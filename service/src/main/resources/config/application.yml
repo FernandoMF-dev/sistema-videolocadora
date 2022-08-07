@@ -1,0 +1,32 @@
+application:
+    appName: Videolocadora
+
+spring:
+    application:
+        name: Videolocadora
+    datasource:
+        type: com.zaxxer.hikari.HikariDataSource
+        url: jdbc:postgresql://localhost:5432/db_database
+        username: db_user
+        password: db_password
+    jackson:
+        date-format: yyyy-MM-dd
+        deserialization:
+            fail-on-unknown-properties: false
+    jpa:
+        database-platform: org.hibernate.dialect.MySQL5Dialect
+        database: postgresql
+        show-sql: true
+        open-in-view: false
+        hibernate:
+            ddl-auto: none
+            naming:
+                physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQL95Dialect
+    liquibase:
+        change-log: classpath:/config/liquibase/master.xml
+    #        drop-first: true
+    server:
+        port: 8080
