@@ -15,6 +15,7 @@
 
 # IDEs and editors
 **/.idea/
+**/.idea/*
 
 # misc
 **/.sass-cache/
@@ -377,5 +378,4 @@
 
 # End of https://www.toptal.com/developers/gitignore/api/angular,dbeaver,eclipse,jetbrains+all,linux,maven,node,sass,sonar,sonarqube
 
-**/**/package-lock.json
 !**/ckeditor/**
