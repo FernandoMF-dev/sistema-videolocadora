@@ -4,5 +4,7 @@
 		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
-
+	<include file="config/liquibase/changelogs/20220817111500_create_table_ator.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20220817114000_create_table_diretor.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20220817133000_create_table_classe.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

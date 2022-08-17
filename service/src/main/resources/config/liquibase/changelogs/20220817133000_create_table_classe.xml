@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="20220817133000-1" author="Fernando Martins Ferreira">
+		<createTable tableName="tb_classe">
+			<column name="id" type="BIGINT" remarks="Chave primária de TB_CLASSE">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="nome" type="VARCHAR" remarks="Nome do classe">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="valor" type="DOUBLE" remarks="Preço de locação">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="prazo_devolucao" type="DOUBLE" remarks="Prazo previsto para a devolução de título">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="excluido" type="BOOLEAN" defaultValueBoolean="false" remarks="Campo de exclusão lógica">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<rollback>
+			<dropTable tableName="tb_classe"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817133000-2" author="Fernando Martins Ferreira">
+		<addPrimaryKey tableName="tb_classe" columnNames="id" constraintName="pk_classe"/>
+
+		<rollback>
+			<dropPrimaryKey tableName="tb_classe" constraintName="pk_classe"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817133000-3" author="Fernando Martins Ferreira">
+		<createSequence sequenceName="seq_classe" incrementBy="1" startValue="1"/>
+
+		<rollback>
+			<dropSequence sequenceName="seq_classe"/>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

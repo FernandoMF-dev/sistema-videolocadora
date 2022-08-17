@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="20220817111500-1" author="Fernando Martins Ferreira">
+		<createTable tableName="tb_ator">
+			<column name="id" type="BIGINT" remarks="Chave primária de TB_ATOR">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="nome" type="VARCHAR" remarks="Nome do ator">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="excluido" type="BOOLEAN" defaultValueBoolean="false" remarks="Campo de exclusão lógica">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<rollback>
+			<dropTable tableName="tb_ator"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817111500-2" author="Fernando Martins Ferreira">
+		<addPrimaryKey tableName="tb_ator" columnNames="id" constraintName="pk_ator"/>
+
+		<rollback>
+			<dropPrimaryKey tableName="tb_ator" constraintName="pk_ator"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817111500-3" author="Fernando Martins Ferreira">
+		<createSequence sequenceName="seq_ator" incrementBy="1" startValue="1"/>
+
+		<rollback>
+			<dropSequence sequenceName="seq_ator"/>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>
