@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="20220817162000-1" author="Fernando Martins Ferreira">
+		<createTable tableName="tb_cliente">
+			<column name="id" type="BIGINT" remarks="Chave primária de TB_CLIENTE">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="numero_inscricao" type="INTEGER" remarks="Número de inscrição do cliente">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="nome" type="VARCHAR" remarks="Nome do cliente">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="cpf" type="VARCHAR" remarks="CPF do sócio"/>
+
+			<column name="endereco" type="VARCHAR" remarks="Email de contato do sócio"/>
+
+			<column name="telefone" type="VARCHAR" remarks="Telefone de contato do sócio"/>
+
+			<column name="tipo_cliente" type="VARCHAR" remarks="Campo enumerado para persistir o tipo de cliente">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="ativo" type="BOOLEAN" defaultValueBoolean="true" remarks="Determina se o cliente está ativo">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="excluido" type="BOOLEAN" defaultValueBoolean="false" remarks="Campo de exclusão lógica">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<rollback>
+			<dropTable tableName="tb_cliente"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817162000-2" author="Fernando Martins Ferreira">
+		<addPrimaryKey tableName="tb_cliente" columnNames="id" constraintName="pk_cliente"/>
+
+		<rollback>
+			<dropPrimaryKey tableName="tb_cliente" constraintName="pk_cliente"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817162000-3" author="Fernando Martins Ferreira">
+		<createSequence sequenceName="seq_cliente" incrementBy="1" startValue="1"/>
+
+		<rollback>
+			<dropSequence sequenceName="seq_cliente"/>
+		</rollback>
+	</changeSet>
+</databaseChangeLog>

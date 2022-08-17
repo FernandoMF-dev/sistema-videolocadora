@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="20220817170000-1" author="Fernando Martins Ferreira">
+		<createTable tableName="tb_locacao">
+			<column name="id" type="BIGINT" remarks="Chave primária de TB_LOCACAO">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="data_locacao" type="DATE" remarks="Data de locação">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="data_devolucao_prevista" type="DATE" remarks="Data limite prevista para devolução"/>
+
+			<column name="data_devolucao_efetiva" type="DATE" remarks="Data de devolucao"/>
+
+			<column name="valor_cobrado" type="DOUBLE" defaultValueNumeric="0" remarks="Valor cobrado pela locação">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="valor_multa" type="DOUBLE" remarks="Valor de multa pago por devolução atrasada"/>
+
+			<column name="situacao" type="VARCHAR" remarks="Campo enumerado para persistir o estado atual da locacao">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="id_item" type="BIGINT" remarks="Chave primária de TB_ITEM">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="id_cliente" type="BIGINT" remarks="Chave primária de TB_CLIENTE">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<rollback>
+			<dropTable tableName="tb_locacao"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817170000-2" author="Fernando Martins Ferreira">
+		<addPrimaryKey tableName="tb_locacao" columnNames="id" constraintName="pk_locacao"/>
+
+		<rollback>
+			<dropPrimaryKey tableName="tb_locacao" constraintName="pk_locacao"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817170000-3" author="Fernando Martins Ferreira">
+		<addForeignKeyConstraint baseTableName="tb_locacao" baseColumnNames="id_item"
+								 referencedTableName="tb_item" referencedColumnNames="id"
+								 constraintName="pk_locacao_item"/>
+
+		<addForeignKeyConstraint baseTableName="tb_locacao" baseColumnNames="id_cliente"
+								 referencedTableName="tb_cliente" referencedColumnNames="id"
+								 constraintName="pk_locacao_cliente"/>
+
+		<rollback>
+			<dropAllForeignKeyConstraints baseTableName="tb_locacao"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817170000-4" author="Fernando Martins Ferreira">
+		<createSequence sequenceName="seq_locacao" incrementBy="1" startValue="1"/>
+
+		<rollback>
+			<dropSequence sequenceName="seq_locacao"/>
+		</rollback>
+	</changeSet>
+</databaseChangeLog>

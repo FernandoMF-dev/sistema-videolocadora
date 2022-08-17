@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="20220817161000-1" author="Fernando Martins Ferreira">
+		<createTable tableName="tb_item">
+			<column name="id" type="BIGINT" remarks="Chave primária de TB_ITEM">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="numero_serie" type="INTEGER" remarks="Número de série do item">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="data_aquisicao" type="DATE" remarks="Data de aquisição do item">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="tipo_item" type="VARCHAR" remarks="Campo enumerado para persistir o tipo do item">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="id_titulo" type="BIGINT" remarks="Título do item">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="excluido" type="BOOLEAN" defaultValueBoolean="false" remarks="Campo de exclusão lógica">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<rollback>
+			<dropTable tableName="tb_item"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817161000-2" author="Fernando Martins Ferreira">
+		<addPrimaryKey tableName="tb_item" columnNames="id" constraintName="pk_item"/>
+
+		<rollback>
+			<dropPrimaryKey tableName="tb_item" constraintName="pk_item"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817161000-3" author="Fernando Martins Ferreira">
+		<addForeignKeyConstraint baseTableName="tb_item" baseColumnNames="id_titulo"
+								 referencedTableName="tb_titulo" referencedColumnNames="id"
+								 constraintName="fk_item_titulo"/>
+
+		<rollback>
+			<dropAllForeignKeyConstraints baseTableName="tb_item"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817161000-4" author="Fernando Martins Ferreira">
+		<createSequence sequenceName="seq_item" incrementBy="1" startValue="1"/>
+
+		<rollback>
+			<dropSequence sequenceName="seq_item"/>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

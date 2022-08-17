@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="20220817134000-1" author="Fernando Martins Ferreira">
+		<createTable tableName="tb_titulo">
+			<column name="id" type="BIGINT" remarks="Chave primária de TB_TITULO">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="nome" type="VARCHAR" remarks="Nome do titulo">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="sinopse" type="VARCHAR" remarks="Sinopse do titulo">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="ano" type="INTEGER" remarks="Ano de publicação">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="categoria" type="VARCHAR" remarks="Campo enumerado para persistir a categoria do título">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="id_classe" type="BIGINT" remarks="Classe do título">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="id_diretor" type="BIGINT" remarks="Diretor do título">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="excluido" type="BOOLEAN" defaultValueBoolean="false" remarks="Campo de exclusão lógica">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<rollback>
+			<dropTable tableName="tb_titulo"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817134000-2" author="Fernando Martins Ferreira">
+		<addPrimaryKey tableName="tb_titulo" columnNames="id" constraintName="pk_titulo"/>
+
+		<rollback>
+			<dropPrimaryKey tableName="tb_titulo" constraintName="pk_titulo"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817134000-3" author="Fernando Martins Ferreira">
+		<addForeignKeyConstraint baseTableName="tb_titulo" baseColumnNames="id_classe"
+								 referencedTableName="tb_classe" referencedColumnNames="id"
+								 constraintName="fk_titulo_classe"/>
+
+		<addForeignKeyConstraint baseTableName="tb_titulo" baseColumnNames="id_diretor"
+								 referencedTableName="tb_diretor" referencedColumnNames="id"
+								 constraintName="fk_titulo_diretor"/>
+
+		<rollback>
+			<dropAllForeignKeyConstraints baseTableName="tb_titulo"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20220817134000-4" author="Fernando Martins Ferreira">
+		<createSequence sequenceName="seq_titulo" incrementBy="1" startValue="1"/>
+
+		<rollback>
+			<dropSequence sequenceName="seq_titulo"/>
+		</rollback>
+	</changeSet>
+
+</databaseChangeLog>

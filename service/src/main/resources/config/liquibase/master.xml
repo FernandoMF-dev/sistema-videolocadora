@@ -7,4 +7,10 @@
 	<include file="config/liquibase/changelogs/20220817111500_create_table_ator.xml" relativeToChangelogFile="false"/>
 	<include file="config/liquibase/changelogs/20220817114000_create_table_diretor.xml" relativeToChangelogFile="false"/>
 	<include file="config/liquibase/changelogs/20220817133000_create_table_classe.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20220817134000_create_table_titulo.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20220817160000_create_rel_titulo_ator.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20220817161000_create_table_item.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20220817162000_create_table_cliente.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20220817163500_create_rel_socio_dependente.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20220817170000_create_table_locacao.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
