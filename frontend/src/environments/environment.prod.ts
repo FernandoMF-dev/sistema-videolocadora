@@ -1,5 +1,6 @@
 export const environment = {
 	production: true,
+	serviceUrl: '/service',
 	apiUrl: '/api',
 	auth: {
 		baseUrl: '',
