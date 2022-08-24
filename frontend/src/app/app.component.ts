@@ -44,17 +44,17 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
 	rippleMouseDownListener: EventListenerOrEventListenerObject;
 
-	constructor(public renderer2: Renderer2, public zone: NgZone, public menuService: MenusService) {
+	constructor(
+		public renderer2: Renderer2,
+		public zone: NgZone,
+		public menuService: MenusService
+	) {
 	}
 
-	ngOnInit() {
-		this.zone.runOutsideAngular(() => {
-			this.bindRipple();
-		});
+	ngOnInit(): void {
+		this.zone.runOutsideAngular(() => this.bindRipple());
 
-		this.menuService.itens = [
-			{ label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] }
-		];
+		this.iniciarMenuLateral();
 	}
 
 	bindRipple() {
@@ -75,8 +75,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
 			// Element.matches() -> https://developer.mozilla.org/en-US/docs/Web/API/Element/matches
 			if (this.selectorMatches(target, '.ripplelink, .ui-button')) {
-				const element = target;
-				this.rippleEffect(element, e);
+				this.rippleEffect(target, e);
 				break;
 			}
 		}
@@ -90,11 +89,11 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		return f.call(el, selector);
 	}
 
-	isVisible(el) {
+	isVisible(el): boolean {
 		return !!(el.offsetWidth || el.offsetHeight);
 	}
 
-	rippleEffect(element, e) {
+	rippleEffect(element, e): void {
 		if (element.querySelector('.ink') === null) {
 			const inkEl = document.createElement('span');
 			this.addClass(inkEl, 'ink');
@@ -124,7 +123,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		this.addClass(ink, 'ripple-animate');
 	}
 
-	hasClass(element, className) {
+	hasClass(element, className): boolean {
 		if (element.classList) {
 			return element.classList.contains(className);
 		} else {
@@ -132,7 +131,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		}
 	}
 
-	addClass(element, className) {
+	addClass(element: Element, className: string): void {
 		if (element.classList) {
 			element.classList.add(className);
 		} else {
@@ -140,7 +139,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		}
 	}
 
-	removeClass(element: Element, className: string) {
+	removeClass(element: Element, className: string): void {
 		if (element.classList) {
 			element.classList.remove(className);
 		} else {
@@ -152,12 +151,12 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		const rect = el.getBoundingClientRect();
 
 		return {
-			top: rect.top + (window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0),
-			left: rect.left + (window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0)
+			top: rect.top + (window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0),
+			left: rect.left + (window.scrollX || document.documentElement.scrollLeft || document.body.scrollLeft || 0)
 		};
 	}
 
-	unbindRipple() {
+	unbindRipple(): void {
 		if (this.rippleInitListener) {
 			document.removeEventListener('DOMContentLoaded', this.rippleInitListener);
 		}
@@ -166,7 +165,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		}
 	}
 
-	ngAfterViewInit() {
+	ngAfterViewInit(): void {
 		this.layoutContainer = this.layourContainerViewChild.nativeElement as HTMLDivElement;
 		const time = 100;
 		setTimeout(() => {
@@ -174,7 +173,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		}, time);
 	}
 
-	onLayoutClick() {
+	onLayoutClick(): void {
 		if (!this.topbarItemClick) {
 			this.activeTopbarItem = null;
 			this.topbarMenuActive = false;
@@ -201,7 +200,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		this.rightPanelClick = false;
 	}
 
-	onMenuButtonClick(event) {
+	onMenuButtonClick(event): void {
 		this.menuClick = true;
 		this.rotateMenuButton = !this.rotateMenuButton;
 		this.topbarMenuActive = false;
@@ -219,12 +218,12 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		event.preventDefault();
 	}
 
-	onMenuClick($event) {
+	onMenuClick($event): void {
 		this.menuClick = true;
 		this.menuService.resetMenu = false;
 	}
 
-	onTopbarMenuButtonClick(event) {
+	onTopbarMenuButtonClick(event): void {
 		this.topbarItemClick = true;
 		this.topbarMenuActive = !this.topbarMenuActive;
 
@@ -233,7 +232,7 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		event.preventDefault();
 	}
 
-	onTopbarItemClick(event, item) {
+	onTopbarItemClick(event, item): void {
 		this.topbarItemClick = true;
 
 		if (this.activeTopbarItem === item) {
@@ -245,43 +244,48 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 		event.preventDefault();
 	}
 
-	onTopbarSubItemClick(event) {
+	onTopbarSubItemClick(event): void {
 		event.preventDefault();
 	}
 
-	onRightPanelButtonClick(event) {
+	onRightPanelButtonClick(event): void {
 		this.rightPanelClick = true;
 		this.rightPanelActive = !this.rightPanelActive;
 		event.preventDefault();
 	}
 
-	onRightPanelClick() {
+	onRightPanelClick(): void {
 		this.rightPanelClick = true;
 	}
 
-	hideOverlayMenu() {
+	hideOverlayMenu(): void {
 		this.rotateMenuButton = false;
 		this.menuService.overlayMenuActive = false;
 		this.menuService.staticMenuMobileActive = false;
 	}
 
-	isTablet() {
+	isTablet(): boolean {
 		const width = window.innerWidth;
 		const maxWidth = this.viewMaxWidth;
 		const minWidth = this.viewMinWidth;
 		return width <= maxWidth && width > minWidth;
 	}
 
-	isDesktop() {
+	isDesktop(): boolean {
 		return window.innerWidth > this.viewMaxWidth;
 	}
 
-	isMobile() {
+	isMobile(): boolean {
 		return window.innerWidth <= this.viewMinWidth;
 	}
 
-	ngOnDestroy() {
+	ngOnDestroy(): void {
 		this.unbindRipple();
 	}
 
+	private iniciarMenuLateral(): void {
+		this.menuService.itens = [
+			{ label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] }
+		];
+	}
 }
