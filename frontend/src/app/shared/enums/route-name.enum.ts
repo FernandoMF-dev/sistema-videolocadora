@@ -1,4 +1,4 @@
-export class RouteEnum {
+export class RouteNameEnum {
 	public static readonly ATOR = 'ator';
 	public static readonly DIRETOR = 'diretor';
 	public static readonly CLASSE = 'classe';
