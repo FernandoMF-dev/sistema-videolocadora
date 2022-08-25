@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PRIMENG_IMPORTS } from './primeng-imports';
+import { PRIMENG_IMPORTS } from './imports/primeng-imports';
 
 @NgModule({
 	imports: [
