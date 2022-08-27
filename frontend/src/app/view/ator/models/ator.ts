@@ -1,4 +1,4 @@
-export class AtorModel {
+export class Ator {
 	id: number;
 	nome: string;
 }
