@@ -22,9 +22,7 @@ import { SharedModule } from './shared/shared.module';
 		DiarioErrosComponent
 	],
 	imports: [
-		BlockUIModule.forRoot({
-			message: 'Carregando...'
-		}),
+		BlockUIModule.forRoot({ message: 'Carregando...' }),
 		BrowserModule,
 		BrowserAnimationsModule,
 		AppRoutingModule,
