@@ -47,7 +47,7 @@ public class Titulo implements Serializable {
 
 	@JoinColumn(name = "id_classe")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Classe>  classe;
+	private List<Classe>  classes;
 
 	@OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<TituloAtor>  atores;

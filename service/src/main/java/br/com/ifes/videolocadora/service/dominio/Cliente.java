@@ -53,11 +53,4 @@ public class Cliente implements Serializable {
 	@Column(name = "excluido")
 	private Boolean excluido;
 
-	@JoinColumn(name = "id_classe")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Classe>  classe;
-
-	@OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<TituloAtor>  atores;
-
 }

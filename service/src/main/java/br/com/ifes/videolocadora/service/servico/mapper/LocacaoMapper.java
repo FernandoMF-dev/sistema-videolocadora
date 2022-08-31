@@ -1,0 +1,21 @@
+package br.com.ifes.videolocadora.service.servico.mapper;
+
+import br.com.ifes.videolocadora.service.dominio.Ator;
+import br.com.ifes.videolocadora.service.dominio.Locacao;
+import br.com.ifes.videolocadora.service.servico.dto.AtorDTO;
+import br.com.ifes.videolocadora.service.servico.dto.LocacaoDTO;
+import org.springframework.web.bind.annotation.Mapping;
+
+@Mapper(componentModel = "spring", uses = {})
+public interface LocacaoMapper extends EntityMapper<LocacaoDTO, Locacao> {
+
+	@Override
+	@Mapping(source = "idItem", target = "item.id")
+	@Mapping(source = "idCliente", target = "cliente.id")
+	Locacao toEntity(LocacaoDTO dto);
+
+	@Override
+	@InheritInverseConfiguration
+	LocacaoDTO toDto(Locacao entity);
+}
+
