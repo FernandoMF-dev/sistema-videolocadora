@@ -1,9 +1,9 @@
-<h2>ATORES</h2>
+<h2>DIRETORES</h2>
 
 <p-card>
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-2">
-			<button pButton type="button" label="Novo AtorModel" icon="pi pi-plus" (click)="inserirAtor()"
+			<button pButton type="button" label="Novo DiretorModel" icon="pi pi-plus" (click)="inserirDiretor()"
 					class="ui-button-success"></button>
 		</div>
 
@@ -15,10 +15,10 @@
 
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-11">
-			<p-table *ngIf="atores" [value]="atores.content" [columns]="cols" (onLazyLoad)="buscarAtores($event)"
+			<p-table *ngIf="diretores" [value]="diretores.content" [columns]="cols" (onLazyLoad)="buscarDiretores($event)"
 					 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="atores.totalElements" [(selection)]="atoresSelecionados"
+					 [totalRecords]="diretores.totalElements" [(selection)]="diretoresSelecionados"
 					 sortField="nome" dataKey="id" selectionMode="multiple"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
@@ -33,7 +33,7 @@
 					<tr class="tabela-filtro">
 						<th *ngFor="let col of columns">
 							<ng-template [ngIf]="!!col?.field">
-								<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarAtores()">
+								<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarDiretores()">
 							</ng-template>
 						</th>
 					</tr>
@@ -59,17 +59,17 @@
 
 		<div class="ui-g-1 position-sticky centralized">
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Buscar" (click)="buscarAtores()"
+				<button pButton type="button" pTooltip="Buscar" (click)="buscarDiretores()"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
 			</div>
 
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Editar" (click)="editarAtor()" [disabled]="disableEditar"
+				<button pButton type="button" pTooltip="Editar" (click)="editarDiretor()" [disabled]="disableEditar"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-pencil"></button>
 			</div>
 
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Excluir" (click)="excluirAtores()" [disabled]="disableExcluir"
+				<button pButton type="button" pTooltip="Excluir" (click)="excluirDiretores()" [disabled]="disableExcluir"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-trash"></button>
 			</div>
 		</div>

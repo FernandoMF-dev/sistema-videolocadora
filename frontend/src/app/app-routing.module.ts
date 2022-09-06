@@ -17,7 +17,12 @@ const routes: Routes = [
 	{
 		path: RouteNameEnum.ATOR,
 		loadChildren: './view/ator/ator.module#AtorModule',
-		data: { breadcrumb: 'Atores' }
+		data: { breadcrumb: 'Ator' }
+	},
+	{
+		path: RouteNameEnum.DIRETOR,
+		loadChildren: './view/diretor/diretor.module#DiretorModule',
+		data: { breadcrumb: 'Diretor' }
 	}
 ];
 

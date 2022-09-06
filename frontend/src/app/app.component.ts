@@ -287,7 +287,8 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 	private iniciarMenuLateral(): void {
 		this.menuService.itens = [
 			{ label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] },
-			{ label: 'Atores', icon: 'person', routerLink: ['/', RouteNameEnum.ATOR] }
+			{ label: 'Atores', icon: 'person', routerLink: ['/', RouteNameEnum.ATOR] },
+			{ label: 'Diretores', icon: 'person', routerLink: ['/', RouteNameEnum.DIRETOR] }
 		];
 	}
 }

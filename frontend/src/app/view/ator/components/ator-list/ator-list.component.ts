@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
-import { Ator } from '../../models/ator';
+import { Ator } from '../../models/ator.model';
 import { AtorService } from '../../services/ator.service';
 
 @Component({
