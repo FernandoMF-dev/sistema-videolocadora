@@ -1,3 +1,4 @@
+import { InputNumberModule } from 'primeng';
 import { AccordionModule } from 'primeng/accordion';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
@@ -86,6 +87,7 @@ export const PRIMENG_IMPORTS = [
 	GalleriaModule,
 	InplaceModule,
 	InputMaskModule,
+	InputNumberModule,
 	InputSwitchModule,
 	InputTextModule,
 	InputTextareaModule,

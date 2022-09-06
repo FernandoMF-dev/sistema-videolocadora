@@ -23,6 +23,11 @@ const routes: Routes = [
 		path: RouteNameEnum.DIRETOR,
 		loadChildren: './view/diretor/diretor.module#DiretorModule',
 		data: { breadcrumb: 'Diretor' }
+	},
+	{
+		path: RouteNameEnum.CLASSE,
+		loadChildren: './view/classe/classe.module#ClasseModule',
+		data: { breadcrumb: 'Classe' }
 	}
 ];
 
