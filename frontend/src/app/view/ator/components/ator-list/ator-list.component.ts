@@ -18,6 +18,7 @@ export class AtorListComponent {
 
 	cols = [{ header: 'Nome', field: 'nome' }];
 	pageListEnum = PageListEnum;
+	viewAtorForm: boolean = false;
 
 	constructor(
 		private atorService: AtorService
@@ -32,17 +33,25 @@ export class AtorListComponent {
 		return !this.atoresSelecionados.length;
 	}
 
+	get atorSelecionado(): Ator {
+		if (this.atoresSelecionados.length < 1) {
+			return null;
+		}
+		return this.atoresSelecionados[0];
+	}
+
 	buscarAtores(event?: LazyLoadEvent): void {
 		this.atoresSelecionados = [];
 		// TODO Implementar esse fluxo
 	}
 
 	inserirAtor(): void {
-		// TODO Implementar esse fluxo
+		this.atoresSelecionados = [];
+		this.viewAtorForm = true;
 	}
 
 	editarAtor(): void {
-		// TODO Implementar esse fluxo
+		this.viewAtorForm = true;
 	}
 
 	excluirAtores(): void {

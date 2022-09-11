@@ -1,7 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PageNotificationService } from '@nuvem/primeng-components';
 import { DialogUtil } from '../../../../shared/utils/dialog.util';
+import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Ator } from '../../models/ator.model';
+import { AtorService } from '../../services/ator.service';
 
 @Component({
 	selector: 'app-ator-form',
@@ -12,10 +15,15 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 
 	@Input() ator: Ator;
 
+	@Output() onCancelar: EventEmitter<void> = new EventEmitter<void>();
+	@Output() onSalvar: EventEmitter<Ator> = new EventEmitter<Ator>();
+
 	form: FormGroup;
 
 	constructor(
-		private formBuilder: FormBuilder
+		private formBuilder: FormBuilder,
+		private pageNotificationService: PageNotificationService,
+		private atorService: AtorService
 	) {
 		super();
 	}
@@ -25,10 +33,84 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 	}
 
 	get tituloDialog(): string {
-		return `${ this.isEdicao ? 'EDITAR' : 'CADASTRAR' } ATOR`;
+		return `${ this.isEdicao ? 'EDITAR' : 'NOVO' } ATOR`;
+	}
+
+	cancelar(): void {
+		this.onCancelar.emit();
+		this.fecharDialog();
 	}
 
 	ngOnInit(): void {
+		this.iniciarForm();
+
+		if (this.isEdicao) {
+			this.atualizarFormEdicao();
+		}
+	}
+
+	validarSalvar(): void {
+		if (!this.form.valid) {
+			this.pageNotificationService.addErrorMessage(MensagemUtil.PREENCHIMENTO_OBRIGATORIO);
+			return;
+		}
+
+		this.salvar();
+	}
+
+	private iniciarForm(): void {
+		this.form = this.formBuilder.group({
+			'id': new FormControl(null, []),
+			'nome': new FormControl(null, [Validators.required])
+		});
+	}
+
+	private atualizarFormEdicao(): void {
+		this.form.patchValue(this.ator);
+	}
+
+	private fecharDialog(): void {
+		this.onClose.emit();
+		this.visible = false;
+	}
+
+	private salvar(): void {
+		const ator = Object.assign(new Ator(), this.form.value);
+
+		if (this.isEdicao) {
+			this.editar(ator);
+		} else {
+			this.inserir(ator);
+		}
+	}
+
+	private inserir(entity: Ator): void {
+		this.atorService.insert<Ator>(entity)
+			.pipe()
+			.subscribe(
+				(res) => {
+					this.pageNotificationService.addSuccessMessage(MensagemUtil.INSERIR_SUCESSO);
+					this.finalizarSalvar(res);
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
+	}
+
+	private editar(entity: Ator): void {
+		this.atorService.update<Ator>(entity, entity.id)
+			.pipe()
+			.subscribe(
+				(res) => {
+					this.pageNotificationService.addSuccessMessage(MensagemUtil.EDITAR_SUCESSO);
+					this.finalizarSalvar(res);
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
+	}
+
+	private finalizarSalvar(entity: Ator): void {
+		this.onSalvar.emit(entity);
+		this.fecharDialog();
 	}
 
 }

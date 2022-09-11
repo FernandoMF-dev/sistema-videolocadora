@@ -21,11 +21,11 @@ export abstract class BaseService {
 		return this.http.get<T>(`${ this.baseUrl }/${ this.entity }/${ id }`);
 	}
 
-	insert<T>(data: T): Observable<T> {
+	insert<T>(data: object): Observable<T> {
 		return this.http.post<T>(`${ this.baseUrl }/${ this.entity }`, data);
 	}
 
-	update<T>(data: T, id: number | string): Observable<T> {
+	update<T>(data: object, id: number | string): Observable<T> {
 		return this.http.put<T>(`${ this.baseUrl }/${ this.entity }/${ id }`, data);
 	}
 

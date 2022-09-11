@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { AtorRoutingModule } from './ator-routing.module';
 import { AtorFormComponent } from './components/ator-form/ator-form.component';
@@ -15,7 +16,9 @@ import { AtorService } from './services/ator.service';
 	imports: [
 		CommonModule,
 		AtorRoutingModule,
-		SharedModule
+		SharedModule,
+		FormsModule,
+		ReactiveFormsModule
 	],
 	providers: [
 		AtorService
