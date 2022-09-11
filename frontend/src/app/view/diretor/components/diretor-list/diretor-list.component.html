@@ -23,7 +23,7 @@
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>
-						<th *ngFor="let col of columns">
+						<th *ngFor="let col of columns" id="diretor-list-table-header-{{ col.field }}">
 							{{ !!col?.header ? col.header : '' }}
 
 							<p-sortIcon *ngIf="col?.field" [field]="col.field" [pSortableColumn]="col.field"></p-sortIcon>
@@ -31,7 +31,7 @@
 					</tr>
 
 					<tr class="tabela-filtro">
-						<th *ngFor="let col of columns">
+						<th *ngFor="let col of columns" id="diretor-list-table-filter-{{ col.field }}">
 							<ng-template [ngIf]="!!col?.field">
 								<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarDiretores()">
 							</ng-template>

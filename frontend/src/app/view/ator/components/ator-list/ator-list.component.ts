@@ -20,7 +20,7 @@ export class AtorListComponent {
 	pageListEnum = PageListEnum;
 
 	constructor(
-		atorService: AtorService
+		private atorService: AtorService
 	) {
 	}
 

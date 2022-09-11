@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { LazyLoadEvent } from 'primeng/api';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
@@ -26,8 +25,7 @@ export class ClasseListComponent {
 	pageListEnum = PageListEnum;
 
 	constructor(
-		router: Router,
-		classeService: ClasseService
+		private classeService: ClasseService
 	) {
 	}
 

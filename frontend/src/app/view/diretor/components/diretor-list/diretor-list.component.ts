@@ -20,7 +20,7 @@ export class DiretorListComponent {
 	pageListEnum = PageListEnum;
 
 	constructor(
-		diretorService: DiretorService
+		private diretorService: DiretorService
 	) {
 	}
 
