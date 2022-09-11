@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { finalize } from 'rxjs/operators';
 import { DialogUtil } from '../../../../shared/utils/dialog.util';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Ator } from '../../models/ator.model';
@@ -12,6 +14,8 @@ import { AtorService } from '../../services/ator.service';
 	styleUrls: ['./ator-form.component.scss']
 })
 export class AtorFormComponent extends DialogUtil implements OnInit {
+
+	@BlockUI() blockUI: NgBlockUI;
 
 	@Input() ator: Ator;
 
@@ -85,8 +89,9 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 	}
 
 	private inserir(entity: Ator): void {
+		this.blockUI.start(MensagemUtil.BLOCKUI_SALVANDO);
 		this.atorService.insert<Ator>(entity)
-			.pipe()
+			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.INSERIR_SUCESSO);
@@ -97,8 +102,9 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 	}
 
 	private editar(entity: Ator): void {
+		this.blockUI.start(MensagemUtil.BLOCKUI_SALVANDO);
 		this.atorService.update<Ator>(entity, entity.id)
-			.pipe()
+			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.EDITAR_SUCESSO);
