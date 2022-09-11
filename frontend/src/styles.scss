@@ -17,7 +17,11 @@
 	align-items: center;
 }
 
-p-dialog > div.ui-dialog-mask.ui-dialog-visible {
+div.ui-dialog-mask.ui-dialog-visible {
 	opacity: 1;
-	background-color: rgb(88, 87, 92, 0.8);
+	background-color: rgb(88, 87, 92, 0.6);
+}
+
+p-confirmDialog > div.ui-dialog-mask.ui-dialog-visible > div.ui-dialog.ui-confirmdialog > div.ui-dialog-footer > p-footer button {
+	width: 100%;
 }
