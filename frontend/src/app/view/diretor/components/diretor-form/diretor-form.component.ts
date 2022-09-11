@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { DialogUtil } from '../../../../shared/utils/dialog.util';
+import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Diretor } from '../../models/diretor.model';
 import { DiretorService } from '../../services/diretor.service';
 
@@ -27,15 +28,89 @@ export class DiretorFormComponent extends DialogUtil implements OnInit {
 		super();
 	}
 
-	ngOnInit(): void {
-	}
-
 	get isEdicao(): boolean {
 		return !!this.diretor && !!this.diretor.id;
 	}
 
 	get tituloDialog(): string {
 		return `${ this.isEdicao ? 'EDITAR' : 'NOVO' } DIRETOR`;
+	}
+
+	cancelar(): void {
+		this.onCancelar.emit();
+		this.fecharDialog();
+	}
+
+	ngOnInit(): void {
+		this.iniciarForm();
+
+		if (this.isEdicao) {
+			this.atualizarFormEdicao();
+		}
+	}
+
+	validarSalvar(): void {
+		if (!this.form.valid) {
+			this.pageNotificationService.addErrorMessage(MensagemUtil.PREENCHIMENTO_OBRIGATORIO);
+			return;
+		}
+
+		this.salvar();
+	}
+
+	private iniciarForm(): void {
+		this.form = this.formBuilder.group({
+			'id': new FormControl(null, []),
+			'nome': new FormControl(null, [Validators.required])
+		});
+	}
+
+	private atualizarFormEdicao(): void {
+		this.form.patchValue(this.diretor);
+	}
+
+	private fecharDialog(): void {
+		this.onClose.emit();
+		this.visible = false;
+	}
+
+	private salvar(): void {
+		const diretor = Object.assign(new Diretor(), this.form.value);
+
+		if (this.isEdicao) {
+			this.editar(diretor);
+		} else {
+			this.inserir(diretor);
+		}
+	}
+
+	private inserir(entity: Diretor): void {
+		this.diretorService.insert<Diretor>(entity)
+			.pipe()
+			.subscribe(
+				(res) => {
+					this.pageNotificationService.addSuccessMessage(MensagemUtil.INSERIR_SUCESSO);
+					this.finalizarSalvar(res);
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
+	}
+
+	private editar(entity: Diretor): void {
+		this.diretorService.update<Diretor>(entity, entity.id)
+			.pipe()
+			.subscribe(
+				(res) => {
+					this.pageNotificationService.addSuccessMessage(MensagemUtil.EDITAR_SUCESSO);
+					this.finalizarSalvar(res);
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
+	}
+
+	private finalizarSalvar(entity: Diretor): void {
+		this.onSalvar.emit(entity);
+		this.fecharDialog();
 	}
 
 }

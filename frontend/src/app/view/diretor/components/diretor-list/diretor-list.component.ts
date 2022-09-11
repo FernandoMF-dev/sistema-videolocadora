@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { LazyLoadEvent } from 'primeng/api';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
+import { MensagemService } from '../../../../shared/services/mensagem.service';
 import { Diretor } from '../../models/diretor.model';
 import { DiretorService } from '../../services/diretor.service';
 
@@ -18,9 +19,11 @@ export class DiretorListComponent {
 
 	cols = [{ header: 'Nome', field: 'nome' }];
 	pageListEnum = PageListEnum;
+	viewDiretorForm: boolean = false;
 
 	constructor(
-		private diretorService: DiretorService
+		private diretorService: DiretorService,
+		private mensagemService: MensagemService
 	) {
 	}
 
@@ -32,26 +35,49 @@ export class DiretorListComponent {
 		return !this.diretoresSelecionados.length;
 	}
 
+	get diretorSelecionado(): Diretor {
+		if (this.diretoresSelecionados.length < 1) {
+			return null;
+		}
+		return this.diretoresSelecionados[0];
+	}
+
+	get mensagemExcluirAtores(): string {
+		return 'Tem certeza que seja excluir o(s) diretor(es)' +
+			this.diretoresSelecionados.map(value => `<em>"${ value.nome }"</em>`).join(', ') +
+			'?';
+	}
+
 	buscarDiretores(event?: LazyLoadEvent): void {
 		this.diretoresSelecionados = [];
 		// TODO Implementar esse fluxo
 	}
 
 	inserirDiretor(): void {
-		// TODO Implementar esse fluxo
+		this.diretoresSelecionados = [];
+		this.viewDiretorForm = true;
 	}
 
 	editarDiretor(): void {
-		// TODO Implementar esse fluxo
+		this.viewDiretorForm = true;
 	}
 
 	excluirDiretores(): void {
-		// TODO Implementar esse fluxo
+		this.mensagemService.exibirMensagem(
+			'EXCLUIR DIRETOR(ES)',
+			this.mensagemExcluirAtores,
+			this,
+			() => this.excluir()
+		);
 	}
 
 	limparFiltro(): void {
 		this.filtro = new Diretor();
 		this.buscarDiretores();
+	}
+
+	private excluir(): void {
+		// TODO Implementar esse fluxo
 	}
 
 }

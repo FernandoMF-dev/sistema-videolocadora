@@ -43,7 +43,7 @@ export class AtorListComponent {
 	}
 
 	get mensagemExcluirAtores(): string {
-		return 'Tem certeza que seja excluir o(s) ator(es)/atriz(es)' +
+		return 'Tem certeza que seja excluir o(s) ator(es)' +
 			this.atoresSelecionados.map(value => `<em>"${ value.nome }"</em>`).join(', ') +
 			'?';
 	}
