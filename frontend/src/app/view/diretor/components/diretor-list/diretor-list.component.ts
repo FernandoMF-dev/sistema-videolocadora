@@ -17,9 +17,9 @@ export class DiretorListComponent {
 	diretoresSelecionados: Diretor[] = [];
 	filtro: Diretor = new Diretor();
 
-	cols = [{ header: 'Nome', field: 'nome' }];
 	pageListEnum = PageListEnum;
 	viewDiretorForm: boolean = false;
+	cols = [{ header: 'Nome', field: 'nome' }];
 
 	constructor(
 		private diretorService: DiretorService,
@@ -42,7 +42,7 @@ export class DiretorListComponent {
 		return this.diretoresSelecionados[0];
 	}
 
-	get mensagemExcluirAtores(): string {
+	get mensagemExcluirDiretores(): string {
 		return 'Tem certeza que seja excluir o(s) diretor(es)' +
 			this.diretoresSelecionados.map(value => `<em>"${ value.nome }"</em>`).join(', ') +
 			'?';
@@ -65,7 +65,7 @@ export class DiretorListComponent {
 	excluirDiretores(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR DIRETOR(ES)',
-			this.mensagemExcluirAtores,
+			this.mensagemExcluirDiretores,
 			this,
 			() => this.excluir()
 		);

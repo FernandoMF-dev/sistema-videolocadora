@@ -65,7 +65,7 @@ export class DiretorFormComponent extends DialogUtil implements OnInit {
 	private iniciarForm(): void {
 		this.form = this.formBuilder.group({
 			'id': new FormControl(null, []),
-			'nome': new FormControl(null, [Validators.required])
+			'nome': new FormControl('', [Validators.required])
 		});
 	}
 

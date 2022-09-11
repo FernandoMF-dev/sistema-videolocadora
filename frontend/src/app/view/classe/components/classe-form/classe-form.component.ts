@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { finalize } from 'rxjs/operators';
 import { DialogUtil } from '../../../../shared/utils/dialog.util';
+import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Classe } from '../../models/classe.model';
 import { ClasseService } from '../../services/classe.service';
 
@@ -38,8 +40,85 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 		return `${ this.isEdicao ? 'EDITAR' : 'NOVO' } CLASSE`;
 	}
 
+	cancelar(): void {
+		this.onCancelar.emit();
+		this.fecharDialog();
+	}
 
 	ngOnInit(): void {
+		this.iniciarForm();
+
+		if (this.isEdicao) {
+			this.atualizarFormEdicao();
+		}
+	}
+
+	validarSalvar(): void {
+		if (!this.form.valid) {
+			this.pageNotificationService.addErrorMessage(MensagemUtil.PREENCHIMENTO_OBRIGATORIO);
+			return;
+		}
+
+		this.salvar();
+	}
+
+	private iniciarForm(): void {
+		this.form = this.formBuilder.group({
+			'id': new FormControl(null, []),
+			'nome': new FormControl('', [Validators.required]),
+			'valor': new FormControl(0, [Validators.required, Validators.min(0)]),
+			'prazoDevolucao': new FormControl(0, [Validators.required, Validators.min(0)])
+		});
+	}
+
+	private atualizarFormEdicao(): void {
+		this.form.patchValue(this.classe);
+	}
+
+	private fecharDialog(): void {
+		this.onClose.emit();
+		this.visible = false;
+	}
+
+	private salvar(): void {
+		const classe = Object.assign(new Classe(), this.form.value);
+
+		if (this.isEdicao) {
+			this.editar(classe);
+		} else {
+			this.inserir(classe);
+		}
+	}
+
+	private inserir(entity: Classe): void {
+		this.blockUI.start(MensagemUtil.BLOCKUI_SALVANDO);
+		this.classeService.insert<Classe>(entity)
+			.pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(
+				(res) => {
+					this.pageNotificationService.addSuccessMessage(MensagemUtil.INSERIR_SUCESSO);
+					this.finalizarSalvar(res);
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
+	}
+
+	private editar(entity: Classe): void {
+		this.blockUI.start(MensagemUtil.BLOCKUI_SALVANDO);
+		this.classeService.update<Classe>(entity, entity.id)
+			.pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(
+				(res) => {
+					this.pageNotificationService.addSuccessMessage(MensagemUtil.EDITAR_SUCESSO);
+					this.finalizarSalvar(res);
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
+	}
+
+	private finalizarSalvar(entity: Classe): void {
+		this.onSalvar.emit(entity);
+		this.fecharDialog();
 	}
 
 }

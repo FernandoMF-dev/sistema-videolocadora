@@ -39,7 +39,7 @@
 
 								<ng-template [ngIf]="!!col.currency">
 									<p-inputNumber [(ngModel)]="filtro[col.field]" mode="currency" locale="pt-BR"
-												   [minFractionDigits]="2" currency="BRL"></p-inputNumber>
+												   currency="BRL"></p-inputNumber>
 								</ng-template>
 
 								<ng-template [ngIf]="!!col.days">
@@ -96,3 +96,5 @@
 		</div>
 	</section>
 </p-card>
+
+<app-classe-form *ngIf="viewClasseForm" [(visible)]="viewClasseForm" [classe]="classeSelecionado"></app-classe-form>

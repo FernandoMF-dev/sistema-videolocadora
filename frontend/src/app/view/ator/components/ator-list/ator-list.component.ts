@@ -17,9 +17,9 @@ export class AtorListComponent {
 	atoresSelecionados: Ator[] = [];
 	filtro: Ator = new Ator();
 
-	cols = [{ header: 'Nome', field: 'nome' }];
 	pageListEnum = PageListEnum;
 	viewAtorForm: boolean = false;
+	cols = [{ header: 'Nome', field: 'nome' }];
 
 	constructor(
 		private atorService: AtorService,
