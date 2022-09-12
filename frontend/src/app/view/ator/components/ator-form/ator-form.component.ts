@@ -70,7 +70,9 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 	}
 
 	private atualizarFormEdicao(): void {
-		this.form.patchValue(this.ator);
+		this.blockUI.start();
+		this.atorService.findById(this.ator.id).pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(res => this.form.patchValue(res));
 	}
 
 	private fecharDialog(): void {

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
+import { PageNotificationService } from '@nuvem/primeng-components';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { LazyLoadEvent } from 'primeng/api';
+import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
 import { MensagemService } from '../../../../shared/services/mensagem.service';
@@ -13,6 +16,8 @@ import { DiretorService } from '../../services/diretor.service';
 })
 export class DiretorListComponent {
 
+	@BlockUI() blockUI: NgBlockUI;
+
 	diretores: Page<Diretor> = new Page();
 	diretoresSelecionados: Diretor[] = [];
 	filtro: Diretor = new Diretor();
@@ -23,7 +28,8 @@ export class DiretorListComponent {
 
 	constructor(
 		private diretorService: DiretorService,
-		private mensagemService: MensagemService
+		private mensagemService: MensagemService,
+		private pageNotificationService: PageNotificationService
 	) {
 	}
 
@@ -50,7 +56,11 @@ export class DiretorListComponent {
 
 	buscarDiretores(event?: LazyLoadEvent): void {
 		this.diretoresSelecionados = [];
-		// TODO Implementar esse fluxo
+		this.blockUI.start()
+		this.diretorService.buscarTodos(event).pipe(finalize((()=> this.blockUI.stop())))
+			.subscribe(res => {
+				this.diretores = res
+			});
 	}
 
 	inserirDiretor(): void {
@@ -77,7 +87,11 @@ export class DiretorListComponent {
 	}
 
 	private excluir(): void {
-		// TODO Implementar esse fluxo
-	}
+		this.blockUI.start();
+		this.diretorService.delete(this.diretorSelecionado.id).pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(() => {
+				this.pageNotificationService.addSuccessMessage('Diretor excluido com sucesso','Sucesso')
+				this.buscarDiretores();
+			});	}
 
 }
