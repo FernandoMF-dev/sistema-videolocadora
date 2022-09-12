@@ -5,6 +5,7 @@
 
 export const environment = {
 	production: false,
+	serviceUrl: '',
 	apiUrl: '/api',
 	auth: {
 		baseUrl: '',

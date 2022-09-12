@@ -1,13 +1,21 @@
 import { NgModule } from '@angular/core';
-import { PRIMENG_IMPORTS } from './primeng-imports';
+import { FormSubmitMsgDirective } from './directive/form-submit-msg.directive';
+import { PRIMENG_IMPORTS } from './imports/primeng-imports';
+import { MensagemService } from './services/mensagem.service';
 
 @NgModule({
 	imports: [
 		PRIMENG_IMPORTS
 	],
-	providers: [],
+	providers: [
+		MensagemService
+	],
 	exports: [
-		PRIMENG_IMPORTS
+		PRIMENG_IMPORTS,
+		FormSubmitMsgDirective
+	],
+	declarations: [
+		FormSubmitMsgDirective
 	]
 })
 export class SharedModule {

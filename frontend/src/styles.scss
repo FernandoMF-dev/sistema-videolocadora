@@ -1,1 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
+
+.position-sticky {
+	position: sticky;
+	top: 11%;
+	height: 11%;
+
+	button:not(:nth-child(1)) {
+		margin-top: 1rem;
+	}
+}
+
+.centralized {
+	align-content: center;
+	text-align: center;
+	align-self: center;
+	align-items: center;
+}
+
+div.ui-dialog-mask.ui-dialog-visible {
+	opacity: 1;
+	background-color: rgb(88, 87, 92, 0.6);
+
+	> div.ui-dialog > div.ui-dialog-footer > p-footer button {
+		width: 100%;
+	}
+}
+
+p-inputnumber > span.ui-inputnumber > span.ui-inputnumber-button-group > button.ui-inputnumber-button {
+	border-radius: 0;
+	height: 1rem;
+}

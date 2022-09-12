@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { MenuOrientation, MenusService } from '@nuvem/primeng-components';
 import { ScrollPanel } from 'primeng';
+import { RouteNameEnum } from './shared/enums/route-name.enum';
 
 @Component({
 	selector: 'app-root',
@@ -285,7 +286,9 @@ export class AppComponent implements AfterViewInit, OnDestroy, OnInit {
 
 	private iniciarMenuLateral(): void {
 		this.menuService.itens = [
-			{ label: 'Dashboard', icon: 'dashboard', routerLink: ['/'] }
+			{ label: 'Ator', icon: 'star', routerLink: ['/', RouteNameEnum.ATOR] },
+			{ label: 'Diretor', icon: 'record_voice_over', routerLink: ['/', RouteNameEnum.DIRETOR] },
+			{ label: 'Classe', icon: 'note', routerLink: ['/', RouteNameEnum.CLASSE] }
 		];
 	}
 }
