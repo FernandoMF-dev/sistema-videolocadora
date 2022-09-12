@@ -3,7 +3,6 @@ package br.com.ifes.videolocadora.service.recurso;
 
 import br.com.ifes.videolocadora.service.servico.DiretorServico;
 import br.com.ifes.videolocadora.service.servico.dto.DiretorDTO;
-import br.com.ifes.videolocadora.service.servico.dto.DiretorDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

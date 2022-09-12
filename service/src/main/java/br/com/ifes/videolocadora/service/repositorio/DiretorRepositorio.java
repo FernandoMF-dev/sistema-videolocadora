@@ -2,7 +2,6 @@ package br.com.ifes.videolocadora.service.repositorio;
 
 
 import br.com.ifes.videolocadora.service.dominio.Diretor;
-import br.com.ifes.videolocadora.service.servico.dto.AtorDTO;
 import br.com.ifes.videolocadora.service.servico.dto.DiretorDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
