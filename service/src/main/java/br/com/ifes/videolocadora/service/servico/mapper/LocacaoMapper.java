@@ -4,7 +4,9 @@ import br.com.ifes.videolocadora.service.dominio.Ator;
 import br.com.ifes.videolocadora.service.dominio.Locacao;
 import br.com.ifes.videolocadora.service.servico.dto.AtorDTO;
 import br.com.ifes.videolocadora.service.servico.dto.LocacaoDTO;
-import org.springframework.web.bind.annotation.Mapping;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring", uses = {})
 public interface LocacaoMapper extends EntityMapper<LocacaoDTO, Locacao> {
