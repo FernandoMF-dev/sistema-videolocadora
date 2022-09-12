@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { Page } from '../../../shared/models/page.model';
 import { BaseService } from '../../../shared/services/base.service';
-import { Ator } from '../../ator/models/ator.model';
+import { Diretor } from '../models/diretor.model';
 
 @Injectable({
 	providedIn: 'root'
@@ -18,8 +18,8 @@ export class DiretorService extends BaseService {
 		super(http, 'diretor', environment.serviceUrl);
 	}
 
-	public buscarTodos(page): Observable<Page<Ator>> {
-		return this.http.get<Page<Ator>>(environment.apiUrl + DiretorService.DIRETOR_URL, {params: page});
+	public buscarTodos(page): Observable<Page<Diretor>> {
+		return this.http.get<Page<Diretor>>(environment.apiUrl + DiretorService.DIRETOR_URL, {params: page});
 	}
 
 }
