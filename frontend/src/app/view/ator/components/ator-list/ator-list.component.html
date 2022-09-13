@@ -18,8 +18,8 @@
 			<p-table *ngIf="atores" [value]="atores.content" [columns]="cols" (onLazyLoad)="buscarAtores($event)"
 					 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="atores.totalElements" [(selection)]="atoresSelecionados"
-					 sortField="nome" dataKey="id" selectionMode="multiple"
+					 [totalRecords]="atores.totalElements" [(selection)]="atorSelecionado"
+					 sortField="nome" dataKey="id" selectionMode="single"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>

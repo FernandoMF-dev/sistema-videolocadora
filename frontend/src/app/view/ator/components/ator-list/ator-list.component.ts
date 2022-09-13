@@ -14,7 +14,7 @@ import { AtorService } from '../../services/ator.service';
 export class AtorListComponent {
 
 	atores: Page<Ator> = new Page();
-	atoresSelecionados: Ator[] = [];
+	atorSelecionado: Ator;
 	filtro: Ator = new Ator();
 
 	pageListEnum = PageListEnum;
@@ -28,33 +28,20 @@ export class AtorListComponent {
 	}
 
 	get disableEditar(): boolean {
-		return this.atoresSelecionados.length !== 1;
+		return !this.atorSelecionado;
 	}
 
 	get disableExcluir(): boolean {
-		return !this.atoresSelecionados.length;
-	}
-
-	get atorSelecionado(): Ator {
-		if (this.atoresSelecionados.length < 1) {
-			return null;
-		}
-		return this.atoresSelecionados[0];
-	}
-
-	get mensagemExcluirAtores(): string {
-		return 'Tem certeza que seja excluir o(s) ator(es)' +
-			this.atoresSelecionados.map(value => `<em>"${ value.nome }"</em>`).join(', ') +
-			'?';
+		return !this.atorSelecionado;
 	}
 
 	buscarAtores(event?: LazyLoadEvent): void {
-		this.atoresSelecionados = [];
+		this.atorSelecionado = null;
 		// TODO Implementar esse fluxo
 	}
 
 	inserirAtor(): void {
-		this.atoresSelecionados = [];
+		this.atorSelecionado = null;
 		this.viewAtorForm = true;
 	}
 
@@ -65,7 +52,7 @@ export class AtorListComponent {
 	excluirAtores(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR ATOR(ES)',
-			this.mensagemExcluirAtores,
+			`Tem certeza que seja excluir o/a ator/atriz "${ this.atorSelecionado.nome }"`,
 			this,
 			() => this.excluir()
 		);

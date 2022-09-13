@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { PageNotificationService } from '@nuvem/primeng-components';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { LazyLoadEvent } from 'primeng/api';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
@@ -13,8 +15,10 @@ import { DiretorService } from '../../services/diretor.service';
 })
 export class DiretorListComponent {
 
+	@BlockUI() blockUI: NgBlockUI;
+
 	diretores: Page<Diretor> = new Page();
-	diretoresSelecionados: Diretor[] = [];
+	diretorSelecionado: Diretor;
 	filtro: Diretor = new Diretor();
 
 	pageListEnum = PageListEnum;
@@ -23,38 +27,26 @@ export class DiretorListComponent {
 
 	constructor(
 		private diretorService: DiretorService,
-		private mensagemService: MensagemService
+		private mensagemService: MensagemService,
+		private pageNotificationService: PageNotificationService
 	) {
 	}
 
 	get disableEditar(): boolean {
-		return this.diretoresSelecionados.length !== 1;
+		return !this.diretorSelecionado;
 	}
 
 	get disableExcluir(): boolean {
-		return !this.diretoresSelecionados.length;
-	}
-
-	get diretorSelecionado(): Diretor {
-		if (this.diretoresSelecionados.length < 1) {
-			return null;
-		}
-		return this.diretoresSelecionados[0];
-	}
-
-	get mensagemExcluirDiretores(): string {
-		return 'Tem certeza que seja excluir o(s) diretor(es)' +
-			this.diretoresSelecionados.map(value => `<em>"${ value.nome }"</em>`).join(', ') +
-			'?';
+		return !this.diretorSelecionado;
 	}
 
 	buscarDiretores(event?: LazyLoadEvent): void {
-		this.diretoresSelecionados = [];
+		this.diretorSelecionado = null;
 		// TODO Implementar esse fluxo
 	}
 
 	inserirDiretor(): void {
-		this.diretoresSelecionados = [];
+		this.diretorSelecionado = null;
 		this.viewDiretorForm = true;
 	}
 
@@ -65,7 +57,7 @@ export class DiretorListComponent {
 	excluirDiretores(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR DIRETOR(ES)',
-			this.mensagemExcluirDiretores,
+			`Tem certeza que seja excluir o/a diretor(a) "${ this.diretorSelecionado.nome }"`,
 			this,
 			() => this.excluir()
 		);

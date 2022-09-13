@@ -18,7 +18,7 @@
 			<p-table *ngIf="diretores" [value]="diretores.content" [columns]="cols" (onLazyLoad)="buscarDiretores($event)"
 					 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="diretores.totalElements" [(selection)]="diretoresSelecionados"
+					 [totalRecords]="diretores.totalElements" [(selection)]="diretorSelecionado"
 					 sortField="nome" dataKey="id" selectionMode="multiple"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>

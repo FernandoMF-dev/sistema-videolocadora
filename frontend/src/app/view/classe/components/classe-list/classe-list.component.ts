@@ -15,7 +15,7 @@ import { ClasseService } from '../../services/classe.service';
 export class ClasseListComponent {
 
 	classes: Page<Classe> = new Page();
-	classesSelecionados: Classe[] = [];
+	classeSelecionada: Classe;
 	filtro: Classe = new Classe();
 
 	pageListEnum = PageListEnum;
@@ -33,33 +33,20 @@ export class ClasseListComponent {
 	}
 
 	get disableEditar(): boolean {
-		return this.classesSelecionados.length !== 1;
+		return !this.classeSelecionada;
 	}
 
 	get disableExcluir(): boolean {
-		return !this.classesSelecionados.length;
-	}
-
-	get classeSelecionado(): Classe {
-		if (this.classesSelecionados.length < 1) {
-			return null;
-		}
-		return this.classesSelecionados[0];
-	}
-
-	get mensagemExcluirClasses(): string {
-		return 'Tem certeza que seja excluir a(s) classe(s)' +
-			this.classesSelecionados.map(value => `<em>"${ value.nome }"</em>`).join(', ') +
-			'?';
+		return !this.classeSelecionada;
 	}
 
 	buscarClasses(event?: LazyLoadEvent): void {
-		this.classesSelecionados = [];
+		this.classeSelecionada = null;
 		// TODO Implementar esse fluxo
 	}
 
 	inserirClasse(): void {
-		this.classesSelecionados = [];
+		this.classeSelecionada = null;
 		this.viewClasseForm = true;
 	}
 
@@ -70,7 +57,7 @@ export class ClasseListComponent {
 	excluirClasses(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR CLASSE(S)',
-			this.mensagemExcluirClasses,
+			`Tem certeza que seja excluir a classe "${ this.classeSelecionada.nome }"`,
 			this,
 			() => this.excluir()
 		);

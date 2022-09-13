@@ -18,8 +18,8 @@
 			<p-table *ngIf="classes" [value]="classes.content" [columns]="cols" (onLazyLoad)="buscarClasses($event)"
 					 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="classes.totalElements" [(selection)]="classesSelecionados"
-					 sortField="nome" dataKey="id" selectionMode="multiple"
+					 [totalRecords]="classes.totalElements" [(selection)]="classeSelecionada"
+					 sortField="nome" dataKey="id" selectionMode="single"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>
@@ -97,4 +97,4 @@
 	</section>
 </p-card>
 
-<app-classe-form *ngIf="viewClasseForm" [(visible)]="viewClasseForm" [classe]="classeSelecionado"></app-classe-form>
+<app-classe-form *ngIf="viewClasseForm" [(visible)]="viewClasseForm" [classe]="classeSelecionada"></app-classe-form>
