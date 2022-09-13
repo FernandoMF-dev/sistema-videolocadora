@@ -15,7 +15,8 @@ public class TituloServico {
 	private final TituloMapper mapper;
 
 	public Titulo procurarPorId(Long id){
-		return repositorio.findById(id).orElseThrow(RuntimeException::new);
+		return repositorio.findById(id)
+				.orElseThrow(() -> new RuntimeException("Título não encontrado"));
 	}
 
 	public TituloDTO obterPorId(Long id){

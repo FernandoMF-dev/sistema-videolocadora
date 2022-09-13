@@ -47,9 +47,10 @@ export class DiretorListComponent {
 		this.blockUI.start();
 		this.diretorService.buscarTodos(event)
 			.pipe(finalize((() => this.blockUI.stop())))
-			.subscribe(res => {
-				this.diretores = res;
-			});
+			.subscribe(
+				(res) => this.diretores = res,
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 	inserirDiretor(): void {
@@ -79,10 +80,13 @@ export class DiretorListComponent {
 		this.blockUI.start(MensagemUtil.BLOCKUI_EXCLUINDO);
 		this.diretorService.delete(this.diretorSelecionado.id)
 			.pipe(finalize(() => this.blockUI.stop()))
-			.subscribe(() => {
-				this.pageNotificationService.addSuccessMessage('Diretor excluido com sucesso', 'Sucesso');
-				this.buscarDiretores();
-			});
+			.subscribe(
+				() => {
+					this.pageNotificationService.addSuccessMessage('Diretor excluido com sucesso', 'Sucesso');
+					this.buscarDiretores();
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 }

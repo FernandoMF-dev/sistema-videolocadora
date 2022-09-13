@@ -47,9 +47,10 @@ export class AtorListComponent {
 		this.blockUI.start();
 		this.atorService.buscarTodos(event)
 			.pipe(finalize((() => this.blockUI.stop())))
-			.subscribe(res => {
-				this.atores = res;
-			});
+			.subscribe(
+				(res) => this.atores = res,
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 	inserirAtor(): void {
@@ -79,10 +80,13 @@ export class AtorListComponent {
 		this.blockUI.start(MensagemUtil.BLOCKUI_EXCLUINDO);
 		this.atorService.delete(this.atorSelecionado.id)
 			.pipe(finalize(() => this.blockUI.stop()))
-			.subscribe(() => {
-				this.pageNotificationService.addSuccessMessage('Ator excluido com sucesso', 'Sucesso');
-				this.buscarAtores();
-			});
+			.subscribe(
+				() => {
+					this.pageNotificationService.addSuccessMessage('Ator excluido com sucesso', 'Sucesso');
+					this.buscarAtores();
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 }

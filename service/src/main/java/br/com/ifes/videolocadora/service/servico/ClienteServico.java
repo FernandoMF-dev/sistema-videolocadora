@@ -15,7 +15,8 @@ public class ClienteServico {
 	private final ClienteMapper mapper;
 
 	public Cliente procurarPorId(Long id){
-		return repositorio.findById(id).orElseThrow(RuntimeException::new);
+		return repositorio.findById(id)
+				.orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 	}
 
 	public ClienteDTO obterPorId(Long id){

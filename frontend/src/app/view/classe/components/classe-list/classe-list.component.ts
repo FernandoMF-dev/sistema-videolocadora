@@ -52,9 +52,10 @@ export class ClasseListComponent {
 		this.blockUI.start();
 		this.classeService.buscarTodos(event)
 			.pipe(finalize((() => this.blockUI.stop())))
-			.subscribe(res => {
-				this.classes = res;
-			});
+			.subscribe(
+				(res) => this.classes = res,
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 	inserirClasse(): void {
@@ -88,10 +89,13 @@ export class ClasseListComponent {
 		this.blockUI.start(MensagemUtil.BLOCKUI_EXCLUINDO);
 		this.classeService.delete(this.classeSelecionada.id)
 			.pipe(finalize(() => this.blockUI.stop()))
-			.subscribe(() => {
-				this.pageNotificationService.addSuccessMessage('Classe excluida com sucesso', 'Sucesso');
-				this.buscarClasses();
-			});
+			.subscribe(
+				() => {
+					this.pageNotificationService.addSuccessMessage('Classe excluida com sucesso', 'Sucesso');
+					this.buscarClasses();
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 }

@@ -17,7 +17,8 @@ public class DiretorServico {
 	private final DiretorMapper mapper;
 
 	public Diretor procurarPorId(Long id){
-		return repositorio.findById(id).orElseThrow(RuntimeException::new);
+		return repositorio.findById(id)
+				.orElseThrow(() -> new RuntimeException("Diretor não encontrado"));
 	}
 
 	public DiretorDTO obterPorId(Long id){

@@ -71,8 +71,12 @@ export class DiretorFormComponent extends DialogUtil implements OnInit {
 
 	private atualizarFormEdicao(): void {
 		this.blockUI.start();
-		this.diretorService.findById(this.diretor.id).pipe(finalize(() => this.blockUI.stop()))
-			.subscribe(res => this.form.patchValue(res));
+		this.diretorService.findById(this.diretor.id)
+			.pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(
+				(res) => this.form.patchValue(res),
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 	private fecharDialog(): void {

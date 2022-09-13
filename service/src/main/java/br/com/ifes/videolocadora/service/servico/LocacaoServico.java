@@ -15,7 +15,8 @@ public class LocacaoServico {
 	private final LocacaoMapper mapper;
 
 	public Locacao procurarPorId(Long id){
-		return repositorio.findById(id).orElseThrow(RuntimeException::new);
+		return repositorio.findById(id)
+				.orElseThrow(() -> new RuntimeException("Locação não encontrada"));
 	}
 
 	public LocacaoDTO obterPorId(Long id){

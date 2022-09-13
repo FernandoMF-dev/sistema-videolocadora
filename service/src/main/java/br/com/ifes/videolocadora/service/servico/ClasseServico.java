@@ -17,7 +17,8 @@ public class ClasseServico {
 	private final ClasseMapper mapper;
 
 	public Classe procurarPorId(Long id){
-		return repositorio.findById(id).orElseThrow(RuntimeException::new);
+		return repositorio.findById(id)
+				.orElseThrow(() -> new RuntimeException("Classe não encontrada"));
 	}
 
 	public ClasseDTO obterPorId(Long id){

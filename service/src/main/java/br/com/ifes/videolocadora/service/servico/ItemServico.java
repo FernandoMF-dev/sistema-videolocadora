@@ -15,7 +15,8 @@ public class ItemServico {
 	private final ItemMapper mapper;
 
 	public Item procurarPorId(Long id){
-		return repositorio.findById(id).orElseThrow(RuntimeException::new);
+		return repositorio.findById(id)
+				.orElseThrow(() -> new RuntimeException("Item não encontrado"));
 	}
 
 	public ItemDTO obterPorId(Long id){

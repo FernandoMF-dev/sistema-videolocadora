@@ -18,7 +18,8 @@ public class AtorServico {
 	private final AtorMapper mapper;
 
 	public Ator procurarPorId(Long id){
-		return repositorio.findById(id).orElseThrow(RuntimeException::new);
+		return repositorio.findById(id)
+				.orElseThrow(() -> new RuntimeException("Ator não encontrado"));
 	}
 
 	public AtorDTO obterPorId(Long id){
