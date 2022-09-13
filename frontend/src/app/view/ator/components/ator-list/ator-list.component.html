@@ -76,4 +76,4 @@
 	</section>
 </p-card>
 
-<app-ator-form *ngIf="viewAtorForm" [(visible)]="viewAtorForm" [ator]="atorSelecionado"></app-ator-form>
+<app-ator-form *ngIf="viewAtorForm" (onSalvar)="buscarAtores()" [(visible)]="viewAtorForm" [ator]="atorSelecionado"></app-ator-form>

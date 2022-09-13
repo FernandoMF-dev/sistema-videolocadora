@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+import { PageNotificationService } from '@nuvem/primeng-components';
+import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { LazyLoadEvent } from 'primeng/api';
+import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
 import { MensagemService } from '../../../../shared/services/mensagem.service';
+import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Ator } from '../../models/ator.model';
 import { AtorService } from '../../services/ator.service';
 
@@ -12,6 +16,8 @@ import { AtorService } from '../../services/ator.service';
 	styleUrls: ['./ator-list.component.scss']
 })
 export class AtorListComponent {
+
+	@BlockUI() blockUI: NgBlockUI;
 
 	atores: Page<Ator> = new Page();
 	atorSelecionado: Ator;
@@ -23,7 +29,8 @@ export class AtorListComponent {
 
 	constructor(
 		private atorService: AtorService,
-		private mensagemService: MensagemService
+		private mensagemService: MensagemService,
+		private pageNotificationService: PageNotificationService
 	) {
 	}
 
@@ -37,7 +44,12 @@ export class AtorListComponent {
 
 	buscarAtores(event?: LazyLoadEvent): void {
 		this.atorSelecionado = null;
-		// TODO Implementar esse fluxo
+		this.blockUI.start();
+		this.atorService.buscarTodos(event)
+			.pipe(finalize((() => this.blockUI.stop())))
+			.subscribe(res => {
+				this.atores = res;
+			});
 	}
 
 	inserirAtor(): void {
@@ -64,7 +76,13 @@ export class AtorListComponent {
 	}
 
 	private excluir(): void {
-		// TODO Implementar esse fluxo
+		this.blockUI.start(MensagemUtil.BLOCKUI_EXCLUINDO);
+		this.atorService.delete(this.atorSelecionado.id)
+			.pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(() => {
+				this.pageNotificationService.addSuccessMessage('Ator excluido com sucesso', 'Sucesso');
+				this.buscarAtores();
+			});
 	}
 
 }
