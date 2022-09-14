@@ -22,4 +22,8 @@ export class DiretorService extends BaseService {
 		return this.http.get<Page<Diretor>>(environment.apiUrl + DiretorService.DIRETOR_URL, {params: page});
 	}
 
+	public filtrar(diretor:Diretor, page): Observable<Page<Diretor>> {
+		return this.http.post<Page<Diretor>>(environment.apiUrl + DiretorService.DIRETOR_URL + "/filtro",diretor, {params: page});
+	}
+
 }

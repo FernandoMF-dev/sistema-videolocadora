@@ -85,7 +85,7 @@ export class DiretorFormComponent extends DialogUtil implements OnInit {
 	}
 
 	private salvar(): void {
-		const diretor = Object.assign(new Diretor(), this.form.value);
+		const diretor = Object.assign(new Diretor(null), this.form.value);
 
 		if (this.isEdicao) {
 			this.editar(diretor);

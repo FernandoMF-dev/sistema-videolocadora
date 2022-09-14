@@ -16,7 +16,7 @@
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-11">
 			<p-table *ngIf="atores" [value]="atores.content" [columns]="cols" (onLazyLoad)="buscarAtores($event)"
-					 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true" [responsive]="true"
+					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
 					 [totalRecords]="atores.totalElements" [(selection)]="atorSelecionado"
 					 sortField="nome" dataKey="id" selectionMode="single"

@@ -56,5 +56,11 @@ public class AtorRecurso {
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
+
+	@PostMapping("/filtro")
+	@Timed
+	public ResponseEntity<Page<AtorDTO>> filtro (@RequestBody AtorDTO dto, Pageable pageable){
+		return ResponseEntity.ok().body(servico.filtrar(dto,pageable));
+	}
 }
 

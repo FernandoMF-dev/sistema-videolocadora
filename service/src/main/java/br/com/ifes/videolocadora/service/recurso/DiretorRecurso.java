@@ -55,5 +55,11 @@ public class DiretorRecurso {
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
+
+	@PostMapping("/filtro")
+	@Timed
+	public ResponseEntity<Page<DiretorDTO>> filtro (@RequestBody DiretorDTO dto, Pageable pageable){
+		return ResponseEntity.ok().body(servico.filtrar(dto,pageable));
+	}
 }
 

@@ -21,4 +21,9 @@ export class ClasseService extends BaseService {
 	public buscarTodos(page): Observable<Page<Classe>> {
 		return this.http.get<Page<Classe>>(environment.apiUrl + ClasseService.CLASSE_URL, {params: page});
 	}
+
+	public filtrar(classe:Classe, page): Observable<Page<Classe>> {
+		return this.http.post<Page<Classe>>(environment.apiUrl + ClasseService.CLASSE_URL + "/filtro",classe, {params: page});
+	}
+	
 }
