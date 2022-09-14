@@ -14,16 +14,16 @@ public class LocacaoServico {
 	private final LocacaoRepositorio repositorio;
 	private final LocacaoMapper mapper;
 
-	public Locacao procurarPorId(Long id){
+	public Locacao procurarPorId(Long id) {
 		return repositorio.findById(id)
 				.orElseThrow(() -> new RuntimeException("Locação não encontrada"));
 	}
 
-	public LocacaoDTO obterPorId(Long id){
+	public LocacaoDTO obterPorId(Long id) {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	public LocacaoDTO salvar(LocacaoDTO dto){
+	public LocacaoDTO salvar(LocacaoDTO dto) {
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 }

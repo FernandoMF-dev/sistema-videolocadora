@@ -16,36 +16,36 @@ public class ClasseServico {
 	private final ClasseRepositorio repositorio;
 	private final ClasseMapper mapper;
 
-	public Classe procurarPorId(Long id){
+	public Classe procurarPorId(Long id) {
 		return repositorio.findById(id)
 				.orElseThrow(() -> new RuntimeException("Classe não encontrada"));
 	}
 
-	public ClasseDTO obterPorId(Long id){
+	public ClasseDTO obterPorId(Long id) {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	public ClasseDTO salvar(ClasseDTO dto){
+	public ClasseDTO salvar(ClasseDTO dto) {
 		dto.setExcluido(false);
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 
-	public Page<ClasseDTO> obterTodos(Pageable page){
+	public Page<ClasseDTO> obterTodos(Pageable page) {
 		return repositorio.findAllList(page);
 	}
 
-	public ClasseDTO editar (Long id, ClasseDTO dto){
+	public ClasseDTO editar(Long id, ClasseDTO dto) {
 		procurarPorId(id);
 		return salvar(dto);
 	}
 
-	public void deletar (Long id){
+	public void deletar(Long id) {
 		Classe entity = procurarPorId(id);
 		entity.setExcluido(true);
 		repositorio.save(entity);
 	}
 
-	public Page<ClasseDTO> filtrar(ClasseDTO dto, Pageable pageable){
+	public Page<ClasseDTO> filtrar(ClasseDTO dto, Pageable pageable) {
 		return repositorio.filtrar(dto, pageable);
 	}
 

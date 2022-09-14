@@ -12,16 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
-@Table(name ="tb_item")
+@Table(name = "tb_item")
 @Entity
 public class Item implements Serializable {
 

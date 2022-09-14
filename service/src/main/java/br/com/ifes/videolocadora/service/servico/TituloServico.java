@@ -14,16 +14,16 @@ public class TituloServico {
 	private final TituloRepositorio repositorio;
 	private final TituloMapper mapper;
 
-	public Titulo procurarPorId(Long id){
+	public Titulo procurarPorId(Long id) {
 		return repositorio.findById(id)
 				.orElseThrow(() -> new RuntimeException("Título não encontrado"));
 	}
 
-	public TituloDTO obterPorId(Long id){
+	public TituloDTO obterPorId(Long id) {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	public TituloDTO salvar(TituloDTO dto){
+	public TituloDTO salvar(TituloDTO dto) {
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 }

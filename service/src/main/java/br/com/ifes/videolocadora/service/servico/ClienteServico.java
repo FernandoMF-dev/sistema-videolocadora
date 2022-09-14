@@ -14,16 +14,16 @@ public class ClienteServico {
 	private final ClienteRepositorio repositorio;
 	private final ClienteMapper mapper;
 
-	public Cliente procurarPorId(Long id){
+	public Cliente procurarPorId(Long id) {
 		return repositorio.findById(id)
 				.orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
 	}
 
-	public ClienteDTO obterPorId(Long id){
+	public ClienteDTO obterPorId(Long id) {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	public ClienteDTO salvar(ClienteDTO dto){
+	public ClienteDTO salvar(ClienteDTO dto) {
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 

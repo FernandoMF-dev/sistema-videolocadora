@@ -14,16 +14,16 @@ public class ItemServico {
 	private final ItemRepositorio repositorio;
 	private final ItemMapper mapper;
 
-	public Item procurarPorId(Long id){
+	public Item procurarPorId(Long id) {
 		return repositorio.findById(id)
 				.orElseThrow(() -> new RuntimeException("Item não encontrado"));
 	}
 
-	public ItemDTO obterPorId(Long id){
+	public ItemDTO obterPorId(Long id) {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	public ItemDTO salvar(ItemDTO dto){
+	public ItemDTO salvar(ItemDTO dto) {
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 }

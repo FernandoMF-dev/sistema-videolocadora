@@ -1,8 +1,6 @@
 package br.com.ifes.videolocadora.service.servico.mapper;
 
-import br.com.ifes.videolocadora.service.dominio.Ator;
 import br.com.ifes.videolocadora.service.dominio.Locacao;
-import br.com.ifes.videolocadora.service.servico.dto.AtorDTO;
 import br.com.ifes.videolocadora.service.servico.dto.LocacaoDTO;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;

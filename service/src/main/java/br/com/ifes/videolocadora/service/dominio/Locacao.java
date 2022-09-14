@@ -1,6 +1,5 @@
 package br.com.ifes.videolocadora.service.dominio;
 
-import liquibase.pro.packaged.C;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,16 +12,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
-@Table(name ="tb_locacao")
+@Table(name = "tb_locacao")
 @Entity
 public class Locacao implements Serializable {
 

@@ -36,30 +36,30 @@ public class DiretorRecurso {
 	public ResponseEntity<DiretorDTO> salvar(@RequestBody DiretorDTO dto) {
 		return ResponseEntity.ok().body(servico.salvar(dto));
 	}
-	
+
 	@GetMapping()
 	@Timed
-	public  ResponseEntity<Page<DiretorDTO>> obterTodos (Pageable page){
+	public ResponseEntity<Page<DiretorDTO>> obterTodos(Pageable page) {
 		return ResponseEntity.ok().body(servico.obterTodos(page));
 	}
 
 	@PutMapping("/{id}")
 	@Timed
-	public  ResponseEntity<DiretorDTO> alterar (@PathVariable Long id,@RequestBody DiretorDTO dto){
+	public ResponseEntity<DiretorDTO> alterar(@PathVariable Long id, @RequestBody DiretorDTO dto) {
 		return ResponseEntity.ok().body(servico.editar(id, dto));
 	}
 
 	@DeleteMapping("/{id}")
 	@Timed
-	public  ResponseEntity<Void> deletar (@PathVariable Long id){
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PostMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<DiretorDTO>> filtro (@RequestBody DiretorDTO dto, Pageable pageable){
-		return ResponseEntity.ok().body(servico.filtrar(dto,pageable));
+	public ResponseEntity<Page<DiretorDTO>> filtro(@RequestBody DiretorDTO dto, Pageable pageable) {
+		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
 	}
 }
 

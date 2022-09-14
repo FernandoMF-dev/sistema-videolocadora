@@ -17,36 +17,36 @@ public class AtorServico {
 	private final AtorRepositorio repositorio;
 	private final AtorMapper mapper;
 
-	public Ator procurarPorId(Long id){
+	public Ator procurarPorId(Long id) {
 		return repositorio.findById(id)
 				.orElseThrow(() -> new RuntimeException("Ator não encontrado"));
 	}
 
-	public AtorDTO obterPorId(Long id){
+	public AtorDTO obterPorId(Long id) {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	public AtorDTO salvar(AtorDTO dto){
+	public AtorDTO salvar(AtorDTO dto) {
 		dto.setExcluido(false);
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 
-	public Page<AtorDTO> obterTodos(Pageable page){
+	public Page<AtorDTO> obterTodos(Pageable page) {
 		return repositorio.findAllList(page);
 	}
 
-	public AtorDTO editar (Long id, AtorDTO dto){
+	public AtorDTO editar(Long id, AtorDTO dto) {
 		procurarPorId(id);
 		return salvar(dto);
 	}
 
-	public void deletar (Long id){
+	public void deletar(Long id) {
 		Ator entity = procurarPorId(id);
 		entity.setExcluido(true);
 		repositorio.save(entity);
 	}
 
-	public Page<AtorDTO> filtrar(AtorDTO dto, Pageable pageable){
+	public Page<AtorDTO> filtrar(AtorDTO dto, Pageable pageable) {
 		return repositorio.filtrar(dto, pageable);
 	}
 }

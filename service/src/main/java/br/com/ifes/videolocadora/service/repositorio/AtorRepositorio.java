@@ -14,13 +14,17 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AtorRepositorio extends JpaRepository<Ator, Long>, JpaSpecificationExecutor<Ator> {
 
-	@Query("select new br.com.ifes.videolocadora.service.servico.dto.AtorDTO(a.id,a.nome,a.excluido) from Ator a where  a.excluido = false")
+	@Query("SELECT new br.com.ifes.videolocadora.service.servico.dto.AtorDTO" +
+			"(a.id,a.nome,a.excluido) " +
+			" FROM Ator a " +
+			" WHERE a.excluido = FALSE")
 	Page<AtorDTO> findAllList(Pageable page);
 
-	@Query("SELECT new br.com.ifes.videolocadora.service.servico.dto.AtorDTO(a.id,a.nome,a.excluido)" +
+	@Query("SELECT new br.com.ifes.videolocadora.service.servico.dto.AtorDTO" +
+			"(a.id,a.nome,a.excluido) " +
 			" FROM Ator a " +
-			" WHERE (a.excluido = false ) " +
+			" WHERE (a.excluido = FALSE) " +
 			" AND (LOWER(a.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) ")
-	Page<AtorDTO> filtrar(@Param("filter") AtorDTO filtro, Pageable pageable);
+	Page<AtorDTO> filtrar(@Param("filter") AtorDTO filter, Pageable pageable);
 
 }

@@ -11,7 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -20,7 +19,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@Table(name ="tb_titulo")
+@Table(name = "tb_titulo")
 @Entity
 public class Titulo implements Serializable {
 
@@ -47,9 +46,9 @@ public class Titulo implements Serializable {
 
 	@JoinColumn(name = "id_classe")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Classe>  classes;
+	private List<Classe> classes;
 
 	@OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<TituloAtor>  atores;
+	private List<TituloAtor> atores;
 
 }

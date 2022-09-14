@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Table(name ="tb_diretor")
+@Table(name = "tb_diretor")
 @Entity
 public class Diretor implements Serializable {
 

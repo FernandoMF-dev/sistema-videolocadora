@@ -40,27 +40,27 @@ public class AtorRecurso {
 
 	@GetMapping()
 	@Timed
-	public  ResponseEntity<Page<AtorDTO>> obterTodos (Pageable page){
+	public ResponseEntity<Page<AtorDTO>> obterTodos(Pageable page) {
 		return ResponseEntity.ok().body(servico.obterTodos(page));
 	}
 
 	@PutMapping("/{id}")
 	@Timed
-	public  ResponseEntity<AtorDTO> alterar (@PathVariable Long id,@RequestBody AtorDTO dto){
+	public ResponseEntity<AtorDTO> alterar(@PathVariable Long id, @RequestBody AtorDTO dto) {
 		return ResponseEntity.ok().body(servico.editar(id, dto));
 	}
 
 	@DeleteMapping("/{id}")
 	@Timed
-	public  ResponseEntity<Void> deletar (@PathVariable Long id){
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PostMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<AtorDTO>> filtro (@RequestBody AtorDTO dto, Pageable pageable){
-		return ResponseEntity.ok().body(servico.filtrar(dto,pageable));
+	public ResponseEntity<Page<AtorDTO>> filtro(@RequestBody AtorDTO dto, Pageable pageable) {
+		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
 	}
 }
 

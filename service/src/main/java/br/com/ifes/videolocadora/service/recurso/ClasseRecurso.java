@@ -39,27 +39,27 @@ public class ClasseRecurso {
 
 	@GetMapping()
 	@Timed
-	public  ResponseEntity<Page<ClasseDTO>> obterTodos (Pageable page){
+	public ResponseEntity<Page<ClasseDTO>> obterTodos(Pageable page) {
 		return ResponseEntity.ok().body(servico.obterTodos(page));
 	}
 
 	@PutMapping("/{id}")
 	@Timed
-	public  ResponseEntity<ClasseDTO> alterar (@PathVariable Long id,@RequestBody ClasseDTO dto){
+	public ResponseEntity<ClasseDTO> alterar(@PathVariable Long id, @RequestBody ClasseDTO dto) {
 		return ResponseEntity.ok().body(servico.editar(id, dto));
 	}
 
 	@DeleteMapping("/{id}")
 	@Timed
-	public  ResponseEntity<Void> deletar (@PathVariable Long id){
+	public ResponseEntity<Void> deletar(@PathVariable Long id) {
 		servico.deletar(id);
 		return ResponseEntity.noContent().build();
 	}
 
 	@PostMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<ClasseDTO>> filtro (@RequestBody ClasseDTO dto, Pageable pageable){
-		return ResponseEntity.ok().body(servico.filtrar(dto,pageable));
+	public ResponseEntity<Page<ClasseDTO>> filtro(@RequestBody ClasseDTO dto, Pageable pageable) {
+		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
 	}
 }
 

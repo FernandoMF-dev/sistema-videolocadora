@@ -1,19 +1,11 @@
 package br.com.ifes.videolocadora.service.servico.dto;
 
-import br.com.ifes.videolocadora.service.dominio.Cliente;
-import br.com.ifes.videolocadora.service.dominio.Item;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
