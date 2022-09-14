@@ -22,7 +22,7 @@ export class ClasseListComponent {
 
 	classes: Page<Classe> = new Page();
 	classeSelecionada: Classe;
-	filtro: Classe = new Classe(null,null,null);
+	filtro: Classe = new Classe();
 	loader: boolean = false;
 
 	pageListEnum = PageListEnum;
@@ -50,20 +50,20 @@ export class ClasseListComponent {
 
 	buscarClasses(event?: LazyLoadEvent): void {
 		this.classeSelecionada = null;
-		if(this.isFiltro()){
+		if (this.isFiltro()) {
 			this.filtrar(event);
 			return;
 		}
 		this.buscarTodosAtores(event);
 	}
 
-	private isFiltro(): string | number {
-		return this.filtro.nome || this.filtro.prazoDevolucao || this.filtro.valor;
+	private isFiltro(): boolean {
+		return !!this.filtro.nome || !!this.filtro.prazoDevolucao || !!this.filtro.valor;
 	}
 
 	private buscarTodosAtores(event: LazyLoadEvent): void {
 		this.blockUI.start();
-		this.classeService.buscarTodos(event)
+		this.classeService.findAll<Classe>(event)
 			.pipe(finalize((() => this.blockUI.stop())))
 			.subscribe(
 				(res) => this.classes = res,
@@ -73,7 +73,7 @@ export class ClasseListComponent {
 
 	private filtrar(event: LazyLoadEvent): void {
 		this.loader = true;
-		this.classeService.filtrar(new Classe(this.filtro.nome ? this.filtro.nome : '', this.filtro.valor, this.filtro.prazoDevolucao), event)
+		this.classeService.filter<Classe>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.classes = res,
@@ -100,7 +100,7 @@ export class ClasseListComponent {
 	}
 
 	limparFiltro(): void {
-		this.filtro = new Classe(null,null,null);
+		this.filtro = new Classe();
 		this.buscarClasses();
 	}
 

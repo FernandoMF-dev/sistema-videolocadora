@@ -87,7 +87,7 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 	}
 
 	private salvar(): void {
-		const classe = Object.assign(new Classe(null,null,null), this.form.value);
+		const classe = Object.assign(new Classe(), this.form.value);
 
 		if (this.isEdicao) {
 			this.editar(classe);

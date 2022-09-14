@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { Page } from '../models/page.model';
 
 export abstract class BaseService {
 	baseUrl: string;
@@ -13,23 +14,35 @@ export abstract class BaseService {
 		this.baseUrl = `${ servicoUrl }${ environment.apiUrl }`;
 	}
 
-	findAll<T>(): Observable<T[]> {
-		return this.http.get<T[]>(`${ this.baseUrl }/${ this.entity }`);
+	public getUrl(): string {
+		return `${ this.baseUrl }/${ this.entity }`;
 	}
 
-	findById<T>(id: number | string): Observable<T> {
-		return this.http.get<T>(`${ this.baseUrl }/${ this.entity }/${ id }`);
+	public getUrlId(id: number | string): string {
+		return `${ this.getUrl() }/${ id }`;
 	}
 
-	insert<T>(data: object): Observable<T> {
-		return this.http.post<T>(`${ this.baseUrl }/${ this.entity }`, data);
+	public findAll<T>(event): Observable<Page<T>> {
+		return this.http.get<Page<T>>(this.getUrl(), { params: event });
 	}
 
-	update<T>(data: object, id: number | string): Observable<T> {
-		return this.http.put<T>(`${ this.baseUrl }/${ this.entity }/${ id }`, data);
+	public filter<T>(filter: object, page): Observable<Page<T>> {
+		return this.http.post<Page<T>>(`${ this.getUrl() }/filtro`, filter, { params: page });
 	}
 
-	delete(id: number | string): Observable<void> {
-		return this.http.delete<void>(`${ this.baseUrl }/${ this.entity }/${ id }`);
+	public findById<T>(id: number | string): Observable<T> {
+		return this.http.get<T>(this.getUrlId(id));
+	}
+
+	public insert<T>(data: object): Observable<T> {
+		return this.http.post<T>(this.getUrl(), data);
+	}
+
+	public update<T>(data: object, id: number | string): Observable<T> {
+		return this.http.put<T>(this.getUrlId(id), data);
+	}
+
+	public delete(id: number | string): Observable<void> {
+		return this.http.delete<void>(this.getUrlId(id));
 	}
 }

@@ -21,7 +21,7 @@ export class AtorListComponent {
 
 	atores: Page<Ator> = new Page();
 	atorSelecionado: Ator;
-	filtro: Ator = new Ator(null);
+	filtro: Ator = new Ator();
 	loader: boolean = false;
 
 	pageListEnum = PageListEnum;
@@ -54,7 +54,7 @@ export class AtorListComponent {
 
 	private buscarTodosAtores(event: LazyLoadEvent): void {
 		this.blockUI.start();
-		this.atorService.buscarTodos(event)
+		this.atorService.findAll<Ator>(event)
 			.pipe(finalize((() => this.blockUI.stop())))
 			.subscribe(
 				(res) => this.atores = res,
@@ -64,7 +64,7 @@ export class AtorListComponent {
 
 	private filtrar(event: LazyLoadEvent): void {
 		this.loader = true;
-		this.atorService.filtrar(new Ator(this.filtro.nome), event)
+		this.atorService.filter<Ator>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.atores = res,
@@ -91,7 +91,7 @@ export class AtorListComponent {
 	}
 
 	limparFiltro(): void {
-		this.filtro = new Ator(null);
+		this.filtro = new Ator();
 		this.buscarAtores();
 	}
 

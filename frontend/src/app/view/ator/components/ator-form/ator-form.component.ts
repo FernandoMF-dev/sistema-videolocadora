@@ -85,7 +85,7 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 	}
 
 	private salvar(): void {
-		const ator = Object.assign(new Ator(null), this.form.value);
+		const ator = Object.assign(new Ator(), this.form.value);
 
 		if (this.isEdicao) {
 			this.editar(ator);

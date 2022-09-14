@@ -21,7 +21,7 @@ export class DiretorListComponent {
 
 	diretores: Page<Diretor> = new Page();
 	diretorSelecionado: Diretor;
-	filtro: Diretor = new Diretor(null);
+	filtro: Diretor = new Diretor();
 	loader: boolean = false;
 
 	pageListEnum = PageListEnum;
@@ -45,7 +45,7 @@ export class DiretorListComponent {
 
 	buscarDiretores(event?: LazyLoadEvent): void {
 		this.diretorSelecionado = null;
-		if(this.filtro.nome){
+		if (this.filtro.nome) {
 			this.filtrar(event);
 			return;
 		}
@@ -54,7 +54,7 @@ export class DiretorListComponent {
 
 	private buscarTodosDiretores(event: LazyLoadEvent): void {
 		this.blockUI.start();
-		this.diretorService.buscarTodos(event)
+		this.diretorService.findAll<Diretor>(event)
 			.pipe(finalize((() => this.blockUI.stop())))
 			.subscribe(
 				(res) => this.diretores = res,
@@ -64,7 +64,7 @@ export class DiretorListComponent {
 
 	private filtrar(event: LazyLoadEvent): void {
 		this.loader = true;
-		this.diretorService.filtrar(new Diretor(this.filtro.nome), event)
+		this.diretorService.filter<Diretor>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.diretores = res,
@@ -91,7 +91,7 @@ export class DiretorListComponent {
 	}
 
 	limparFiltro(): void {
-		this.filtro = new Diretor(null);
+		this.filtro = new Diretor();
 		this.buscarDiretores();
 	}
 
