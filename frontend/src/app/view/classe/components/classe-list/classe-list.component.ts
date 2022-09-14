@@ -69,8 +69,8 @@ export class ClasseListComponent {
 		this.buscarTodosAtores(event);
 	}
 
-	private isFiltro(): string | number {
-		return this.filtro.nome || this.filtro.prazoDevolucao || this.filtro.valor;
+	private isFiltro(): boolean {
+		return !!this.filtro.nome || !!this.filtro.prazoDevolucao || !!this.filtro.valor;
 	}
 
 	private buscarTodosAtores(event: LazyLoadEvent): void {
