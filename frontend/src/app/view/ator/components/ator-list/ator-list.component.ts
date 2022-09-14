@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
@@ -18,6 +19,7 @@ import { AtorService } from '../../services/ator.service';
 export class AtorListComponent {
 
 	@BlockUI() blockUI: NgBlockUI;
+	@ViewChild('table') table: Table;
 
 	atores: Page<Ator> = new Page();
 	atorSelecionado: Ator;
@@ -44,27 +46,29 @@ export class AtorListComponent {
 	}
 
 	buscarAtores(event?: LazyLoadEvent): void {
+		const tableEvent: Table | LazyLoadEvent = !event ? this.table : event;
+
 		this.atorSelecionado = null;
 		if (this.filtro.nome) {
-			this.filtrar(event);
+			this.filtrar(tableEvent);
 			return;
 		}
-		this.buscarTodosAtores(event);
+		this.buscarTodosAtores(tableEvent);
 	}
 
-	private buscarTodosAtores(event: LazyLoadEvent): void {
-		this.blockUI.start();
-		this.atorService.findAll<Ator>(event)
-			.pipe(finalize((() => this.blockUI.stop())))
+	private buscarTodosAtores(tableEvent: Table | LazyLoadEvent): void {
+		this.loader = true;
+		this.atorService.findAll<Ator>(tableEvent)
+			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.atores = res,
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}
 
-	private filtrar(event: LazyLoadEvent): void {
+	private filtrar(tableEvent: Table | LazyLoadEvent): void {
 		this.loader = true;
-		this.atorService.filter<Ator>(this.filtro, event)
+		this.atorService.filter<Ator>(this.filtro, tableEvent)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.atores = res,

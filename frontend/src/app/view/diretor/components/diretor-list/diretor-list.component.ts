@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
@@ -18,6 +19,7 @@ import { DiretorService } from '../../services/diretor.service';
 export class DiretorListComponent {
 
 	@BlockUI() blockUI: NgBlockUI;
+	@ViewChild('table') table: Table;
 
 	diretores: Page<Diretor> = new Page();
 	diretorSelecionado: Diretor;
@@ -44,27 +46,29 @@ export class DiretorListComponent {
 	}
 
 	buscarDiretores(event?: LazyLoadEvent): void {
+		const tableEvent: Table | LazyLoadEvent = !event ? this.table : event;
+
 		this.diretorSelecionado = null;
 		if (this.filtro.nome) {
-			this.filtrar(event);
+			this.filtrar(tableEvent);
 			return;
 		}
-		this.buscarTodosDiretores(event);
+		this.buscarTodosDiretores(tableEvent);
 	}
 
-	private buscarTodosDiretores(event: LazyLoadEvent): void {
-		this.blockUI.start();
-		this.diretorService.findAll<Diretor>(event)
-			.pipe(finalize((() => this.blockUI.stop())))
+	private buscarTodosDiretores(tableEvent: Table | LazyLoadEvent): void {
+		this.loader = true;
+		this.diretorService.findAll<Diretor>(tableEvent)
+			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.diretores = res,
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}
 
-	private filtrar(event: LazyLoadEvent): void {
+	private filtrar(tableEvent: Table | LazyLoadEvent): void {
 		this.loader = true;
-		this.diretorService.filter<Diretor>(this.filtro, event)
+		this.diretorService.filter<Diretor>(this.filtro, tableEvent)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.diretores = res,

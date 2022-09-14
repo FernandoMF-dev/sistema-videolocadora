@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { LazyLoadEvent } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
@@ -19,6 +20,7 @@ import { ClasseService } from '../../services/classe.service';
 export class ClasseListComponent {
 
 	@BlockUI() blockUI: NgBlockUI;
+	@ViewChild('table') table: Table;
 
 	classes: Page<Classe> = new Page();
 	classeSelecionada: Classe;
@@ -49,31 +51,33 @@ export class ClasseListComponent {
 	}
 
 	buscarClasses(event?: LazyLoadEvent): void {
+		const tableEvent: Table | LazyLoadEvent = !event ? this.table : event;
+
 		this.classeSelecionada = null;
 		if (this.isFiltro()) {
-			this.filtrar(event);
+			this.filtrar(tableEvent);
 			return;
 		}
-		this.buscarTodosAtores(event);
+		this.buscarTodosAtores(tableEvent);
 	}
 
 	private isFiltro(): boolean {
 		return !!this.filtro.nome || !!this.filtro.prazoDevolucao || !!this.filtro.valor;
 	}
 
-	private buscarTodosAtores(event: LazyLoadEvent): void {
-		this.blockUI.start();
-		this.classeService.findAll<Classe>(event)
-			.pipe(finalize((() => this.blockUI.stop())))
+	private buscarTodosAtores(tableEvent: Table | LazyLoadEvent): void {
+		this.loader = true;
+		this.classeService.findAll<Classe>(tableEvent)
+			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.classes = res,
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}
 
-	private filtrar(event: LazyLoadEvent): void {
+	private filtrar(tableEvent: Table | LazyLoadEvent): void {
 		this.loader = true;
-		this.classeService.filter<Classe>(this.filtro, event)
+		this.classeService.filter<Classe>(this.filtro, tableEvent)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.classes = res,
