@@ -19,7 +19,7 @@
 				<constraints nullable="false"/>
 			</column>
 
-			<column name="prazo_devolucao" type="DOUBLE" remarks="Prazo previsto para a devolução de título">
+			<column name="prazo_devolucao" type="INTEGER" remarks="Prazo previsto para a devolução de título">
 				<constraints nullable="false"/>
 			</column>
 
