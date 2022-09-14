@@ -21,7 +21,8 @@ export class ClasseListComponent {
 
 	classes: Page<Classe> = new Page();
 	classesSelecionados: Classe[] = [];
-	filtro: Classe = new Classe();
+	filtro: Classe = new Classe(null,null,null);
+	loader: boolean = false;
 
 	pageListEnum = PageListEnum;
 	viewClasseForm: boolean = false;
@@ -61,11 +62,28 @@ export class ClasseListComponent {
 
 	buscarClasses(event?: LazyLoadEvent): void {
 		this.classesSelecionados = [];
-		this.blockUI.start()
-		this.classeService.buscarTodos(event).pipe(finalize((()=> this.blockUI.stop())))
-			.subscribe(res => {
-				this.classes = res
-			});	}
+		if(this.isFiltro()){
+			this.filtrar(event);
+			return;
+		}
+		this.buscarTodosAtores(event);
+	}
+
+	private isFiltro(): string | number {
+		return this.filtro.nome || this.filtro.prazoDevolucao || this.filtro.valor;
+	}
+
+	private buscarTodosAtores(event: LazyLoadEvent): void {
+		this.blockUI.start();
+		this.classeService.buscarTodos(event).pipe(finalize((() => this.blockUI.stop())))
+			.subscribe(res => this.classes = res);
+	}
+
+	private filtrar(event: LazyLoadEvent): void {
+		this.loader = true;
+		this.classeService.filtrar(new Classe(this.filtro.nome ? this.filtro.nome : '', this.filtro.valor, this.filtro.prazoDevolucao), event).pipe(finalize(() => this.loader = false))
+			.subscribe(res => this.classes = res);
+	}
 
 	inserirClasse(): void {
 		this.classesSelecionados = [];
@@ -86,7 +104,7 @@ export class ClasseListComponent {
 	}
 
 	limparFiltro(): void {
-		this.filtro = new Classe();
+		this.filtro = new Classe(null,null,null);
 		this.buscarClasses();
 	}
 

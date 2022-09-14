@@ -43,4 +43,9 @@ public class DiretorServico {
 		entity.setExcluido(true);
 		repositorio.save(entity);
 	}
+
+	public Page<DiretorDTO> filtrar(DiretorDTO dto, Pageable pageable){
+		return repositorio.filtrar(dto, pageable);
+	}
+
 }

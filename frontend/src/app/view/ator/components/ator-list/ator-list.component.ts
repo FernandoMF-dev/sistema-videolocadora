@@ -20,7 +20,8 @@ export class AtorListComponent {
 
 	atores: Page<Ator> = new Page();
 	atoresSelecionados: Ator[] = [];
-	filtro: Ator = new Ator();
+	filtro: Ator = new Ator(null);
+	loader: boolean = false;
 
 	pageListEnum = PageListEnum;
 	viewAtorForm: boolean = false;
@@ -56,11 +57,23 @@ export class AtorListComponent {
 
 	buscarAtores(event?: LazyLoadEvent): void {
 		this.atoresSelecionados = [];
-		this.blockUI.start()
-		this.atorService.buscarTodos(event).pipe(finalize((()=> this.blockUI.stop())))
-			.subscribe(res => {
-			this.atores = res
-		});
+		if(this.filtro.nome){
+			this.filtrar(event);
+			return;
+		}
+		this.buscarTodosAtores(event);
+	}
+
+	private buscarTodosAtores(event: LazyLoadEvent): void {
+		this.blockUI.start();
+		this.atorService.buscarTodos(event).pipe(finalize((() => this.blockUI.stop())))
+			.subscribe(res => this.atores = res);
+	}
+
+	private filtrar(event: LazyLoadEvent): void {
+		this.loader = true;
+		this.atorService.filtrar(new Ator(this.filtro.nome), event).pipe(finalize(() => this.loader = false))
+			.subscribe(res => this.atores = res);
 	}
 
 	inserirAtor(): void {
@@ -82,7 +95,7 @@ export class AtorListComponent {
 	}
 
 	limparFiltro(): void {
-		this.filtro = new Ator();
+		this.filtro = new Ator(null);
 		this.buscarAtores();
 	}
 

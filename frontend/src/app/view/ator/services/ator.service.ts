@@ -21,4 +21,8 @@ export class AtorService extends BaseService {
 		return this.http.get<Page<Ator>>(environment.apiUrl + AtorService.ATOR_URL, {params: page});
 	}
 
+	public filtrar(ator:Ator, page): Observable<Page<Ator>> {
+		return this.http.post<Page<Ator>>(environment.apiUrl + AtorService.ATOR_URL + "/filtro",ator, {params: page});
+	}
+
 }

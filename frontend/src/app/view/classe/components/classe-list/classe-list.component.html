@@ -16,7 +16,7 @@
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-11">
 			<p-table *ngIf="classes" [value]="classes.content" [columns]="cols" (onLazyLoad)="buscarClasses($event)"
-					 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true" [responsive]="true"
+					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
 					 [totalRecords]="classes.totalElements" [(selection)]="classesSelecionados"
 					 sortField="nome" dataKey="id" selectionMode="multiple"
@@ -38,12 +38,12 @@
 								</ng-template>
 
 								<ng-template [ngIf]="!!col.currency">
-									<p-inputNumber [(ngModel)]="filtro[col.field]" mode="currency" locale="pt-BR"
+									<p-inputNumber [(ngModel)]="filtro[col.field]" mode="currency" (change)="buscarClasses()" locale="pt-BR"
 												   currency="BRL"></p-inputNumber>
 								</ng-template>
 
 								<ng-template [ngIf]="!!col.days">
-									<p-inputNumber [(ngModel)]="filtro[col.field]"></p-inputNumber>
+									<p-inputNumber [(ngModel)]="filtro[col.field]" (change)="buscarClasses()" ></p-inputNumber>
 								</ng-template>
 							</ng-template>
 						</th>

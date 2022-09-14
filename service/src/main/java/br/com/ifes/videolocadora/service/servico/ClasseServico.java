@@ -42,4 +42,10 @@ public class ClasseServico {
 		Classe entity = procurarPorId(id);
 		entity.setExcluido(true);
 		repositorio.save(entity);
-	}}
+	}
+
+	public Page<ClasseDTO> filtrar(ClasseDTO dto, Pageable pageable){
+		return repositorio.filtrar(dto, pageable);
+	}
+
+}

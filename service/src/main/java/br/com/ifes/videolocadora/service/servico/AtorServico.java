@@ -44,4 +44,8 @@ public class AtorServico {
 		entity.setExcluido(true);
 		repositorio.save(entity);
 	}
+
+	public Page<AtorDTO> filtrar(AtorDTO dto, Pageable pageable){
+		return repositorio.filtrar(dto, pageable);
+	}
 }
