@@ -1,5 +1,6 @@
 package br.com.ifes.videolocadora.service.service.dto;
 
+import br.com.ifes.videolocadora.service.domain.enums.SituacaoLocacaoEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +25,7 @@ public class LocacaoDTO implements Serializable {
 
 	private Double valorMulta;
 
-	private String situacao;
+	private SituacaoLocacaoEnum situacao;
 
 	private String categoria;
 

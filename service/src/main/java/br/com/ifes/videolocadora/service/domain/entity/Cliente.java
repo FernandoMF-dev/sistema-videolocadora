@@ -1,10 +1,13 @@
 package br.com.ifes.videolocadora.service.domain.entity;
 
+import br.com.ifes.videolocadora.service.domain.enums.TipoClienteEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,8 +42,9 @@ public class Cliente implements Serializable {
 	@Column(name = "telefone")
 	private String telefone;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "tipo_cliente")
-	private String tipoCliente;
+	private TipoClienteEnum tipoCliente;
 
 	@Column(name = "ativo")
 	private Boolean ativo;

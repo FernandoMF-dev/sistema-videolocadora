@@ -1,5 +1,6 @@
 package br.com.ifes.videolocadora.service.service.dto;
 
+import br.com.ifes.videolocadora.service.domain.enums.CategoriaEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,11 +21,11 @@ public class TituloDTO implements Serializable {
 
 	private Integer ano;
 
-	private String categoria;
+	private CategoriaEnum categoria;
 
 	private Boolean excluido;
 
-	private List<ClasseDTO> classes;
+	private ClasseDTO classe;
 
 	private List<TituloAtorDTO> atores;
 

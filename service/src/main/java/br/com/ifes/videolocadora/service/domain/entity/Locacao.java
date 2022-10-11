@@ -1,11 +1,14 @@
 package br.com.ifes.videolocadora.service.domain.entity;
 
+import br.com.ifes.videolocadora.service.domain.enums.SituacaoLocacaoEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,7 +38,7 @@ public class Locacao implements Serializable {
 	@Column(name = "data_devolucao_prevista")
 	private Date dataDevolucaoPrevista;
 
-	@Column(name = "data_devoluca_efetiva")
+	@Column(name = "data_devolucao_efetiva")
 	private Date dataDevolucaoEfetiva;
 
 	@Column(name = "valor_cobrado")
@@ -44,11 +47,9 @@ public class Locacao implements Serializable {
 	@Column(name = "valor_multa")
 	private Double valorMulta;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "situacao")
-	private String situacao;
-
-	@Column(name = "categoria")
-	private String categoria;
+	private SituacaoLocacaoEnum situacao;
 
 	@JoinColumn(name = "id_item")
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

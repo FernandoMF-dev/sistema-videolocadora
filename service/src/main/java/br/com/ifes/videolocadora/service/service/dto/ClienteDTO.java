@@ -1,5 +1,6 @@
 package br.com.ifes.videolocadora.service.service.dto;
 
+import br.com.ifes.videolocadora.service.domain.enums.TipoClienteEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,7 +24,7 @@ public class ClienteDTO implements Serializable {
 
 	private String telefone;
 
-	private String tipoCliente;
+	private TipoClienteEnum tipoCliente;
 
 	private Boolean ativo;
 

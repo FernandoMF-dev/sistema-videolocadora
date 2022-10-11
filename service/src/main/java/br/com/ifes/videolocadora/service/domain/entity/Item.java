@@ -1,11 +1,14 @@
 package br.com.ifes.videolocadora.service.domain.entity;
 
+import br.com.ifes.videolocadora.service.domain.enums.TipoItemEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -35,8 +38,9 @@ public class Item implements Serializable {
 	@Column(name = "data_aquisicao")
 	private Date dataAquisicao;
 
-	@Column(name = "ano")
-	private String tipoItem;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tipo_item")
+	private TipoItemEnum tipoItem;
 
 	@Column(name = "excluido")
 	private Boolean excluido;

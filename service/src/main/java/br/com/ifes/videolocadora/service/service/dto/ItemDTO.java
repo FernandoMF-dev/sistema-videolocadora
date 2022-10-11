@@ -1,5 +1,6 @@
 package br.com.ifes.videolocadora.service.service.dto;
 
+import br.com.ifes.videolocadora.service.domain.enums.TipoItemEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public class ItemDTO implements Serializable {
 
 	private Date dataAquisicao;
 
-	private String tipoItem;
+	private TipoItemEnum tipoItem;
 
 	private Boolean excluido;
 

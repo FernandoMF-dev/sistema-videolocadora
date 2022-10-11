@@ -1,16 +1,20 @@
 package br.com.ifes.videolocadora.service.domain.entity;
 
+import br.com.ifes.videolocadora.service.domain.enums.CategoriaEnum;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -38,15 +42,16 @@ public class Titulo implements Serializable {
 	@Column(name = "ano")
 	private Integer ano;
 
+	@Enumerated(EnumType.STRING)
 	@Column(name = "categoria")
-	private String categoria;
+	private CategoriaEnum categoria;
 
 	@Column(name = "excluido")
 	private Boolean excluido;
 
 	@JoinColumn(name = "id_classe")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Classe> classes;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Classe classe;
 
 	@OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<TituloAtor> atores;
