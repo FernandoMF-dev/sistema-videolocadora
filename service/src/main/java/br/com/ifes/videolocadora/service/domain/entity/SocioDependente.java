@@ -16,7 +16,7 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@Table(name = "rel_titulo_ator")
+@Table(name = "rel_socio_dependente")
 @IdClass(SocioDependentePK.class)
 @Entity
 public class SocioDependente implements Serializable {
