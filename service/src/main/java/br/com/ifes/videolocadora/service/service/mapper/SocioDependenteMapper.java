@@ -4,7 +4,7 @@ import br.com.ifes.videolocadora.service.domain.entity.SocioDependente;
 import br.com.ifes.videolocadora.service.service.dto.SocioDependenteDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface SocioDependenteMapper extends EntityMapper<SocioDependenteDTO, SocioDependente> {
 }
 

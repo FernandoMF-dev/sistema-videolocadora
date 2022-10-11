@@ -4,7 +4,7 @@ import br.com.ifes.videolocadora.service.domain.entity.Ator;
 import br.com.ifes.videolocadora.service.service.dto.AtorDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface AtorMapper extends EntityMapper<AtorDTO, Ator> {
 }
 

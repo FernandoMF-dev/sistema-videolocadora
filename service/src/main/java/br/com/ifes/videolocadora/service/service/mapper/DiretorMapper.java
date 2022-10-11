@@ -4,7 +4,7 @@ import br.com.ifes.videolocadora.service.domain.entity.Diretor;
 import br.com.ifes.videolocadora.service.service.dto.DiretorDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring")
 public interface DiretorMapper extends EntityMapper<DiretorDTO, Diretor> {
 }
 
