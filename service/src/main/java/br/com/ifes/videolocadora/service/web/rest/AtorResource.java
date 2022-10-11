@@ -1,13 +1,13 @@
 package br.com.ifes.videolocadora.service.web.rest;
 
-
-import br.com.ifes.videolocadora.service.service.DiretorServico;
-import br.com.ifes.videolocadora.service.service.dto.DiretorDTO;
+import br.com.ifes.videolocadora.service.service.AtorService;
+import br.com.ifes.videolocadora.service.service.dto.AtorDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,33 +19,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/diretor")
+@RequestMapping("/api/ator")
 @RequiredArgsConstructor
 @Slf4j
-public class DiretorRecurso {
-	private final DiretorServico servico;
+public class AtorResource {
+	private final AtorService servico;
 
 	@GetMapping("/{id}")
 	@Timed
-	public ResponseEntity<DiretorDTO> obter(@PathVariable Long id) {
+	public ResponseEntity<AtorDTO> obter(@PathVariable Long id) {
 		return ResponseEntity.ok().body(servico.obterPorId(id));
 	}
 
 	@PostMapping()
 	@Timed
-	public ResponseEntity<DiretorDTO> salvar(@RequestBody DiretorDTO dto) {
-		return ResponseEntity.ok().body(servico.salvar(dto));
+	public ResponseEntity<AtorDTO> salvar(@RequestBody AtorDTO dto) {
+		return new ResponseEntity<>(servico.salvar(dto), HttpStatus.CREATED);
 	}
 
 	@GetMapping()
 	@Timed
-	public ResponseEntity<Page<DiretorDTO>> obterTodos(Pageable page) {
+	public ResponseEntity<Page<AtorDTO>> obterTodos(Pageable page) {
 		return ResponseEntity.ok().body(servico.obterTodos(page));
 	}
 
 	@PutMapping("/{id}")
 	@Timed
-	public ResponseEntity<DiretorDTO> alterar(@PathVariable Long id, @RequestBody DiretorDTO dto) {
+	public ResponseEntity<AtorDTO> alterar(@PathVariable Long id, @RequestBody AtorDTO dto) {
 		return ResponseEntity.ok().body(servico.editar(id, dto));
 	}
 
@@ -58,7 +58,7 @@ public class DiretorRecurso {
 
 	@PostMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<DiretorDTO>> filtro(@RequestBody DiretorDTO dto, Pageable pageable) {
+	public ResponseEntity<Page<AtorDTO>> filtro(@RequestBody AtorDTO dto, Pageable pageable) {
 		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
 	}
 }

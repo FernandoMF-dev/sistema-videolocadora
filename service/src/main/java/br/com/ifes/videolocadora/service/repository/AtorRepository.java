@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AtorRepositorio extends JpaRepository<Ator, Long>, JpaSpecificationExecutor<Ator> {
+public interface AtorRepository extends JpaRepository<Ator, Long>, JpaSpecificationExecutor<Ator> {
 
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.AtorDTO" +
 			"(a.id,a.nome,a.excluido) " +

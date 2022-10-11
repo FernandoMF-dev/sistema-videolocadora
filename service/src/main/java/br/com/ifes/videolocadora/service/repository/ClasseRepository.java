@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClasseRepositorio extends JpaRepository<Classe, Long>, JpaSpecificationExecutor<Classe> {
+public interface ClasseRepository extends JpaRepository<Classe, Long>, JpaSpecificationExecutor<Classe> {
 
 	@Query("select new br.com.ifes.videolocadora.service.service.dto.ClasseDTO(c.id,c.nome,c.valor,c.prazoDevolucao,c.excluido) from Classe c where  c.excluido = false")
 	Page<ClasseDTO> findAllList(Pageable page);

@@ -1,7 +1,7 @@
 package br.com.ifes.videolocadora.service.service;
 
 import br.com.ifes.videolocadora.service.domain.entity.Locacao;
-import br.com.ifes.videolocadora.service.repository.LocacaoRepositorio;
+import br.com.ifes.videolocadora.service.repository.LocacaoRepository;
 import br.com.ifes.videolocadora.service.service.dto.LocacaoDTO;
 import br.com.ifes.videolocadora.service.service.mapper.LocacaoMapper;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LocacaoServico {
+public class LocacaoService {
 
-	private final LocacaoRepositorio repositorio;
+	private final LocacaoRepository repositorio;
 	private final LocacaoMapper mapper;
 
 	public Locacao procurarPorId(Long id) {

@@ -1,7 +1,7 @@
 package br.com.ifes.videolocadora.service.service;
 
 import br.com.ifes.videolocadora.service.domain.entity.Diretor;
-import br.com.ifes.videolocadora.service.repository.DiretorRepositorio;
+import br.com.ifes.videolocadora.service.repository.DiretorRepository;
 import br.com.ifes.videolocadora.service.service.dto.DiretorDTO;
 import br.com.ifes.videolocadora.service.service.mapper.DiretorMapper;
 import lombok.RequiredArgsConstructor;
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class DiretorServico {
+public class DiretorService {
 
-	private final DiretorRepositorio repositorio;
+	private final DiretorRepository repositorio;
 	private final DiretorMapper mapper;
 
 	public Diretor procurarPorId(Long id) {

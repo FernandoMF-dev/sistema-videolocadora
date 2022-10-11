@@ -1,8 +1,8 @@
 package br.com.ifes.videolocadora.service.web.rest;
 
 
-import br.com.ifes.videolocadora.service.service.AtorServico;
-import br.com.ifes.videolocadora.service.service.dto.AtorDTO;
+import br.com.ifes.videolocadora.service.service.ClasseService;
+import br.com.ifes.videolocadora.service.service.dto.ClasseDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,35 +18,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
-@RequestMapping("/api/ator")
+@RequestMapping("/api/classe")
 @RequiredArgsConstructor
 @Slf4j
-public class AtorRecurso {
-	private final AtorServico servico;
+public class ClasseResource {
+	private final ClasseService servico;
 
 	@GetMapping("/{id}")
 	@Timed
-	public ResponseEntity<AtorDTO> obter(@PathVariable Long id) {
+	public ResponseEntity<ClasseDTO> obter(@PathVariable Long id) {
 		return ResponseEntity.ok().body(servico.obterPorId(id));
 	}
 
 	@PostMapping()
 	@Timed
-	public ResponseEntity<AtorDTO> salvar(@RequestBody AtorDTO dto) {
+	public ResponseEntity<ClasseDTO> salvar(@RequestBody ClasseDTO dto) {
 		return ResponseEntity.ok().body(servico.salvar(dto));
 	}
 
 	@GetMapping()
 	@Timed
-	public ResponseEntity<Page<AtorDTO>> obterTodos(Pageable page) {
+	public ResponseEntity<Page<ClasseDTO>> obterTodos(Pageable page) {
 		return ResponseEntity.ok().body(servico.obterTodos(page));
 	}
 
 	@PutMapping("/{id}")
 	@Timed
-	public ResponseEntity<AtorDTO> alterar(@PathVariable Long id, @RequestBody AtorDTO dto) {
+	public ResponseEntity<ClasseDTO> alterar(@PathVariable Long id, @RequestBody ClasseDTO dto) {
 		return ResponseEntity.ok().body(servico.editar(id, dto));
 	}
 
@@ -59,7 +58,7 @@ public class AtorRecurso {
 
 	@PostMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<AtorDTO>> filtro(@RequestBody AtorDTO dto, Pageable pageable) {
+	public ResponseEntity<Page<ClasseDTO>> filtro(@RequestBody ClasseDTO dto, Pageable pageable) {
 		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
 	}
 }

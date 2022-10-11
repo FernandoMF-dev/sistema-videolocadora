@@ -1,8 +1,8 @@
 package br.com.ifes.videolocadora.service.web.rest;
 
 
-import br.com.ifes.videolocadora.service.service.ClienteServico;
-import br.com.ifes.videolocadora.service.service.dto.ClienteDTO;
+import br.com.ifes.videolocadora.service.service.ItemService;
+import br.com.ifes.videolocadora.service.service.dto.ItemDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,21 +15,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/cliente")
+@RequestMapping("/api/item")
 @RequiredArgsConstructor
 @Slf4j
-public class ClienteRecurso {
-	private final ClienteServico servico;
+public class ItemResource {
+	private final ItemService servico;
 
 	@GetMapping("/{id}")
 	@Timed
-	public ResponseEntity<ClienteDTO> obter(@PathVariable Long id) {
+	public ResponseEntity<ItemDTO> obter(@PathVariable Long id) {
 		return ResponseEntity.ok().body(servico.obterPorId(id));
 	}
 
 	@PostMapping()
 	@Timed
-	public ResponseEntity<ClienteDTO> salvar(@RequestBody ClienteDTO dto) {
+	public ResponseEntity<ItemDTO> salvar(@RequestBody ItemDTO dto) {
 		return ResponseEntity.ok().body(servico.salvar(dto));
 	}
 }

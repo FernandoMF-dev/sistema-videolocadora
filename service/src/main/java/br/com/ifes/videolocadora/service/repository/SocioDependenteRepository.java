@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SocioDependenteRepositorio extends JpaRepository<SocioDependente, SocioDependentePK>, JpaSpecificationExecutor<SocioDependente> {
+public interface SocioDependenteRepository extends JpaRepository<SocioDependente, SocioDependentePK>, JpaSpecificationExecutor<SocioDependente> {
 }

@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TituloAtorRepositorio extends JpaRepository<TituloAtor, TituloAtorPK>, JpaSpecificationExecutor<TituloAtor> {
+public interface TituloAtorRepository extends JpaRepository<TituloAtor, TituloAtorPK>, JpaSpecificationExecutor<TituloAtor> {
 }
