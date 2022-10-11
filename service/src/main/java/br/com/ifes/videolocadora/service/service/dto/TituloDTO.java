@@ -3,6 +3,7 @@ package br.com.ifes.videolocadora.service.service.dto;
 import br.com.ifes.videolocadora.service.domain.enums.CategoriaEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -11,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@RequiredArgsConstructor
 public class TituloDTO implements Serializable {
 
 	private Long id;
@@ -23,10 +25,8 @@ public class TituloDTO implements Serializable {
 
 	private CategoriaEnum categoria;
 
-	private Boolean excluido;
-
 	private ClasseDTO classe;
 
-	private List<TituloAtorDTO> atores;
+	private List<AtorDTO> atoresList;
 
 }

@@ -21,8 +21,6 @@ public class ItemDTO implements Serializable {
 
 	private TipoItemEnum tipoItem;
 
-	private Boolean excluido;
-
 	private Long idTitulo;
 
 }

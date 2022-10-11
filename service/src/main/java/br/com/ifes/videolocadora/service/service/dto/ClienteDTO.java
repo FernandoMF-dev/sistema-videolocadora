@@ -28,6 +28,4 @@ public class ClienteDTO implements Serializable {
 
 	private Boolean ativo;
 
-	private Boolean excluido;
-
 }

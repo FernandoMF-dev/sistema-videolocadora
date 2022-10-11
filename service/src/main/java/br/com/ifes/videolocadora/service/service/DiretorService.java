@@ -26,7 +26,6 @@ public class DiretorService {
 	}
 
 	public DiretorDTO salvar(DiretorDTO dto) {
-		dto.setExcluido(false);
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 

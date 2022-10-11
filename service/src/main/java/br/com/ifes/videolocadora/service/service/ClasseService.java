@@ -26,7 +26,6 @@ public class ClasseService {
 	}
 
 	public ClasseDTO salvar(ClasseDTO dto) {
-		dto.setExcluido(false);
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 
