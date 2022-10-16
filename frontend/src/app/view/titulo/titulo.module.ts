@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from '../../shared/shared.module';
 import { TituloCardComponent } from './components/titulo-card/titulo-card.component';
 import { TituloListComponent } from './components/titulo-list/titulo-list.component';
 import { TituloService } from './services/titulo.service';
@@ -12,7 +14,10 @@ import { TituloRoutingModule } from './titulo-routing.module';
 	],
 	imports: [
 		CommonModule,
-		TituloRoutingModule
+		TituloRoutingModule,
+		SharedModule,
+		FormsModule,
+		ReactiveFormsModule
 	],
 	providers: [
 		TituloService

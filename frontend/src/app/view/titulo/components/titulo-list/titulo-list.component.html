@@ -1,1 +1,50 @@
-<p>titulo-list works!</p>
+<h2>TÍTULOS</h2>
+
+<p-card>
+	<section class="ui-g ui-fluid">
+		<div class="ui-g-2">
+			<button pButton type="button" label="Novo Titulo" icon="pi pi-plus" (click)="inserirTitulo()"
+					class="ui-button-success"></button>
+		</div>
+	</section>
+
+	<section class="ui-g ui-fluid">
+		<div class="ui-g-11">
+			<ng-template class="ui-g-12" [ngIf]="!carregando">
+				<div *ngFor="let rowData of titulos.content" class="ui-g-4">
+					<app-titulo-card [value]="rowData" [selected]="rowData.id === tituloSelecionado?.id"
+									 (onSelect)="tituloSelecionado = $event" (onUnselect)="limparSelecao($event.id)"></app-titulo-card>
+				</div>
+			</ng-template>
+
+			<ng-template class="ui-g-12" [ngIf]="carregando">
+				<div class="ui-g-12 carregando">
+					<em class="pi pi-spin pi-spinner"></em>
+				</div>
+			</ng-template>
+
+			<div class="ui-g-12">
+				<p-paginator [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
+							 [totalRecords]="titulos.totalElements" [showCurrentPageReport]="true" (onPageChange)="buscarTitulos($event)"
+							 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}"></p-paginator>
+			</div>
+		</div>
+
+		<div class="ui-g-1 position-sticky centralized">
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Buscar" (click)="buscarTitulos()"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Editar" (click)="editarTitulo()" [disabled]="disableEditar"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-pencil"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Excluir" (click)="excluirTitulo()" [disabled]="disableExcluir"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-trash"></button>
+			</div>
+		</div>
+	</section>
+</p-card>

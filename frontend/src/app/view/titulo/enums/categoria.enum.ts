@@ -3,7 +3,7 @@ export class CategoriaEnum {
 }
 
 export class Categoria {
-	public static readonly TESTE = new Categoria(CategoriaEnum.TESTE, 'Teste');
+	public static readonly TESTE = new Categoria(CategoriaEnum.TESTE, 'Categoria de Teste');
 
 	private constructor(
 		public id: CategoriaEnum,
