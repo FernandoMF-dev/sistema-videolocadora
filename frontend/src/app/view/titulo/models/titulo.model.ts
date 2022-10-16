@@ -8,6 +8,6 @@ export class Titulo {
 	sinopse?: string = '';
 	ano?: number;
 	categoria?: CategoriaEnum;
-	class?: Classe;
+	classe?: Classe;
 	atores?: TituloAtor[] = [];
 }
