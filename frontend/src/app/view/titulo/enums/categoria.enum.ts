@@ -1,3 +1,6 @@
+import { SelectItem } from 'primeng';
+import { ConversionUtil } from '../../../shared/utils/conversion.util';
+
 export class CategoriaEnum {
 	public static readonly TESTE = 'CATEGORIA_TESTE';
 }
@@ -15,6 +18,10 @@ export class Categoria {
 		return [
 			Categoria.TESTE
 		];
+	}
+
+	public static getSelectItens(): SelectItem[] {
+		return ConversionUtil.arrayToSelectItens(this.getValues(), 'label', 'id');
 	}
 
 	public static findById(id: CategoriaEnum): Categoria {

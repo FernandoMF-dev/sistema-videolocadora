@@ -48,3 +48,6 @@
 		</div>
 	</section>
 </p-card>
+
+<app-titulo-form *ngIf="viewTituloForm" (onSalvar)="buscarTitulos()" [(visible)]="viewTituloForm"
+				 [titulo]="tituloSelecionado"></app-titulo-form>

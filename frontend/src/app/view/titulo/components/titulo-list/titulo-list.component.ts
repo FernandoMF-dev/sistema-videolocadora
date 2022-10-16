@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { PageChangeEvent } from '../../../../shared/models/events/page-change.event';
 import { Page } from '../../../../shared/models/page.model';
 import { MensagemService } from '../../../../shared/services/mensagem.service';
+import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Ator } from '../../../ator/models/ator.model';
 import { Classe } from '../../../classe/models/classe.model';
 import { CategoriaEnum } from '../../enums/categoria.enum';
@@ -25,6 +27,7 @@ export class TituloListComponent implements OnInit {
 	titulos: Page<Titulo> = new Page<Titulo>();
 	tituloSelecionado: Titulo;
 	carregando: boolean = false;
+	viewTituloForm: boolean = false;
 
 	constructor(
 		private tituloService: TituloService,
@@ -52,15 +55,21 @@ export class TituloListComponent implements OnInit {
 	}
 
 	inserirTitulo(): void {
-		// TODO Implementar fluxo para inserir novo título
+		this.tituloSelecionado = null;
+		this.viewTituloForm = true;
 	}
 
 	editarTitulo(): void {
-		// TODO Implementar fluxo para editar título selecionado
+		this.viewTituloForm = true;
 	}
 
 	excluirTitulo(): void {
-		// TODO Implementar fluxo para excluir título selecionado
+		this.mensagemService.exibirMensagem(
+			'EXCLUIR TÍTULO',
+			`Tem certeza que seja excluir o título "${ this.tituloSelecionado.nome }"`,
+			this,
+			() => this.excluir()
+		);
 	}
 
 	buscarTitulos(event?: PageChangeEvent): void {
@@ -73,6 +82,19 @@ export class TituloListComponent implements OnInit {
 			this.teste(!!event ? event.rows : PageListEnum.INITIAL_ROWS);
 			this.carregando = false;
 		}, 300);
+	}
+
+	private excluir(): void {
+		this.blockUI.start(MensagemUtil.BLOCKUI_EXCLUINDO);
+		this.tituloService.delete(this.tituloSelecionado.id)
+			.pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(
+				() => {
+					this.pageNotificationService.addSuccessMessage('Título excluido com sucesso', 'Sucesso');
+					this.buscarTitulos();
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 	// TODO Destruir essa função
