@@ -10,4 +10,6 @@ export class Titulo {
 	categoria?: CategoriaEnum;
 	classe?: Classe;
 	atores?: Ator[] = [];
+
+	atoresNomes?: string;
 }

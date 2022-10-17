@@ -1,5 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
+button.tag-button.ui-button {
+	width: fit-content;
+	height: fit-content;
+	margin-right: 0.5rem;
+}
+
 .position-sticky {
 	position: sticky;
 	top: 11%;

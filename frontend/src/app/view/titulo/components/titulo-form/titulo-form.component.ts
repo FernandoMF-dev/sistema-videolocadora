@@ -30,6 +30,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 	optionsCategoria: SelectItem[] = Categoria.getSelectItens();
 
 	viewClasseSelect: boolean = false;
+	viewAtorSelect: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -73,7 +74,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 	}
 
 	buscarAtores(): void {
-		// TODO Implementar fluxo para selecionar atores
+		this.viewAtorSelect = true;
 	}
 
 	validarSalvar(): void {
@@ -156,5 +157,9 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 	selecionarClasse(event: Classe): void {
 		this.viewClasseSelect = false;
 		this.form.controls['classe'].setValue(event);
+	}
+
+	selecionarAtores(event: Ator[]): void {
+		this.form.controls['atores'].setValue(event);
 	}
 }

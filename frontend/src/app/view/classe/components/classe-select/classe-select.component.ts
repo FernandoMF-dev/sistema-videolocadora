@@ -48,7 +48,7 @@ export class ClasseSelectComponent extends DialogUtil implements OnInit {
 		this.fecharDialog();
 	}
 
-	selecionar(): void {
+	salvar(): void {
 		this.onSalvar.emit(this.classeSelecionada);
 		this.fecharDialog();
 	}

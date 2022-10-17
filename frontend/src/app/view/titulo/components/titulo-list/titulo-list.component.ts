@@ -128,7 +128,8 @@ export class TituloListComponent implements OnInit {
 		titulo.classe = classe;
 		titulo.atores = [ator1, ator2];
 		titulo.categoria = CategoriaEnum.TESTE;
-		titulo.sinopse = 'Sinópse ';
+		titulo.sinopse = `=-=-=-=-=-= ${ this.titulos.totalElements } =-=-=-=-=-=`;
+		titulo.atoresNomes = `${ ator1.nome }, ${ ator2.nome }`;
 
 		return titulo;
 	}

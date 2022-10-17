@@ -38,10 +38,6 @@ export class TituloCardComponent {
 		return ConversionUtil.numberToCurrency(this.value.classe.valor);
 	}
 
-	getAtoresNomes(): string {
-		return this.value.atores.map(value => value.nome).join(', ');
-	}
-
 	toogleSelected(value: boolean = !this.selected): void {
 		this.selected = value;
 	}
