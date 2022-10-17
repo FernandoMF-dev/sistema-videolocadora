@@ -10,14 +10,14 @@
 
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-11">
-			<ng-template class="ui-g-12" [ngIf]="!carregando">
+			<ng-template class="ui-g-12" [ngIf]="!loader">
 				<div *ngFor="let rowData of titulos.content" class="ui-g-4">
 					<app-titulo-card [value]="rowData" [selected]="rowData.id === tituloSelecionado?.id"
 									 (onSelect)="tituloSelecionado = $event" (onUnselect)="limparSelecao($event.id)"></app-titulo-card>
 				</div>
 			</ng-template>
 
-			<ng-template class="ui-g-12" [ngIf]="carregando">
+			<ng-template class="ui-g-12" [ngIf]="loader">
 				<div class="ui-g-12 carregando">
 					<em class="pi pi-spin pi-spinner"></em>
 				</div>

@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { LazyLoadEvent } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { PageListEnum } from '../enums/page-list.enum';
+import { PageChangeEvent } from '../models/events/page-change.event';
 
 export class RequestUtil {
 
@@ -31,6 +32,17 @@ export class RequestUtil {
 		params = params.set('sort', this.formatSortField(event));
 
 		return this.formatParams(params, event, pageable);
+	}
+
+	public static getParamsFromPageChangeEvent(event?: PageChangeEvent, pageable?: { sort: string }): HttpParams {
+		if (!event) {
+			return this.formatParams(new HttpParams(), null, pageable);
+		}
+
+		let params: HttpParams = this.getParamsWithPageAndSize(event.page, event.rows);
+		params = params.set('sort', this.formatSortField());
+
+		return this.formatParams(params, null, pageable);
 	}
 
 	private static formatParams(params: HttpParams, tableEvent?: Table | LazyLoadEvent, pageable?: { sort: string }): HttpParams {

@@ -7,9 +7,6 @@ import { PageChangeEvent } from '../../../../shared/models/events/page-change.ev
 import { Page } from '../../../../shared/models/page.model';
 import { MensagemService } from '../../../../shared/services/mensagem.service';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
-import { Ator } from '../../../ator/models/ator.model';
-import { Classe } from '../../../classe/models/classe.model';
-import { CategoriaEnum } from '../../enums/categoria.enum';
 import { Titulo } from '../../models/titulo.model';
 import { TituloService } from '../../services/titulo.service';
 
@@ -25,7 +22,7 @@ export class TituloListComponent implements OnInit {
 	pageListEnum = PageListEnum;
 	titulos: Page<Titulo> = new Page<Titulo>();
 	tituloSelecionado: Titulo;
-	carregando: boolean = false;
+	loader: boolean = false;
 	viewTituloForm: boolean = false;
 
 	constructor(
@@ -72,15 +69,15 @@ export class TituloListComponent implements OnInit {
 	}
 
 	buscarTitulos(event?: PageChangeEvent): void {
-		// TODO Implementar fluxo para buscar títulos no backend
-
 		this.limparSelecao();
-		this.carregando = true;
+		this.loader = true;
 
-		setTimeout(() => {
-			this.teste(!!event ? event.rows : PageListEnum.INITIAL_ROWS);
-			this.carregando = false;
-		}, 300);
+		this.tituloService.findAll<Titulo>(event)
+			.pipe(finalize(() => this.loader = false))
+			.subscribe(
+				(res) => this.titulos = res,
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
 	}
 
 	private excluir(): void {
@@ -96,41 +93,4 @@ export class TituloListComponent implements OnInit {
 			);
 	}
 
-	// TODO Destruir essa função
-	private teste(size: number): void {
-		this.titulos = new Page<Titulo>();
-		this.titulos.totalElements = 0;
-
-		for (let i = 0; i < size; i++) {
-			this.titulos.totalElements++;
-			this.titulos.content.push(this.criarTituloTeste());
-		}
-	}
-
-	// TODO Destruir essa função
-	private criarTituloTeste(): Titulo {
-		const classe = new Classe();
-		const titulo = new Titulo();
-		const ator1 = new Ator();
-		const ator2 = new Ator();
-
-		classe.nome = `Nome Classe ${ this.titulos.totalElements }`;
-		classe.prazoDevolucao = this.titulos.totalElements;
-		classe.valor = this.titulos.totalElements;
-
-		ator1.nome = `Ator ${ this.titulos.totalElements }.1`;
-		ator2.nome = `Ator ${ this.titulos.totalElements }.2`;
-
-		titulo.id = this.titulos.totalElements;
-		titulo.nome = `Nome Título ${ this.titulos.totalElements }`;
-		titulo.ano = 2000 + this.titulos.totalElements;
-		titulo.sinopse = '';
-		titulo.classe = classe;
-		titulo.atores = [ator1, ator2];
-		titulo.categoria = CategoriaEnum.TESTE;
-		titulo.sinopse = `=-=-=-=-=-= ${ this.titulos.totalElements } =-=-=-=-=-=`;
-		titulo.atoresNomes = `${ ator1.nome }, ${ ator2.nome }`;
-
-		return titulo;
-	}
 }
