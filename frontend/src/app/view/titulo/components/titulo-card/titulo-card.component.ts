@@ -39,7 +39,7 @@ export class TituloCardComponent {
 	}
 
 	getAtoresNomes(): string {
-		return this.value.atores.map(value => value.ator.nome).join(', ');
+		return this.value.atores.map(value => value.nome).join(', ');
 	}
 
 	toogleSelected(value: boolean = !this.selected): void {

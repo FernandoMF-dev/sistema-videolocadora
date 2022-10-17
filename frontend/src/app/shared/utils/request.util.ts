@@ -5,10 +5,6 @@ import { PageListEnum } from '../enums/page-list.enum';
 
 export class RequestUtil {
 
-	public static mapFieldRequestParamFromObjectArray(tags: any[], param: string = 'ids', key: string = 'id'): string {
-		return `${ param }=${ tags.map(element => element[key]).join() }`;
-	}
-
 	public static getParamsWithPageAndSize(page?: number, size?: number): HttpParams {
 		let params: HttpParams = new HttpParams();
 
@@ -24,33 +20,6 @@ export class RequestUtil {
 		params = params.append('sort', '');
 
 		return params;
-	}
-
-	public static getParams(tableEvent?: Table | LazyLoadEvent, pageable?: { sort: string }) {
-		if (tableEvent == null) {
-			return this.formatParams(new HttpParams(), tableEvent, pageable);
-		}
-
-		if (tableEvent instanceof Table) {
-			return this.getParamsFromTable(tableEvent, pageable);
-		}
-
-		return this.getParamsFromLazyLoadEvent(tableEvent, pageable);
-	}
-
-	public static getParamsFromTable(table?: Table, pageable?: { sort: string }): HttpParams {
-		if (table == null) {
-			return this.formatParams(new HttpParams(), table, pageable);
-		}
-
-		let params: HttpParams = new HttpParams();
-		const direction = table.sortOrder === 1 ? 'ASC' : 'DESC';
-
-		params = params.append('page', Math.round(table.first / table.rows).toString());
-		params = params.append('size', table.rows == null ? PageListEnum.INITIAL_ROWS.toString() : table.rows.toString());
-		params = params.append('sort', table.sortField == null ? '' : `${ table.sortField },${ direction }`);
-
-		return this.formatParams(params, table, pageable);
 	}
 
 	public static getParamsFromLazyLoadEvent(event?: LazyLoadEvent, pageable?: { sort: string }): HttpParams {

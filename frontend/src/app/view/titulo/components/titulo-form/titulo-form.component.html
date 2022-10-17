@@ -23,19 +23,20 @@
 						<ng-template [ngIf]="!!classeSelecionada">
 							<div class="ui-g-12 ui-sm-12">
 								<label>Nome*</label>
-								<input pInputText type="text" [readonly]="true" [ngModel]="classeSelecionada.nome">
+								<input pInputText type="text" [readonly]="true" [ngModel]="classeSelecionada.nome"
+									   [ngModelOptions]="{standalone: true}">
 							</div>
 
 							<div class="ui-g-12 ui-sm-12">
 								<label>Valor</label>
 								<p-inputNumber mode="currency" locale="pt-BR" currency="BRL" [disabled]="true"
-											   [ngModel]="classeSelecionada.valor"></p-inputNumber>
+											   [ngModel]="classeSelecionada.valor" [ngModelOptions]="{standalone: true}"></p-inputNumber>
 							</div>
 
 							<div class="ui-g-12 ui-sm-12">
 								<label>Prazo de Devolução*</label>
-								<p-inputNumber suffix=" Dias" [disabled]="true"
-											   [ngModel]="classeSelecionada.prazoDevolucao"></p-inputNumber>
+								<p-inputNumber suffix=" Dias" [disabled]="true" [ngModel]="classeSelecionada.prazoDevolucao"
+											   [ngModelOptions]="{standalone: true}"></p-inputNumber>
 							</div>
 						</ng-template>
 
@@ -50,7 +51,7 @@
 				<p-fieldset legend="Atores">
 					<div class="ui-g ui-fluid">
 						<div class="ui-g-12 ui-sm-12" *ngIf="!!atoresSelecionados?.length">
-							<button *ngFor="let ator of atoresSelecionados" pButton type="button" [label]="ator.ator.nome"
+							<button *ngFor="let ator of atoresSelecionados" pButton type="button" [label]="ator.nome"
 									class="ui-button-secondary"></button>
 						</div>
 
@@ -82,3 +83,6 @@
 		</p-footer>
 	</p-dialog>
 </form>
+
+<app-classe-select *ngIf="viewClasseSelect" [(visible)]="viewClasseSelect" [classeSelecionada]="classeSelecionada"
+				   (onSalvar)="selecionarClasse($event)"></app-classe-select>

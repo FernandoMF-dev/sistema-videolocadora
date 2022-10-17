@@ -5,13 +5,15 @@ import { SharedModule } from '../../shared/shared.module';
 import { ClasseRoutingModule } from './classe-routing.module';
 import { ClasseFormComponent } from './components/classe-form/classe-form.component';
 import { ClasseListComponent } from './components/classe-list/classe-list.component';
+import { ClasseSelectComponent } from './components/classe-select/classe-select.component';
 import { ClasseService } from './services/classe.service';
 
 
 @NgModule({
 	declarations: [
 		ClasseListComponent,
-		ClasseFormComponent
+		ClasseFormComponent,
+		ClasseSelectComponent
 	],
 	imports: [
 		CommonModule,
@@ -22,6 +24,9 @@ import { ClasseService } from './services/classe.service';
 	],
 	providers: [
 		ClasseService
+	],
+	exports: [
+		ClasseSelectComponent
 	]
 })
 export class ClasseModule {

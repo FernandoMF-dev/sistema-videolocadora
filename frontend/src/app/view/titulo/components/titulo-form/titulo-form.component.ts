@@ -6,9 +6,9 @@ import { SelectItem } from 'primeng';
 import { finalize } from 'rxjs/operators';
 import { DialogUtil } from '../../../../shared/utils/dialog.util';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
+import { Ator } from '../../../ator/models/ator.model';
 import { Classe } from '../../../classe/models/classe.model';
 import { Categoria } from '../../enums/categoria.enum';
-import { TituloAtor } from '../../models/titulo-ator.model';
 import { Titulo } from '../../models/titulo.model';
 import { TituloService } from '../../services/titulo.service';
 
@@ -28,6 +28,8 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 
 	form: FormGroup;
 	optionsCategoria: SelectItem[] = Categoria.getSelectItens();
+
+	viewClasseSelect: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -49,7 +51,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 		return this.form.controls['classe'].value;
 	}
 
-	get atoresSelecionados(): TituloAtor[] {
+	get atoresSelecionados(): Ator[] {
 		return this.form.controls['atores'].value;
 	}
 
@@ -67,7 +69,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 	}
 
 	buscarClasses(): void {
-		// TODO Implementar fluxo para selecionar classes
+		this.viewClasseSelect = true;
 	}
 
 	buscarAtores(): void {
@@ -149,5 +151,10 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 	private finalizarSalvar(entity: Titulo): void {
 		this.onSalvar.emit(entity);
 		this.fecharDialog();
+	}
+
+	selecionarClasse(event: Classe): void {
+		this.viewClasseSelect = false;
+		this.form.controls['classe'].setValue(event);
 	}
 }

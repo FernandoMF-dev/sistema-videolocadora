@@ -10,7 +10,6 @@ import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Ator } from '../../../ator/models/ator.model';
 import { Classe } from '../../../classe/models/classe.model';
 import { CategoriaEnum } from '../../enums/categoria.enum';
-import { TituloAtor } from '../../models/titulo-ator.model';
 import { Titulo } from '../../models/titulo.model';
 import { TituloService } from '../../services/titulo.service';
 
@@ -114,8 +113,6 @@ export class TituloListComponent implements OnInit {
 		const titulo = new Titulo();
 		const ator1 = new Ator();
 		const ator2 = new Ator();
-		const tituloAtor1 = new TituloAtor();
-		const tituloAtor2 = new TituloAtor();
 
 		classe.nome = `Nome Classe ${ this.titulos.totalElements }`;
 		classe.prazoDevolucao = this.titulos.totalElements;
@@ -124,20 +121,14 @@ export class TituloListComponent implements OnInit {
 		ator1.nome = `Ator ${ this.titulos.totalElements }.1`;
 		ator2.nome = `Ator ${ this.titulos.totalElements }.2`;
 
-		tituloAtor1.ator = ator1;
-		tituloAtor2.ator = ator2;
-
 		titulo.id = this.titulos.totalElements;
 		titulo.nome = `Nome Título ${ this.titulos.totalElements }`;
 		titulo.ano = 2000 + this.titulos.totalElements;
 		titulo.sinopse = '';
 		titulo.classe = classe;
-		titulo.atores = [tituloAtor1, tituloAtor2];
+		titulo.atores = [ator1, ator2];
 		titulo.categoria = CategoriaEnum.TESTE;
-
-		for (let i = 0; i < this.titulos.totalElements * 5; i++) {
-			titulo.sinopse += 'Sinópse ';
-		}
+		titulo.sinopse = 'Sinópse ';
 
 		return titulo;
 	}
