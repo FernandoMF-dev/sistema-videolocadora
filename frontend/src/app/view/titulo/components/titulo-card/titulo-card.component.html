@@ -1,0 +1,23 @@
+<div *ngIf="!!value" class="titulo-card" [ngClass]="{'selected' : selected}" (click)="toogleSelected()"
+	 [pTooltip]="value.sinopse" tooltipPosition="bottom">
+	<p class="nome">{{ value.nome }}</p>
+
+	<p class="info-geral">
+		<span class="ano">{{ value.ano }}</span>
+		<span class="categoria">{{ getCategoriaLabel() }}</span>
+	</p>
+
+	<p class="classe" *ngIf="!!value.classe">
+		<span class="classe-nome">{{ value.classe.nome }}</span>
+		<span class="classe-valor">{{ getClasseValor() }}</span>
+		<span class="classe-devolucao">{{ value.classe.prazoDevolucao }} Dias</span>
+	</p>
+
+	<p class="atores" *ngIf="!!value.atores?.length">
+		<strong>Atores:</strong> {{ value.atoresNomes }}
+	</p>
+
+	<p class="sinopse" *ngIf="!!value.sinopse">
+		<strong>Sinópse:</strong> {{ value.sinopse }}
+	</p>
+</div>

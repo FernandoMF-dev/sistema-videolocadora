@@ -1,0 +1,91 @@
+<form [formGroup]="form" (ngSubmit)="validarSalvar()">
+	<p-dialog [(visible)]="visible" [header]="tituloDialog" modal="true" styleClass="dialog-lg">
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-12 ui-sm-12">
+				<label>Nome*</label>
+				<input pInputText type="text" formControlName="nome">
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<label>Ano*</label>
+				<p-inputNumber formControlName="ano" min="0" [maxFractionDigits]="0" [step]="10"
+							   [showButtons]="true" [useGrouping]="false"></p-inputNumber>
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<label>Categoria*</label>
+				<p-dropdown [options]="optionsCategoria" formControlName="categoria" placeholder="Selecione..."></p-dropdown>
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<p-fieldset legend="Classe">
+					<div class="ui-g ui-fluid">
+						<ng-template [ngIf]="!!classeSelecionada">
+							<div class="ui-g-12 ui-sm-12">
+								<label>Nome*</label>
+								<input pInputText type="text" [readonly]="true" [ngModel]="classeSelecionada.nome"
+									   [ngModelOptions]="{standalone: true}">
+							</div>
+
+							<div class="ui-g-6 ui-sm-12">
+								<label>Valor</label>
+								<p-inputNumber mode="currency" locale="pt-BR" currency="BRL" [disabled]="true"
+											   [ngModel]="classeSelecionada.valor" [ngModelOptions]="{standalone: true}"></p-inputNumber>
+							</div>
+
+							<div class="ui-g-6 ui-sm-12">
+								<label>Prazo de Devolução*</label>
+								<p-inputNumber suffix=" Dias" [disabled]="true" [ngModel]="classeSelecionada.prazoDevolucao"
+											   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+							</div>
+						</ng-template>
+
+						<div class="ui-g-12 ui-sm-12">
+							<button pButton type="button" label="Selecionar" class="ui-button-success" (click)="buscarClasses()"></button>
+						</div>
+					</div>
+				</p-fieldset>
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<p-fieldset legend="Atores">
+					<div class="ui-g ui-fluid">
+						<div class="ui-g-12 ui-sm-12" *ngIf="!!atoresSelecionados?.length">
+							<button *ngFor="let ator of atoresSelecionados" pButton type="button" [label]="ator.nome"
+									class="ui-button-info tag-button"></button>
+						</div>
+
+						<div class="ui-g-12 ui-sm-12">
+							<button pButton type="button" label="Selecionar" class="ui-button-success" (click)="buscarAtores()"></button>
+						</div>
+					</div>
+				</p-fieldset>
+			</div>
+
+			<div class="ui-g-12 ui-sm-12">
+				<label>Sinópse*</label>
+				<textarea pInputTextarea formControlName="nome"></textarea>
+			</div>
+		</div>
+
+		<p-footer>
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="button" icon="pi pi-times" label="Cancelar"
+							(click)="cancelar()" class="ui-button-danger"></button>
+				</div>
+
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="submit" appFormSubmitMsg icon="pi pi-save" label="Salvar"
+							[formGroup]="form" class="ui-button-success"></button>
+				</div>
+			</div>
+		</p-footer>
+	</p-dialog>
+</form>
+
+<app-classe-select *ngIf="viewClasseSelect" [(visible)]="viewClasseSelect" [classeSelecionada]="classeSelecionada"
+				   (onSalvar)="selecionarClasse($event)"></app-classe-select>
+
+<app-ator-select *ngIf="viewAtorSelect" [(visible)]="viewAtorSelect" [atoresSelecionados]="atoresSelecionados"
+				 (onSalvar)="selecionarAtores($event)"></app-ator-select>

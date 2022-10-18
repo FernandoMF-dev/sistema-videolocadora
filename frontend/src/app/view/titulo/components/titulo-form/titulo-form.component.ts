@@ -2,42 +2,58 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
+import { SelectItem } from 'primeng';
 import { finalize } from 'rxjs/operators';
 import { DialogUtil } from '../../../../shared/utils/dialog.util';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
-import { Classe } from '../../models/classe.model';
-import { ClasseService } from '../../services/classe.service';
+import { Ator } from '../../../ator/models/ator.model';
+import { Classe } from '../../../classe/models/classe.model';
+import { Categoria } from '../../enums/categoria.enum';
+import { Titulo } from '../../models/titulo.model';
+import { TituloService } from '../../services/titulo.service';
 
 @Component({
-	selector: 'app-classe-form',
-	templateUrl: './classe-form.component.html',
-	styleUrls: ['./classe-form.component.scss']
+	selector: 'app-titulo-form',
+	templateUrl: './titulo-form.component.html',
+	styleUrls: ['./titulo-form.component.scss']
 })
-export class ClasseFormComponent extends DialogUtil implements OnInit {
+export class TituloFormComponent extends DialogUtil implements OnInit {
 
 	@BlockUI() blockUI: NgBlockUI;
 
-	@Input() classe: Classe;
+	@Input() titulo: Titulo;
 
 	@Output() onCancelar: EventEmitter<void> = new EventEmitter<void>();
-	@Output() onSalvar: EventEmitter<Classe> = new EventEmitter<Classe>();
+	@Output() onSalvar: EventEmitter<Titulo> = new EventEmitter<Titulo>();
 
 	form: FormGroup;
+	optionsCategoria: SelectItem[] = Categoria.getSelectItens();
+
+	viewClasseSelect: boolean = false;
+	viewAtorSelect: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
 		private pageNotificationService: PageNotificationService,
-		private classeService: ClasseService
+		private tituloService: TituloService
 	) {
 		super();
 	}
 
 	get isEdicao(): boolean {
-		return !!this.classe && !!this.classe.id;
+		return !!this.titulo && !!this.titulo.id;
 	}
 
 	get tituloDialog(): string {
-		return `${ this.isEdicao ? 'EDITAR' : 'NOVO' } CLASSE`;
+		return `${ this.isEdicao ? 'EDITAR' : 'NOVO' } TÍTULO`;
+	}
+
+	get classeSelecionada(): Classe {
+		return this.form.controls['classe'].value;
+	}
+
+	get atoresSelecionados(): Ator[] {
+		return this.form.controls['atores'].value;
 	}
 
 	ngOnInit(): void {
@@ -53,6 +69,14 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 		this.fecharDialog();
 	}
 
+	buscarClasses(): void {
+		this.viewClasseSelect = true;
+	}
+
+	buscarAtores(): void {
+		this.viewAtorSelect = true;
+	}
+
 	validarSalvar(): void {
 		if (!this.form.valid) {
 			this.pageNotificationService.addErrorMessage(MensagemUtil.PREENCHIMENTO_OBRIGATORIO);
@@ -66,14 +90,17 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 		this.form = this.formBuilder.group({
 			'id': new FormControl(null, []),
 			'nome': new FormControl('', [Validators.required]),
-			'valor': new FormControl(0, [Validators.required, Validators.min(0)]),
-			'prazoDevolucao': new FormControl(0, [Validators.required, Validators.min(0)])
+			'sinopse': new FormControl('', []),
+			'ano': new FormControl(new Date().getFullYear(), [Validators.required, Validators.min(0)]),
+			'categoria': new FormControl(null, [Validators.required]),
+			'classe': new FormControl(null, [Validators.required]),
+			'atores': new FormControl([], [])
 		});
 	}
 
 	private atualizarFormEdicao(): void {
 		this.blockUI.start();
-		this.classeService.findById(this.classe.id)
+		this.tituloService.findById(this.titulo.id)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.form.patchValue(res),
@@ -87,18 +114,18 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 	}
 
 	private salvar(): void {
-		const classe: Classe = Object.assign(new Classe(), this.form.value);
+		const titulo: Titulo = Object.assign(new Titulo(), this.form.value);
 
 		if (this.isEdicao) {
-			this.editar(classe);
+			this.editar(titulo);
 		} else {
-			this.inserir(classe);
+			this.inserir(titulo);
 		}
 	}
 
-	private inserir(entity: Classe): void {
+	private inserir(entity: Titulo): void {
 		this.blockUI.start(MensagemUtil.BLOCKUI_SALVANDO);
-		this.classeService.insert<Classe>(entity)
+		this.tituloService.insert<Titulo>(entity)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => {
@@ -109,9 +136,9 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private editar(entity: Classe): void {
+	private editar(entity: Titulo): void {
 		this.blockUI.start(MensagemUtil.BLOCKUI_SALVANDO);
-		this.classeService.update<Classe>(entity, entity.id)
+		this.tituloService.update<Titulo>(entity, entity.id)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => {
@@ -122,9 +149,17 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private finalizarSalvar(entity: Classe): void {
+	private finalizarSalvar(entity: Titulo): void {
 		this.onSalvar.emit(entity);
 		this.fecharDialog();
 	}
 
+	selecionarClasse(event: Classe): void {
+		this.viewClasseSelect = false;
+		this.form.controls['classe'].setValue(event);
+	}
+
+	selecionarAtores(event: Ator[]): void {
+		this.form.controls['atores'].setValue(event);
+	}
 }

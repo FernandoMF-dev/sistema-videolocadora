@@ -28,6 +28,11 @@ const routes: Routes = [
 		path: RouteNameEnum.CLASSE,
 		loadChildren: './view/classe/classe.module#ClasseModule',
 		data: { breadcrumb: 'Classe' }
+	},
+	{
+		path: RouteNameEnum.TITULO,
+		loadChildren: './view/titulo/titulo.module#TituloModule',
+		data: { breadcrumb: 'Título' }
 	}
 ];
 

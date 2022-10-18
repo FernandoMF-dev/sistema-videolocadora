@@ -1,25 +1,18 @@
-<h2>ATORES</h2>
-
-<p-card>
-	<section class="ui-g ui-fluid">
-		<div class="ui-g-2">
-			<button pButton type="button" label="Novo Ator" icon="pi pi-plus" (click)="inserirAtor()"
-					class="ui-button-success"></button>
+<p-dialog [(visible)]="visible" header="Selecionar Classe" modal="true">
+	<div class="ui-g ui-fluid">
+		<div class="ui-g-12 ui-sm-12">
+			<p-fieldset legend="Atores Selecionados">
+				<button *ngFor="let ator of atoresSelecionados" pButton type="button" [label]="ator.nome" icon="pi pi-times"
+						class="ui-button-info tag-button" (click)="removerAtor(ator.id)"></button>
+			</p-fieldset>
 		</div>
 
-		<div class="ui-g-2 ui-sm-11 ui-g-offset-7 ui-sm-offset-0">
-			<button pButton type="button" label="Limpar Filtro" icon="pi pi-times" (click)="limparFiltro()"
-					class="ui-button-secondary"></button>
-		</div>
-	</section>
-
-	<section class="ui-g ui-fluid">
-		<div class="ui-g-11">
+		<div class="ui-g-12 ui-sm-12">
 			<p-table *ngIf="atores" [value]="atores.content" [columns]="cols" (onLazyLoad)="buscarAtores($event)"
 					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="atores.totalElements" [(selection)]="atorSelecionado"
-					 sortField="nome" dataKey="id" selectionMode="single"
+					 [totalRecords]="atores.totalElements" [(selection)]="atoresSelecionados"
+					 sortField="nome" dataKey="id" selectionMode="multiple"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>
@@ -56,24 +49,17 @@
 				</ng-template>
 			</p-table>
 		</div>
+	</div>
 
-		<div class="ui-g-1 position-sticky centralized">
-			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Buscar" (click)="buscarAtores()"
-						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
+	<p-footer>
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-6 ui-sm-12">
+				<button pButton type="button" icon="pi pi-times" label="Cancelar" (click)="cancelar()" class="ui-button-danger"></button>
 			</div>
 
-			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Editar" (click)="editarAtor()" [disabled]="disableEditar"
-						class="ui-button-icon-only ui-button-secondary" icon="pi pi-pencil"></button>
-			</div>
-
-			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Excluir" (click)="excluirAtores()" [disabled]="disableExcluir"
-						class="ui-button-icon-only ui-button-secondary" icon="pi pi-trash"></button>
+			<div class="ui-g-6 ui-sm-12">
+				<button pButton type="submit" icon="pi pi-save" label="Salvar" (click)="salvar()" class="ui-button-success"></button>
 			</div>
 		</div>
-	</section>
-</p-card>
-
-<app-ator-form *ngIf="viewAtorForm" (onSalvar)="buscarAtores()" [(visible)]="viewAtorForm" [ator]="atorSelecionado"></app-ator-form>
+	</p-footer>
+</p-dialog>
