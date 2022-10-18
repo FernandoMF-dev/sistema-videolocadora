@@ -50,10 +50,14 @@ public class Titulo implements Serializable {
 	private Boolean excluido;
 
 	@JoinColumn(name = "id_classe")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Classe classe;
 
-	@ManyToMany(mappedBy = "titulos", cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_diretor")
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	private Diretor diretor;
+
+	@ManyToMany(mappedBy = "titulos", cascade = CascadeType.MERGE)
 	private List<Ator> atores;
 
 }

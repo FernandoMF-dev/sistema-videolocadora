@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum CategoriaEnum {
 
-	TESTE("teste");
+	CATEGORIA_TESTE("teste");
 
 	private final String descricao;
 }

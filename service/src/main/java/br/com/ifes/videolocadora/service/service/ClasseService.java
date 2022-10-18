@@ -26,7 +26,9 @@ public class ClasseService {
 	}
 
 	public ClasseDTO salvar(ClasseDTO dto) {
-		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
+		Classe entity = mapper.toEntity(dto);
+		entity.setExcluido(false);
+		return mapper.toDto(repositorio.save(entity));
 	}
 
 	public Page<ClasseDTO> obterTodos(Pageable page) {

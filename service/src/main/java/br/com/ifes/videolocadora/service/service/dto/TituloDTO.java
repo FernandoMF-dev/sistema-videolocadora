@@ -25,6 +25,8 @@ public class TituloDTO implements Serializable {
 
 	private ClasseDTO classe;
 
-	private List<AtorDTO> atoresList;
+	private List<AtorDTO> atores;
+
+	private DiretorDTO diretor;
 
 }

@@ -26,16 +26,19 @@ public class TituloListDTO implements Serializable {
 
 	private String atores;
 
+	private String diretor;
+
 	public TituloListDTO(Long id, String nome, String sinopse, Integer ano,
-				  CategoriaEnum categoria,
-				  Long idClasse, String nomeClasse, Double valorClasse, Integer prazoDevolucaoClasse, Object ator){
+						 CategoriaEnum categoria,
+						 Long idClasse, String nomeClasse, Double valorClasse, Integer prazoDevolucaoClasse, String diretor, Object ator) {
 		this.id = id;
 		this.nome = nome;
 		this.sinopse = sinopse;
 		this.ano = ano;
 		this.categoria = categoria;
-		this.classe = new ClasseDTO(idClasse,nomeClasse,valorClasse,prazoDevolucaoClasse);
-		System.out.println(ator);
+		this.classe = new ClasseDTO(idClasse, nomeClasse, valorClasse, prazoDevolucaoClasse);
+		this.diretor = diretor;
+		this.atores = "";
 	}
 
 }

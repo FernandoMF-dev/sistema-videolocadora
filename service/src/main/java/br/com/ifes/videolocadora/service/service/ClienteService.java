@@ -24,7 +24,9 @@ public class ClienteService {
 	}
 
 	public ClienteDTO salvar(ClienteDTO dto) {
-		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
+		Cliente entity = mapper.toEntity(dto);
+		entity.setExcluido(false);
+		return mapper.toDto(repositorio.save(entity));
 	}
 
 }

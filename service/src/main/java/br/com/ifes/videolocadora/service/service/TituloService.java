@@ -27,7 +27,9 @@ public class TituloService {
 	}
 
 	public TituloDTO salvar(TituloDTO dto) {
-		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
+		Titulo entity = mapper.toEntity(dto);
+		entity.setExcluido(false);
+		return mapper.toDto(repositorio.save(entity));
 	}
 
 	public Page<TituloListDTO> obterTodos(Pageable page) {
@@ -45,7 +47,7 @@ public class TituloService {
 		repositorio.save(entity);
 	}
 
-	public Page<TituloDTO> filtrar(TituloDTO dto, Pageable pageable) {
-		return repositorio.filtrar(dto, pageable);
+	public Page<TituloListDTO> filtrar(TituloDTO dto, Pageable pageable) {
+		return repositorio.findAllList(pageable);
 	}
 }
