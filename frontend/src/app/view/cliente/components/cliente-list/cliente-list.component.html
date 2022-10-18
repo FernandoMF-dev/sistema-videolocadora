@@ -99,9 +99,25 @@
 			</div>
 
 			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Atribuir Dependente" (click)="atribuirDependente()"
+						[disabled]="disableAtribuirDependente" icon="pi pi-user-plus"
+						class="ui-button-icon-only ui-button-secondary"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" [pTooltip]="clienteSelecionado?.ativo ? 'Inativar' : 'Ativar'" (click)="patchAtivo()"
+						[disabled]="disableEditar" icon="pi {{ clienteSelecionado?.ativo ? 'pi-lock' : 'pi-lock-open' }}"
+						class="ui-button-icon-only ui-button-secondary"></button>
+			</div>
+
+			<div class="ui-g-12">
 				<button pButton type="button" pTooltip="Excluir" (click)="excluirCliente()" [disabled]="disableExcluir"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-trash"></button>
 			</div>
 		</div>
 	</section>
 </p-card>
+
+<app-cliente-form *ngIf="viewClienteForm" [(visible)]="viewClienteForm" [cliente]="clienteSelecionado"
+				  [tipoCliente]="tipoClienteClienteForm" [idResponsavel]="responsavelClienteForm?.id"
+				  (onSalvar)="buscarClientesSocios()"></app-cliente-form>

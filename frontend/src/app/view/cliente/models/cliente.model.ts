@@ -9,4 +9,6 @@ export class Cliente {
 	telefone?: string = '';
 	tipoCliente?: TipoClienteEnum;
 	ativo?: boolean = true;
+
+	idResponsavel?: number;
 }

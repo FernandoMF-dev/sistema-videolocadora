@@ -33,6 +33,10 @@ export class ClienteListComponent {
 		{ label: 'INATIVO', value: false }
 	];
 
+	viewClienteForm: boolean = false;
+	responsavelClienteForm: Cliente;
+	tipoClienteClienteForm: TipoClienteEnum;
+
 	pageListEnum = PageListEnum;
 	cols = [
 		{ header: 'Nº Inscrição', field: 'numeroInscricao', width: '10%', integer: true },
@@ -52,7 +56,11 @@ export class ClienteListComponent {
 	}
 
 	get disableEditar(): boolean {
-		return !this.clienteSelecionado || this.clienteSelecionado.tipoCliente === TipoClienteEnum.DEPENDENTE;
+		return !this.clienteSelecionado;
+	}
+
+	get disableAtribuirDependente(): boolean {
+		return this.disableEditar || this.clienteSelecionado.tipoCliente !== TipoClienteEnum.SOCIO;
 	}
 
 	get disableExcluir(): boolean {
@@ -64,11 +72,27 @@ export class ClienteListComponent {
 	}
 
 	inserirCliente(): void {
-		// TODO Implementar fluxo para inserir novo cliente
+		this.clienteSelecionado = null;
+		this.responsavelClienteForm = null;
+		this.tipoClienteClienteForm = TipoClienteEnum.SOCIO;
+		this.viewClienteForm = true;
 	}
 
 	editarCliente(): void {
-		// TODO Implementar fluxo para editar cliente selecionado
+		this.responsavelClienteForm = null;
+		this.tipoClienteClienteForm = this.clienteSelecionado.tipoCliente;
+		this.viewClienteForm = true;
+	}
+
+	atribuirDependente(): void {
+		this.responsavelClienteForm = this.clienteSelecionado;
+		this.clienteSelecionado = null;
+		this.tipoClienteClienteForm = TipoClienteEnum.DEPENDENTE;
+		this.viewClienteForm = true;
+	}
+
+	patchAtivo(): void {
+		// TODO Implementar fluxo para alterar o status do cliente selecionado
 	}
 
 	limparFiltro(): void {
