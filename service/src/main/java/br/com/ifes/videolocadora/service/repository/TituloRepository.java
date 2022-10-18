@@ -2,7 +2,6 @@ package br.com.ifes.videolocadora.service.repository;
 
 
 import br.com.ifes.videolocadora.service.domain.entity.Titulo;
-import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
 import br.com.ifes.videolocadora.service.service.dto.TituloListDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,5 +38,5 @@ public interface TituloRepository extends JpaRepository<Titulo, Long>, JpaSpecif
 			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
 
 			"")
-	Page<TituloListDTO> filtrar(@Param("filter") TituloDTO filter, Pageable pageable);
+	Page<TituloListDTO> filtrar(@Param("filter") TituloListDTO filter, Pageable pageable);
 }
