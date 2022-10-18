@@ -1,6 +1,42 @@
 <form [formGroup]="form" (ngSubmit)="validarSalvar()">
 	<p-dialog [(visible)]="visible" [header]="tituloDialog" modal="true" styleClass="dialog-lg">
 		<div class="ui-g ui-fluid">
+			<div *ngIf="idResponsavel" class="ui-g-12 ui-sm-12">
+				<p-fieldset legend="Sócio Responsável">
+					<ng-template [ngIf]="responsavel">
+						<div class="ui-g-8 ui-sm-12">
+							<label>Nome</label>
+							<input pInputText type="text" [ngModel]="responsavel.nome" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-2 ui-sm-12">
+							<label>Nº Inscrição</label>
+							<p-inputNumber [ngModel]="responsavel.numeroInscricao" [disabled]="true"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>Status</label>
+							<p-dropdown [options]="optionsStatus" [ngModel]="responsavel.ativo" [readonly]="true"
+										[ngModelOptions]="{standalone: true}"></p-dropdown>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>CPF</label>
+							<p-inputMask [unmask]="true" [ngModel]="responsavel.cpf" [readonly]="true" mask="999.999.999-99"
+										 [ngModelOptions]="{standalone: true}"></p-inputMask>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>Telefone</label>
+							<input pInputText type="tel" [ngModel]="responsavel.telefone" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+					</ng-template>
+				</p-fieldset>
+			</div>
+
 			<div class=" ui-sm-12" [ngClass]="{'ui-g-9': isEdicao, 'ui-g-12': !isEdicao}">
 				<label>Nome*</label>
 				<input pInputText type="text" formControlName="nome">

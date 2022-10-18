@@ -27,6 +27,7 @@ export class ClienteFormComponent extends DialogUtil implements OnInit {
 	@Output() onSalvar: EventEmitter<Cliente> = new EventEmitter<Cliente>();
 
 	form: FormGroup;
+	responsavel: Cliente;
 	optionsStatus: SelectItem[] = [
 		{ label: 'ATIVO', value: true },
 		{ label: 'INATIVO', value: false }
@@ -53,6 +54,10 @@ export class ClienteFormComponent extends DialogUtil implements OnInit {
 
 		if (this.isEdicao) {
 			this.atualizarFormEdicao();
+		}
+
+		if (this.idResponsavel) {
+			this.buscarSocioResponsavel();
 		}
 	}
 
@@ -94,6 +99,14 @@ export class ClienteFormComponent extends DialogUtil implements OnInit {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.form.patchValue(res),
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
+	}
+
+	private buscarSocioResponsavel(): void {
+		this.clienteService.findById<Cliente>(this.idResponsavel)
+			.subscribe(
+				(res) => this.responsavel = res,
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}

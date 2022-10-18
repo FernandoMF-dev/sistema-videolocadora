@@ -4,15 +4,18 @@
 			<p-fieldset legend="Classe Selecionada">
 				<div class="ui-g ui-fluid" *ngIf="!!classeSelecionada">
 					<div class="ui-g-4 ui-sm-12">
+						<label>Nome</label>
 						<input pInputText type="text" [(ngModel)]="classeSelecionada.nome" [readonly]="true">
 					</div>
 
 					<div class="ui-g-4 ui-sm-12">
+						<label>Valor</label>
 						<p-inputNumber [(ngModel)]="classeSelecionada.valor" mode="currency" [disabled]="true"
 									   locale="pt-BR" currency="BRL"></p-inputNumber>
 					</div>
 
 					<div class="ui-g-4 ui-sm-12">
+						<label>Prazo de Devolução</label>
 						<p-inputNumber [(ngModel)]="classeSelecionada.prazoDevolucao" suffix=" Dias" [disabled]="true"></p-inputNumber>
 					</div>
 				</div>
