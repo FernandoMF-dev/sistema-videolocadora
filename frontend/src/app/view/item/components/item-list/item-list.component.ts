@@ -46,6 +46,8 @@ export class ItemListComponent {
 		{ header: 'Prazo de Devolução', field: 'prazoDevolucao', sufix: ' Dias', integer: true }
 	];
 
+	viewItemForm: boolean = false;
+
 	constructor(
 		private itemService: ItemService,
 		private mensagemService: MensagemService,
@@ -67,11 +69,12 @@ export class ItemListComponent {
 	}
 
 	inserirItem(): void {
-		// TODO Implementar fluxo para inserção de item
+		this.itemSelecionado = null;
+		this.viewItemForm = true;
 	}
 
 	editarItem(): void {
-		// TODO Implementar fluxo para inserção de item
+		this.viewItemForm = true;
 	}
 
 	buscarItens(event?: LazyLoadEvent): void {

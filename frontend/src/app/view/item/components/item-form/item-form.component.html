@@ -1,0 +1,91 @@
+<form [formGroup]="form" (ngSubmit)="validarSalvar()">
+	<p-dialog [(visible)]="visible" [header]="tituloDialog" modal="true" styleClass="dialog-lg">
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-12 ui-sm-12">
+				<div class="ui-g-3 ui-sm-12">
+					<label>Nº de Série*</label>
+					<p-inputNumber formControlName="numeroSerie" min="0" [maxFractionDigits]="0" [showButtons]="true"></p-inputNumber>
+				</div>
+
+				<div class="ui-g-3 ui-sm-12">
+					<label>Data de Aquisição*</label>
+					<p-calendar formControlName="dataAquisicao" dateFormat="dd/mm/yy" [locale]="dataBr" [showButtonBar]="true"></p-calendar>
+				</div>
+
+				<div class="ui-g-3 ui-sm-12">
+					<label>Tipo de Item*</label>
+					<p-dropdown formControlName="tipoItem" [options]="optionsTipoItem" placeholder="Selecione..."></p-dropdown>
+				</div>
+
+				<div class="ui-g-3 ui-sm-12">
+					<button pButton type="button" label="Selecionar Título" class="ui-button-success" (click)="buscarTitulos()"></button>
+				</div>
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<p-fieldset legend="Título">
+					<ng-template [ngIf]="!!titulo">
+						<div class="ui-g-8 ui-sm-12">
+							Nome
+							<input pInputText type="text" [readonly]="true" [ngModel]="titulo.nome" [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-1 ui-sm-12">
+							Ano
+							<input pInputText type="text" [readonly]="true" [ngModel]="titulo.ano" [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-3 ui-sm-12">
+							Categoria
+							<input pInputText type="text" [readonly]="true" [ngModel]="formatCategoria(titulo.categoria)"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-12 ui-sm-12" *ngIf="!!titulo?.atores?.length">
+							<button *ngFor="let ator of titulo.atores" pButton type="button" [label]="ator.nome"
+									class="ui-button-info tag-button"></button>
+						</div>
+					</ng-template>
+				</p-fieldset>
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<p-fieldset legend="Classe">
+					<ng-template [ngIf]="!!titulo?.classe">
+						<div class="ui-g-12 ui-sm-12">
+							<label>Nome</label>
+							<input pInputText type="text" [readonly]="true" [ngModel]="titulo.classe.nome"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-6 ui-sm-12">
+							<label>Valor</label>
+							<p-inputNumber mode="currency" locale="pt-BR" currency="BRL" [disabled]="true"
+										   [ngModel]="titulo.classe.valor" [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-6 ui-sm-12">
+							<label>Prazo de Devolução</label>
+							<p-inputNumber suffix=" Dias" [disabled]="true" [ngModel]="titulo.classe.prazoDevolucao"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+					</ng-template>
+				</p-fieldset>
+			</div>
+		</div>
+
+		<p-footer>
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="button" icon="pi pi-times" label="Cancelar"
+							(click)="cancelar()" class="ui-button-danger"></button>
+				</div>
+
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="submit" appFormSubmitMsg icon="pi pi-save" label="Salvar"
+							[formGroup]="form" class="ui-button-success"></button>
+				</div>
+			</div>
+		</p-footer>
+	</p-dialog>
+</form>

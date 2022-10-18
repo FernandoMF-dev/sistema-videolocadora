@@ -100,7 +100,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 
 	private atualizarFormEdicao(): void {
 		this.blockUI.start();
-		this.tituloService.findById(this.titulo.id)
+		this.tituloService.findById<Titulo>(this.titulo.id)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.form.patchValue(res),

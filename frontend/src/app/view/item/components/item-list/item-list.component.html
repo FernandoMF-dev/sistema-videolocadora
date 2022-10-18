@@ -19,7 +19,7 @@
 					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
 					 [totalRecords]="itens.totalElements" [(selection)]="itemSelecionado"
-					 sortField="nome" dataKey="id" selectionMode="single"
+					 sortField="numeroSerie" sortOrder="-1" dataKey="id" selectionMode="single"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>
@@ -125,3 +125,5 @@
 		</div>
 	</section>
 </p-card>
+
+<app-item-form *ngIf="viewItemForm" [(visible)]="viewItemForm" [item]="itemSelecionado" (onSalvar)="buscarItens()"></app-item-form>
