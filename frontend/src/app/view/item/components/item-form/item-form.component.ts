@@ -34,6 +34,8 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 	dataBr = DateTimeUtil.dataBr;
 	optionsTipoItem: SelectItem[] = TipoItem.getSelectItens();
 
+	viewItemSelect: boolean = false;
+
 	constructor(
 		private formBuilder: FormBuilder,
 		private pageNotificationService: PageNotificationService,
@@ -61,7 +63,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 	}
 
 	buscarTitulos(): void {
-		// TODO Implementar fluxo para buscar título de item
+		this.viewItemSelect = true;
 	}
 
 	formatCategoria(categoria: CategoriaEnum): string {
@@ -71,6 +73,11 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 	cancelar(): void {
 		this.onCancelar.emit();
 		this.fecharDialog();
+	}
+
+	selecionarTitulo(event: Titulo): void {
+		this.titulo = event;
+		this.form.patchValue({ 'idTitulo': event.id });
 	}
 
 	validarSalvar(): void {
@@ -110,7 +117,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 		this.tituloService.findById<Titulo>(this.item.idTitulo)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
-				(res) => this.titulo = res,
+				(res) => this.selecionarTitulo(res),
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}

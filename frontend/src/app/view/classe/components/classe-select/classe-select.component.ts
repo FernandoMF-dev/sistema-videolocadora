@@ -24,7 +24,6 @@ export class ClasseSelectComponent extends DialogUtil {
 	classes: Page<Classe> = new Page();
 	filtro: Classe = new Classe();
 	loader: boolean = false;
-
 	pageListEnum = PageListEnum;
 	cols = [
 		{ header: 'Nome', field: 'nome', text: true },

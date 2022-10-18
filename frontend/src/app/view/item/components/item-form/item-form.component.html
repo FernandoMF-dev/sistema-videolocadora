@@ -89,3 +89,5 @@
 		</p-footer>
 	</p-dialog>
 </form>
+
+<app-titulo-select *ngIf="viewItemSelect" [(visible)]="viewItemSelect" (onSalvar)="selecionarTitulo($event)"></app-titulo-select>
