@@ -71,7 +71,7 @@ export class DiretorFormComponent extends DialogUtil implements OnInit {
 
 	private atualizarFormEdicao(): void {
 		this.blockUI.start();
-		this.diretorService.findById(this.diretor.id)
+		this.diretorService.findById<Diretor>(this.diretor.id)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.form.patchValue(res),

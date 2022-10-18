@@ -6,10 +6,10 @@ import { BaseService } from '../../../shared/services/base.service';
 @Injectable({
 	providedIn: 'root'
 })
-export class TituloService extends BaseService {
+export class ItemService extends BaseService {
 
 	constructor(http: HttpClient) {
-		super(http, 'titulo', environment.serviceUrl);
+		super(http, 'item', environment.serviceUrl);
 	}
 
 }

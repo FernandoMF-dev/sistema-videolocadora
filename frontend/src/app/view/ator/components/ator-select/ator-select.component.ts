@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { LazyLoadEvent } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { AtorService } from '../../services/ator.service';
 	templateUrl: './ator-select.component.html',
 	styleUrls: ['./ator-select.component.scss']
 })
-export class AtorSelectComponent extends DialogUtil implements OnInit {
+export class AtorSelectComponent extends DialogUtil {
 
 	@Input() atoresSelecionados: Ator[] = [];
 
@@ -32,10 +32,6 @@ export class AtorSelectComponent extends DialogUtil implements OnInit {
 		private pageNotificationService: PageNotificationService
 	) {
 		super();
-	}
-
-	ngOnInit(): void {
-		this.buscarAtores();
 	}
 
 	cancelar(): void {

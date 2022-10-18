@@ -22,7 +22,7 @@
 					<div class="ui-g ui-fluid">
 						<ng-template [ngIf]="!!classeSelecionada">
 							<div class="ui-g-12 ui-sm-12">
-								<label>Nome*</label>
+								<label>Nome</label>
 								<input pInputText type="text" [readonly]="true" [ngModel]="classeSelecionada.nome"
 									   [ngModelOptions]="{standalone: true}">
 							</div>
@@ -34,7 +34,7 @@
 							</div>
 
 							<div class="ui-g-6 ui-sm-12">
-								<label>Prazo de Devolução*</label>
+								<label>Prazo de Devolução</label>
 								<p-inputNumber suffix=" Dias" [disabled]="true" [ngModel]="classeSelecionada.prazoDevolucao"
 											   [ngModelOptions]="{standalone: true}"></p-inputNumber>
 							</div>

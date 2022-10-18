@@ -1,5 +1,6 @@
-import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import localePt from '@angular/common/locales/pt';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -14,6 +15,8 @@ import { DiarioErrosComponent } from './components/diario-erros/diario-erros.com
 import { AppFooterComponent } from './components/footer/app.footer.component';
 import { AppTopbarComponent } from './components/topbar/app.topbar.component';
 import { SharedModule } from './shared/shared.module';
+
+registerLocaleData(localePt);
 
 @NgModule({
 	declarations: [
@@ -40,7 +43,7 @@ import { SharedModule } from './shared/shared.module';
 	providers: [
 		ConfirmationService,
 		{ provide: LocationStrategy, useClass: HashLocationStrategy },
-		{ provide: LOCALE_ID, useValue: 'pt' }
+		{ provide: LOCALE_ID, useValue: 'pt-BR' }
 	],
 	bootstrap: [AppComponent]
 })

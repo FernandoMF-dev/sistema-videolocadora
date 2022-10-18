@@ -72,7 +72,7 @@ export class TituloListComponent implements OnInit {
 		this.limparSelecao();
 		this.loader = true;
 
-		this.tituloService.findAll<Titulo>(event)
+		this.tituloService.findAllPageChange<Titulo>(event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.titulos = res,

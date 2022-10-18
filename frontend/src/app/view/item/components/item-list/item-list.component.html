@@ -1,9 +1,9 @@
-<h2>CLASSES</h2>
+<h2>ITENS</h2>
 
 <p-card>
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-2">
-			<button pButton type="button" label="Nova Classe" icon="pi pi-plus" (click)="inserirClasse()"
+			<button pButton type="button" label="Novo Item" icon="pi pi-plus" (click)="inserirItem()"
 					class="ui-button-success"></button>
 		</div>
 
@@ -15,18 +15,17 @@
 
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-11">
-			<p-table *ngIf="classes" [value]="classes.content" [columns]="cols" (onLazyLoad)="buscarClasses($event)"
+			<p-table *ngIf="itens" [value]="itens.content" [columns]="cols" (onLazyLoad)="buscarItens($event)"
 					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="classes.totalElements" [(selection)]="classeSelecionada"
-					 sortField="nome" dataKey="id" selectionMode="single"
+					 [totalRecords]="itens.totalElements" [(selection)]="itemSelecionado"
+					 sortField="numeroSerie" sortOrder="-1" dataKey="id" selectionMode="single"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>
-						<th *ngFor="let col of columns" id="classe-list-table-header-{{ col.field }}">
+						<th *ngFor="let col of columns" id="item-list-table-header-{{ col.field }}"
+							[ngStyle]="{'width': !!col?.width ? col.width : 'auto'}">
 							{{ !!col?.header ? col.header : '' }}
-
-							<p-sortIcon *ngIf="col?.field" [field]="col.field" [pSortableColumn]="col.field"></p-sortIcon>
 						</th>
 					</tr>
 
@@ -34,17 +33,32 @@
 						<th *ngFor="let col of columns" id="classe-list-table-filter-{{ col.field }}">
 							<ng-template [ngIf]="!!col?.field">
 								<ng-template [ngIf]="!!col?.text">
-									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarClasses()">
+									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarItens()">
+								</ng-template>
+
+								<ng-template [ngIf]="!!col?.date">
+									<p-calendar [(ngModel)]="filtro[col.field]" dateFormat="dd/mm/yy" [locale]="dataBr"
+												[showButtonBar]="true" (onSelect)="buscarItens()" (onInput)="buscarItens()"></p-calendar>
 								</ng-template>
 
 								<ng-template [ngIf]="!!col.currency">
-									<p-inputNumber [(ngModel)]="filtro[col.field]" mode="currency" (onBlur)="buscarClasses()"
+									<p-inputNumber [(ngModel)]="filtro[col.field]" mode="currency" (onBlur)="buscarItens()"
 												   locale="pt-BR" currency="BRL"></p-inputNumber>
 								</ng-template>
 
 								<ng-template [ngIf]="!!col.integer">
-									<p-inputNumber [(ngModel)]="filtro[col.field]" (onBlur)="buscarClasses()"
+									<p-inputNumber [(ngModel)]="filtro[col.field]" (onBlur)="buscarItens()"
 												   [maxFractionDigits]="0"></p-inputNumber>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.tipoItem">
+									<p-dropdown [options]="optionsTipoItem" [(ngModel)]="filtro[col.field]" [showClear]="true"
+												placeholder="Selecione..." (onChange)="buscarItens()"></p-dropdown>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.categoria">
+									<p-dropdown [options]="optionsCategoria" [(ngModel)]="filtro[col.field]" [showClear]="true"
+												placeholder="Selecione..." (onChange)="buscarItens()"></p-dropdown>
 								</ng-template>
 							</ng-template>
 						</th>
@@ -52,10 +66,14 @@
 				</ng-template>
 
 				<ng-template pTemplate="body" let-rowData let-columns="columns">
-					<tr [pSelectableRow]="rowData">
+					<tr [pSelectableRow]="rowData" [pTooltip]="!rowData['sinopse'] ? '' : rowData['sinopse']" tooltipPosition="bottom">
 						<td *ngFor="let col of columns">
 							<ng-template [ngIf]="!!col.text">
 								{{ rowData[col.field] }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.date">
+								{{ rowData[col.field] | date: 'dd/MM/yyyy' }}
 							</ng-template>
 
 							<ng-template [ngIf]="!!col.currency">
@@ -64,6 +82,14 @@
 
 							<ng-template [ngIf]="!!col.integer">
 								{{ rowData[col.field] | number:'1.0-0':'pt-BR' }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.tipoItem">
+								{{ formatTipoItem(rowData[col.field]) }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.categoria">
+								{{ formatCategoria(rowData[col.field]) }}
 							</ng-template>
 
 							{{ !col?.sufix ? '' : col.sufix }}
@@ -83,22 +109,21 @@
 
 		<div class="ui-g-1 position-sticky centralized">
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Buscar" (click)="buscarClasses()"
+				<button pButton type="button" pTooltip="Buscar" (click)="buscarItens()"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
 			</div>
 
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Editar" (click)="editarClasse()" [disabled]="disableEditar"
+				<button pButton type="button" pTooltip="Editar" (click)="editarItem()" [disabled]="disableEditar"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-pencil"></button>
 			</div>
 
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Excluir" (click)="excluirClasses()" [disabled]="disableExcluir"
+				<button pButton type="button" pTooltip="Excluir" (click)="excluirItem()" [disabled]="disableExcluir"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-trash"></button>
 			</div>
 		</div>
 	</section>
 </p-card>
 
-<app-classe-form *ngIf="viewClasseForm" (onSalvar)="buscarClasses()" [(visible)]="viewClasseForm"
-				 [classe]="classeSelecionada"></app-classe-form>
+<app-item-form *ngIf="viewItemForm" [(visible)]="viewItemForm" [item]="itemSelecionado" (onSalvar)="buscarItens()"></app-item-form>

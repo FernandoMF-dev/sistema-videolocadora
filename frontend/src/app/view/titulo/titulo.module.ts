@@ -7,6 +7,7 @@ import { ClasseModule } from '../classe/classe.module';
 import { TituloCardComponent } from './components/titulo-card/titulo-card.component';
 import { TituloFormComponent } from './components/titulo-form/titulo-form.component';
 import { TituloListComponent } from './components/titulo-list/titulo-list.component';
+import { TituloSelectComponent } from './components/titulo-select/titulo-select.component';
 import { TituloService } from './services/titulo.service';
 import { TituloRoutingModule } from './titulo-routing.module';
 
@@ -14,7 +15,8 @@ import { TituloRoutingModule } from './titulo-routing.module';
 	declarations: [
 		TituloListComponent,
 		TituloCardComponent,
-		TituloFormComponent
+		TituloFormComponent,
+		TituloSelectComponent
 	],
 	imports: [
 		CommonModule,
@@ -27,6 +29,9 @@ import { TituloRoutingModule } from './titulo-routing.module';
 	],
 	providers: [
 		TituloService
+	],
+	exports: [
+		TituloSelectComponent
 	]
 })
 export class TituloModule {

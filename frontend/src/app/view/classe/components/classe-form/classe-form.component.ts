@@ -73,7 +73,7 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 
 	private atualizarFormEdicao(): void {
 		this.blockUI.start();
-		this.classeService.findById(this.classe.id)
+		this.classeService.findById<Classe>(this.classe.id)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.form.patchValue(res),

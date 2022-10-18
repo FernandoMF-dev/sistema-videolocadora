@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { LazyLoadEvent } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { ClasseService } from '../../services/classe.service';
 	templateUrl: './classe-select.component.html',
 	styleUrls: ['./classe-select.component.scss']
 })
-export class ClasseSelectComponent extends DialogUtil implements OnInit {
+export class ClasseSelectComponent extends DialogUtil {
 
 	@Input() classeSelecionada: Classe;
 
@@ -24,7 +24,6 @@ export class ClasseSelectComponent extends DialogUtil implements OnInit {
 	classes: Page<Classe> = new Page();
 	filtro: Classe = new Classe();
 	loader: boolean = false;
-
 	pageListEnum = PageListEnum;
 	cols = [
 		{ header: 'Nome', field: 'nome', text: true },
@@ -37,10 +36,6 @@ export class ClasseSelectComponent extends DialogUtil implements OnInit {
 		private pageNotificationService: PageNotificationService
 	) {
 		super();
-	}
-
-	ngOnInit(): void {
-		this.buscarClasses();
 	}
 
 	cancelar(): void {
