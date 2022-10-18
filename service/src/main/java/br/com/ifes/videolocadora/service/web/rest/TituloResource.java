@@ -3,9 +3,12 @@ package br.com.ifes.videolocadora.service.web.rest;
 
 import br.com.ifes.videolocadora.service.service.TituloService;
 import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
+import br.com.ifes.videolocadora.service.service.dto.TituloListDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +28,12 @@ public class TituloResource {
 	@Timed
 	public ResponseEntity<TituloDTO> obter(@PathVariable Long id) {
 		return ResponseEntity.ok().body(servico.obterPorId(id));
+	}
+
+	@GetMapping
+	@Timed
+	public ResponseEntity<Page<TituloListDTO>> obterTodos(Pageable page) {
+		return ResponseEntity.ok().body(servico.obterTodos(page));
 	}
 
 	@PostMapping()

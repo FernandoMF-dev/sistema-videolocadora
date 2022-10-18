@@ -14,8 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -50,10 +50,14 @@ public class Titulo implements Serializable {
 	private Boolean excluido;
 
 	@JoinColumn(name = "id_classe")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Classe classe;
 
-	@OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<TituloAtor> atores;
+	@JoinColumn(name = "id_diretor")
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+	private Diretor diretor;
+
+	@ManyToMany(mappedBy = "titulos", cascade = CascadeType.MERGE)
+	private List<Ator> atores;
 
 }

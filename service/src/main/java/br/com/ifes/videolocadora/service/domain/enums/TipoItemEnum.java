@@ -6,4 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum TipoItemEnum {
+
+	TIPO_ITEM_TESTE("teste");
+
+	private final String descricao;
+
+
 }

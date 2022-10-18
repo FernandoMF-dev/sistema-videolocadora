@@ -23,10 +23,10 @@ public class TituloDTO implements Serializable {
 
 	private CategoriaEnum categoria;
 
-	private Boolean excluido;
-
 	private ClasseDTO classe;
 
-	private List<TituloAtorDTO> atores;
+	private List<AtorDTO> atores;
+
+	private DiretorDTO diretor;
 
 }

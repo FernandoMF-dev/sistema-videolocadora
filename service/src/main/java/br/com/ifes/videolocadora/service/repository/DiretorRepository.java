@@ -14,10 +14,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface DiretorRepository extends JpaRepository<Diretor, Long>, JpaSpecificationExecutor<Diretor> {
 
-	@Query("select new br.com.ifes.videolocadora.service.service.dto.DiretorDTO(d.id,d.nome,d.excluido) from Diretor d where  d.excluido = false")
+	@Query("select new br.com.ifes.videolocadora.service.service.dto.DiretorDTO(d.id,d.nome) from Diretor d where  d.excluido = false")
 	Page<DiretorDTO> findAllList(Pageable page);
 
-	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.DiretorDTO(d.id,d.nome,d.excluido)" +
+	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.DiretorDTO(d.id,d.nome)" +
 			" FROM Diretor d " +
 			" WHERE (d.excluido = false ) " +
 			" AND (LOWER(d.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) ")

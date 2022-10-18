@@ -26,8 +26,9 @@ public class DiretorService {
 	}
 
 	public DiretorDTO salvar(DiretorDTO dto) {
-		dto.setExcluido(false);
-		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
+		Diretor entity = mapper.toEntity(dto);
+		entity.setExcluido(false);
+		return mapper.toDto(repositorio.save(entity));
 	}
 
 	public Page<DiretorDTO> obterTodos(Pageable page) {

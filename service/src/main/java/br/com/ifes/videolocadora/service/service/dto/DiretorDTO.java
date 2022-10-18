@@ -17,6 +17,4 @@ public class DiretorDTO implements Serializable {
 
 	private String nome;
 
-	private Boolean excluido;
-
 }
