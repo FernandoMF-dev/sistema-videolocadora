@@ -10,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 @RequiredArgsConstructor
 public class TituloService {
@@ -22,6 +24,7 @@ public class TituloService {
 				.orElseThrow(() -> new RuntimeException("Título não encontrado"));
 	}
 
+	@Transactional
 	public TituloDTO obterPorId(Long id) {
 		return mapper.toDto(procurarPorId(id));
 	}
