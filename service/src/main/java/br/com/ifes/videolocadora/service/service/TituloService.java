@@ -3,6 +3,7 @@ package br.com.ifes.videolocadora.service.service;
 import br.com.ifes.videolocadora.service.domain.entity.Titulo;
 import br.com.ifes.videolocadora.service.repository.TituloRepository;
 import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
+import br.com.ifes.videolocadora.service.service.dto.TituloListDTO;
 import br.com.ifes.videolocadora.service.service.mapper.TituloMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -29,7 +30,7 @@ public class TituloService {
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
 	}
 
-	public Page<TituloDTO> obterTodos(Pageable page) {
+	public Page<TituloListDTO> obterTodos(Pageable page) {
 		return repositorio.findAllList(page);
 	}
 
