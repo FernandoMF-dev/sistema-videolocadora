@@ -33,6 +33,11 @@ const routes: Routes = [
 		path: RouteNameEnum.TITULO,
 		loadChildren: './view/titulo/titulo.module#TituloModule',
 		data: { breadcrumb: 'Título' }
+	},
+	{
+		path: RouteNameEnum.ITEM,
+		loadChildren: './view/item/item.module#ItemModule',
+		data: { breadcrumb: 'Item' }
 	}
 ];
 

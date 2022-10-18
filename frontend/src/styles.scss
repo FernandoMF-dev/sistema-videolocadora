@@ -36,6 +36,18 @@ p-inputnumber > span.ui-inputnumber > span.ui-inputnumber-button-group > button.
 	height: 1rem;
 }
 
+p-dropdown > .ui-dropdown.ui-widget {
+	min-width: 0;
+
+	> div.ui-dropdown-label-container {
+		overflow: hidden;
+
+		> span.ui-dropdown-label {
+			text-overflow: ellipsis;
+		}
+	}
+}
+
 .ui-dialog {
 	max-width: 90vw;
 	max-height: 90vh;

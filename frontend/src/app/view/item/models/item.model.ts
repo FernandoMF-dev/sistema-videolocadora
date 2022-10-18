@@ -1,4 +1,3 @@
-import { Titulo } from '../../titulo/models/titulo.model';
 import { TipoItemEnum } from '../enums/tipo-item.enum';
 
 export class Item {
@@ -7,6 +6,4 @@ export class Item {
 	dataAquisicao: Date;
 	tipoItem: TipoItemEnum;
 	idTitulo: number;
-
-	titulo: Titulo;
 }
