@@ -27,4 +27,8 @@ export class ClienteService extends BaseService {
 		return this.http.get<TreeNodeModel<Cliente>[]>(`${ this.getUrl() }/dependente?idSocio=${ idSocio }`);
 	}
 
+	public patchAtivo(id: number, value: boolean): Observable<void> {
+		return this.http.patch<void>(`${ this.getUrlId(id) }/ativo?value=${ value }`, null);
+	}
+
 }

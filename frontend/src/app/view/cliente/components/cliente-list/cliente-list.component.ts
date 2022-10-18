@@ -92,7 +92,8 @@ export class ClienteListComponent {
 	}
 
 	patchAtivo(): void {
-		// TODO Implementar fluxo para alterar o status do cliente selecionado
+		this.clienteSelecionado.ativo = !this.clienteSelecionado.ativo;
+		this.clienteService.patchAtivo(this.clienteSelecionado.id, this.clienteSelecionado.ativo).subscribe();
 	}
 
 	limparFiltro(): void {
