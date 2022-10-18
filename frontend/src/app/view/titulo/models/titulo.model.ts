@@ -11,5 +11,5 @@ export class Titulo {
 	classe?: Classe;
 	atores?: Ator[] = [];
 
-	atoresNomes?: string;
+	atoresNomes?: string = '';
 }

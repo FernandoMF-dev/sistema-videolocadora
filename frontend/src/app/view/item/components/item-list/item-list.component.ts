@@ -10,7 +10,6 @@ import { MensagemService } from '../../../../shared/services/mensagem.service';
 import { ConversionUtil } from '../../../../shared/utils/conversion.util';
 import { DateTimeUtil } from '../../../../shared/utils/date-time.util';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
-import { Classe } from '../../../classe/models/classe.model';
 import { Categoria, CategoriaEnum } from '../../../titulo/enums/categoria.enum';
 import { TipoItem, TipoItemEnum } from '../../enums/tipo-item.enum';
 import { ItemList } from '../../models/item-list.model';
@@ -114,7 +113,7 @@ export class ItemListComponent {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				() => {
-					this.pageNotificationService.addSuccessMessage('Classe excluida com sucesso', 'Sucesso');
+					this.pageNotificationService.addSuccessMessage('Item excluido com sucesso', 'Sucesso');
 					this.buscarItens();
 				},
 				(err) => this.pageNotificationService.addErrorMessage(err.message)

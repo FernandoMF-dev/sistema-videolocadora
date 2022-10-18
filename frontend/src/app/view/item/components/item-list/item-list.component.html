@@ -30,7 +30,7 @@
 					</tr>
 
 					<tr class="tabela-filtro">
-						<th *ngFor="let col of columns" id="classe-list-table-filter-{{ col.field }}">
+						<th *ngFor="let col of columns" id="item-list-table-filter-{{ col.field }}">
 							<ng-template [ngIf]="!!col?.field">
 								<ng-template [ngIf]="!!col?.text">
 									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarItens()">
