@@ -51,6 +51,6 @@ public class TituloService {
 	}
 
 	public Page<TituloListDTO> filtrar(TituloDTO dto, Pageable pageable) {
-		return repositorio.findAllList(pageable);
+		return repositorio.filtrar(dto, pageable);
 	}
 }

@@ -39,5 +39,5 @@ public interface TituloRepository extends JpaRepository<Titulo, Long>, JpaSpecif
 			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
 
 			"")
-	Page<TituloDTO> filtrar(@Param("filter") TituloDTO filter, Pageable pageable);
+	Page<TituloListDTO> filtrar(@Param("filter") TituloDTO filter, Pageable pageable);
 }
