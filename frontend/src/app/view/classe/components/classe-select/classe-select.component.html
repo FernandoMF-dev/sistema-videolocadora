@@ -28,7 +28,7 @@
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>
-						<th *ngFor="let col of columns" id="classe-list-table-header-{{ col.field }}">
+						<th *ngFor="let col of columns" id="classe-select-table-header-{{ col.field }}">
 							{{ !!col?.header ? col.header : '' }}
 
 							<p-sortIcon *ngIf="col?.field" [field]="col.field" [pSortableColumn]="col.field"></p-sortIcon>
@@ -36,7 +36,7 @@
 					</tr>
 
 					<tr class="tabela-filtro">
-						<th *ngFor="let col of columns" id="classe-list-table-filter-{{ col.field }}">
+						<th *ngFor="let col of columns" id="classe-select-table-filter-{{ col.field }}">
 							<ng-template [ngIf]="!!col?.field">
 								<ng-template [ngIf]="!!col?.text">
 									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarClasses()">

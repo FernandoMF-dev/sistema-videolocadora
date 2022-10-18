@@ -30,7 +30,7 @@ export class ClasseListComponent {
 	cols = [
 		{ header: 'Nome', field: 'nome', text: true },
 		{ header: 'Valor', field: 'valor', currency: true },
-		{ header: 'Prazo de Devolução', field: 'prazoDevolucao', days: true }
+		{ header: 'Prazo de Devolução', field: 'prazoDevolucao', sufix: ' Dias', integer: true }
 	];
 
 	constructor(
@@ -93,7 +93,7 @@ export class ClasseListComponent {
 	excluirClasses(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR CLASSE',
-			`Tem certeza que seja excluir a classe "${ this.classeSelecionada.nome }"`,
+			`Tem certeza que seja excluir a classe "${ this.classeSelecionada.nome }"?`,
 			this,
 			() => this.excluir()
 		);

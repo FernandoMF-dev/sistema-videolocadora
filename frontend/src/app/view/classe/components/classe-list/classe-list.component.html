@@ -42,8 +42,9 @@
 												   locale="pt-BR" currency="BRL"></p-inputNumber>
 								</ng-template>
 
-								<ng-template [ngIf]="!!col.days">
-									<p-inputNumber [(ngModel)]="filtro[col.field]" (onBlur)="buscarClasses()"></p-inputNumber>
+								<ng-template [ngIf]="!!col.integer">
+									<p-inputNumber [(ngModel)]="filtro[col.field]" (onBlur)="buscarClasses()"
+												   [maxFractionDigits]="0"></p-inputNumber>
 								</ng-template>
 							</ng-template>
 						</th>
@@ -61,9 +62,11 @@
 								{{ formatCurrency(rowData[col.field]) }}
 							</ng-template>
 
-							<ng-template [ngIf]="!!col.days">
-								{{ rowData[col.field] }} Dias
+							<ng-template [ngIf]="!!col.integer">
+								{{ rowData[col.field] | number:'1.0-0':'pt-BR' }}
 							</ng-template>
+
+							{{ !col?.sufix ? '' : col.sufix }}
 						</td>
 					</tr>
 				</ng-template>
