@@ -14,8 +14,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -53,7 +53,7 @@ public class Titulo implements Serializable {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Classe classe;
 
-	@OneToMany(mappedBy = "titulo", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<TituloAtor> atores;
+	@ManyToMany(mappedBy = "titulos", cascade = CascadeType.ALL)
+	private List<Ator> atores;
 
 }

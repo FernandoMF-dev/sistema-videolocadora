@@ -15,19 +15,20 @@ import org.springframework.stereotype.Repository;
 public interface TituloRepository extends JpaRepository<Titulo, Long>, JpaSpecificationExecutor<Titulo> {
 
 	@Query(value = "SELECT t.id, t.nome,t.sinopse,t.ano,t.categoria," +
-			"coalesce(t.classe.id,t.classe.nome,t.classe.valor,t.classe.prazoDevolucao) as classe," +
-			"coalesce(ta.ator.id,ta.ator.nome) as atores"+
+			"t.classe.id,t.classe.nome,t.classe.valor,t.classe.prazoDevolucao as classe," +
+			" ta.id,ta.nome as atores"+
 			" FROM Titulo t" +
-			" JOIN TituloAtor ta on t.atores" +
-			" WHERE t.excluido = FALSE")
+			" LEFT JOIN t.atores ta" +
+			" WHERE t.excluido = FALSE", nativeQuery = true)
 	Page<TituloDTO> findAllList(Pageable page);
 
 	@Query("SELECT t.id, t.nome,t.sinopse,t.ano,t.categoria," +
 			"coalesce(t.classe.id,t.classe.nome,t.classe.valor,t.classe.prazoDevolucao) as classe," +
 			"coalesce(ta.ator.id,ta.ator.nome) as atores"+
 			" FROM Titulo t" +
-			" JOIN TituloAtor ta on t.atores" +
-			" WHERE (t.excluido = FALSE) " +
-			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) ")
+			" JOIN TituloAtor ta" +
+			" WHERE t.excluido = FALSE" +
+//			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
+			"")
 	Page<TituloDTO> filtrar(@Param("filter") TituloDTO filter, Pageable pageable);
 }

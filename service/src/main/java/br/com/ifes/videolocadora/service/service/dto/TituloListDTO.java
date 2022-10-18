@@ -6,12 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class TituloDTO implements Serializable {
+public class TituloListDTO implements Serializable {
 
 	private Long id;
 
@@ -25,6 +24,6 @@ public class TituloDTO implements Serializable {
 
 	private ClasseDTO classe;
 
-	private List<AtorDTO> atoresList;
+	private String atores;
 
 }
