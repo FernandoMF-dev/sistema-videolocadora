@@ -33,6 +33,7 @@ public class ClienteService {
 
 	public ClienteDTO inserir(ClienteDTO dto) {
 		dto.setId(null);
+		dto.setAtivo(true);
 		dto.setNumeroInscricao(gerarNumeroInscricao());
 		return salvar(dto);
 	}
@@ -56,6 +57,12 @@ public class ClienteService {
 		if (TipoClienteEnum.SOCIO.equals(entity.getTipoCliente())) {
 			this.excluirDependente(entity.getId());
 		}
+	}
+
+	public void patchAtivo(Long id, Boolean value) {
+		Cliente entity = procurarPorId(id);
+		entity.setAtivo(value);
+		repositorio.save(entity);
 	}
 
 	public Page<ClienteDTO> filtrar(ClienteDTO dto, Pageable pageable) {
