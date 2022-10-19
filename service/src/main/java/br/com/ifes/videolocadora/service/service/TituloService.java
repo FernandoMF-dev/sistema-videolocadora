@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,12 +44,12 @@ public class TituloService {
 		Page<TituloListDTO> tituloList = repositorio.findAllList(page);
 		List<Long> idTitulos = tituloList.stream().map(TituloListDTO::getId).collect(Collectors.toList());
 		List<TituloAtor> relacaoList = repositorio.findAtorByTituloId(idTitulos);
-		relacaoList.forEach(relacao -> tituloList.getContent().forEach(titulo -> {
-			if (relacao.getIdTitulo().equals(titulo.getId())) {
-				titulo.setAtoresNomes(titulo.getAtoresNomes().concat(relacao.getAtor().getNome()));
-				titulo.setAtoresNomes(titulo.getAtoresNomes().concat(", "));
-			}
-		}));
+
+		tituloList.getContent().forEach(titulo -> titulo.setAtoresNomes(relacaoList.stream()
+				.filter(relacao -> Objects.equals(relacao.getIdTitulo(), titulo.getId()))
+				.map(relacao -> relacao.getAtor().getNome())
+				.collect(Collectors.joining(", "))));
+
 		return tituloList;
 	}
 
