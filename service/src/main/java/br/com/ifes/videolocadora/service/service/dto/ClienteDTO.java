@@ -16,6 +16,8 @@ public class ClienteDTO implements Serializable {
 
 	private Long id;
 
+	private Long idResponsavel;
+
 	private Integer numeroInscricao;
 
 	private String nome;

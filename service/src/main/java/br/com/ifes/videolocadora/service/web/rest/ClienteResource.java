@@ -3,6 +3,7 @@ package br.com.ifes.videolocadora.service.web.rest;
 
 import br.com.ifes.videolocadora.service.service.ClienteService;
 import br.com.ifes.videolocadora.service.service.dto.ClienteDTO;
+import br.com.ifes.videolocadora.service.service.dto.TreeNodeDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +42,7 @@ public class ClienteResource {
 
 	@PostMapping("/filtro/socio")
 	@Timed
-	public ResponseEntity<Page<ClienteDTO>> filtro(@RequestBody ClienteDTO dto, Pageable page) {
+	public ResponseEntity<Page<TreeNodeDTO>> filtro(@RequestBody ClienteDTO dto, Pageable page) {
 		return ResponseEntity.ok().body(servico.filtrar(dto, page));
 	}
 

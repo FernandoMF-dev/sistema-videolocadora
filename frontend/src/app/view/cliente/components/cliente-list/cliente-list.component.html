@@ -52,24 +52,23 @@
 				</ng-template>
 
 				<ng-template pTemplate="body" let-rowData let-columns="columns">
-					<tr [pSelectableRow]="rowData">
+					<tr [ttSelectableRow]="rowData" >
 						<td *ngFor="let col of columns; let i = index">
 							<p-treeTableToggler [rowNode]="rowData" *ngIf="i === 0"></p-treeTableToggler>
-
 							<ng-template [ngIf]="!!col.text">
-								{{ rowData[col.field] }}
+								{{ rowData.node.data[col.field] }}
 							</ng-template>
 
 							<ng-template [ngIf]="!!col.integer">
-								{{ rowData[col.field] | number:'1.0-0':'pt-BR' }}
+								{{ rowData.node.data[col.field] | number:'1.0-0':'pt-BR' }}
 							</ng-template>
 
 							<ng-template [ngIf]="!!col.tipoCliente">
-								{{ formatTipoCliente(rowData[col.field]) }}
+								{{ formatTipoCliente(rowData.node.data[col.field]) }}
 							</ng-template>
 
 							<ng-template [ngIf]="!!col.status">
-								{{ rowData[col.field] ? 'ATIVO' : 'INATIVO' }}
+								{{ rowData.node.data[col.field] ? 'ATIVO' : 'INATIVO' }}
 							</ng-template>
 
 							{{ !col?.sufix ? '' : col.sufix }}
@@ -118,6 +117,6 @@
 	</section>
 </p-card>
 
-<app-cliente-form *ngIf="viewClienteForm" [(visible)]="viewClienteForm" [cliente]="clienteSelecionado"
+<app-cliente-form *ngIf="viewClienteForm" [(visible)]="viewClienteForm" [cliente]="clienteSelecionado?.data"
 				  [tipoCliente]="tipoClienteClienteForm" [idResponsavel]="responsavelClienteForm?.id"
 				  (onSalvar)="buscarClientesSocios()"></app-cliente-form>

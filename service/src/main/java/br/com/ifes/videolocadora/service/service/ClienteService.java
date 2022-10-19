@@ -4,6 +4,7 @@ import br.com.ifes.videolocadora.service.domain.entity.Cliente;
 import br.com.ifes.videolocadora.service.domain.enums.TipoClienteEnum;
 import br.com.ifes.videolocadora.service.repository.ClienteRepository;
 import br.com.ifes.videolocadora.service.service.dto.ClienteDTO;
+import br.com.ifes.videolocadora.service.service.dto.TreeNodeDTO;
 import br.com.ifes.videolocadora.service.service.mapper.ClienteMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,7 @@ public class ClienteService {
 		return salvar(dto);
 	}
 
-	public Page<ClienteDTO> obterTodos(Pageable page) {
+	public Page<TreeNodeDTO> obterTodos(Pageable page) {
 		return repositorio.findAllList(page);
 	}
 
@@ -65,7 +66,7 @@ public class ClienteService {
 		repositorio.save(entity);
 	}
 
-	public Page<ClienteDTO> filtrar(ClienteDTO dto, Pageable pageable) {
+	public Page<TreeNodeDTO> filtrar(ClienteDTO dto, Pageable pageable) {
 		return repositorio.filtrar(dto, pageable);
 	}
 

@@ -25,7 +25,7 @@ export class ClienteListComponent {
 
 	clientes: Page<TreeNodeModel<Cliente>> = new Page();
 	filtro: Cliente = new Cliente();
-	clienteSelecionado: Cliente;
+	clienteSelecionado: any;
 	loader: boolean = false;
 
 	optionsStatus: SelectItem[] = [
@@ -34,7 +34,7 @@ export class ClienteListComponent {
 	];
 
 	viewClienteForm: boolean = false;
-	responsavelClienteForm: Cliente;
+	responsavelClienteForm: Partial<Cliente>;
 	tipoClienteClienteForm: TipoClienteEnum;
 
 	pageListEnum = PageListEnum;
@@ -60,7 +60,7 @@ export class ClienteListComponent {
 	}
 
 	get disableAtribuirDependente(): boolean {
-		return this.disableEditar || this.clienteSelecionado.tipoCliente !== TipoClienteEnum.SOCIO;
+		return this.disableEditar || this.clienteSelecionado.data.tipoCliente !== TipoClienteEnum.SOCIO;
 	}
 
 	get disableExcluir(): boolean {
@@ -68,7 +68,10 @@ export class ClienteListComponent {
 	}
 
 	formatTipoCliente(tipoItem: TipoClienteEnum): string {
-		return TipoCliente.findById(tipoItem).label;
+		if(tipoItem){
+			return TipoCliente.findById(tipoItem).label;
+		}
+		return '';
 	}
 
 	inserirCliente(): void {
@@ -80,20 +83,26 @@ export class ClienteListComponent {
 
 	editarCliente(): void {
 		this.responsavelClienteForm = null;
-		this.tipoClienteClienteForm = this.clienteSelecionado.tipoCliente;
+		this.tipoClienteClienteForm = this.clienteSelecionado.data.tipoCliente;
+
+		if (this.tipoClienteClienteForm === TipoClienteEnum.DEPENDENTE) {
+			this.responsavelClienteForm = { id: this.clienteSelecionado.data.idResponsavel }
+		}
+
 		this.viewClienteForm = true;
 	}
 
 	atribuirDependente(): void {
-		this.responsavelClienteForm = this.clienteSelecionado;
+		console.log(this.clienteSelecionado.data);
+		this.responsavelClienteForm = this.clienteSelecionado.data;
 		this.clienteSelecionado = null;
 		this.tipoClienteClienteForm = TipoClienteEnum.DEPENDENTE;
 		this.viewClienteForm = true;
 	}
 
 	patchAtivo(): void {
-		this.clienteSelecionado.ativo = !this.clienteSelecionado.ativo;
-		this.clienteService.patchAtivo(this.clienteSelecionado.id, this.clienteSelecionado.ativo).subscribe();
+		this.clienteSelecionado.data.ativo = !this.clienteSelecionado.data.ativo;
+		this.clienteService.patchAtivo(this.clienteSelecionado.data.id, this.clienteSelecionado.data.ativo).subscribe();
 	}
 
 	limparFiltro(): void {
@@ -106,9 +115,15 @@ export class ClienteListComponent {
 		this.clienteService.filterSocio(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
-				(res) => this.clientes = res,
+				(res) => {
+					this.clientes = res
+				},
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
+	}
+
+	teste(e){
+		console.log(e);
 	}
 
 	buscarClientesDependentes(event: NodeExpandEvent<Cliente>): void {
@@ -128,7 +143,7 @@ export class ClienteListComponent {
 	excluirCliente(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR ITEM',
-			`Tem certeza que seja excluir o cliente "${ this.clienteSelecionado.nome }"?`,
+			`Tem certeza que seja excluir o cliente "${ this.clienteSelecionado.data.nome }"?`,
 			this,
 			() => this.excluir()
 		);
@@ -136,7 +151,7 @@ export class ClienteListComponent {
 
 	private excluir(): void {
 		this.blockUI.start(MensagemUtil.BLOCKUI_EXCLUINDO);
-		this.clienteService.delete(this.clienteSelecionado.id)
+		this.clienteService.delete(this.clienteSelecionado.data.id)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				() => {
