@@ -13,5 +13,5 @@ export class Titulo {
 	diretor?: Diretor;
 	atores?: Ator[] = [];
 
-	atoresNomes?: string;
+	atoresNomes?: string = '';
 }

@@ -1,0 +1,85 @@
+<form [formGroup]="form" (ngSubmit)="validarSalvar()">
+	<p-dialog [(visible)]="visible" [header]="tituloDialog" modal="true" styleClass="dialog-lg">
+		<div class="ui-g ui-fluid">
+			<div *ngIf="idResponsavel" class="ui-g-12 ui-sm-12">
+				<p-fieldset legend="Sócio Responsável">
+					<ng-template [ngIf]="responsavel">
+						<div class="ui-g-8 ui-sm-12">
+							<label>Nome</label>
+							<input pInputText type="text" [ngModel]="responsavel.nome" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-2 ui-sm-12">
+							<label>Nº Inscrição</label>
+							<p-inputNumber [ngModel]="responsavel.numeroInscricao" [disabled]="true"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>Status</label>
+							<p-dropdown [options]="optionsStatus" [ngModel]="responsavel.ativo" [readonly]="true"
+										[ngModelOptions]="{standalone: true}"></p-dropdown>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>CPF</label>
+							<p-inputMask [unmask]="true" [ngModel]="responsavel.cpf" [readonly]="true" mask="999.999.999-99"
+										 [ngModelOptions]="{standalone: true}"></p-inputMask>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>Telefone</label>
+							<input pInputText type="tel" [ngModel]="responsavel.telefone" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+					</ng-template>
+				</p-fieldset>
+			</div>
+
+			<div class=" ui-sm-12" [ngClass]="{'ui-g-9': isEdicao, 'ui-g-12': !isEdicao}">
+				<label>Nome*</label>
+				<input pInputText type="text" formControlName="nome">
+			</div>
+
+			<div *ngIf="isEdicao" class="ui-g-3 ui-sm-12">
+				<label>Nº Inscrição*</label>
+				<input pInputText type="text" formControlName="numeroInscricao" [readonly]="true">
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<label>Status*</label>
+				<p-dropdown [options]="optionsStatus" formControlName="ativo" placeholder="Selecione..."></p-dropdown>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<label>CPF*</label>
+				<p-inputMask [unmask]="true" formControlName="cpf" mask="999.999.999-99"></p-inputMask>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<label>Telefone*</label>
+				<input pInputText type="tel" formControlName="telefone">
+			</div>
+
+			<div class="ui-g-12 ui-sm-12">
+				<label>Endereço*</label>
+				<input pInputText type="text" formControlName="endereco">
+			</div>
+		</div>
+
+		<p-footer>
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="button" icon="pi pi-times" label="Cancelar"
+							(click)="cancelar()" class="ui-button-danger"></button>
+				</div>
+
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="submit" appFormSubmitMsg icon="pi pi-save" label="Salvar"
+							[formGroup]="form" class="ui-button-success"></button>
+				</div>
+			</div>
+		</p-footer>
+	</p-dialog>
+</form>

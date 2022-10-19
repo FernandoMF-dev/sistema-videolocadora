@@ -1,0 +1,123 @@
+<h2>CLIENTES</h2>
+
+<p-card>
+	<section class="ui-g ui-fluid">
+		<div class="ui-g-2">
+			<button pButton type="button" label="Novo Item" icon="pi pi-plus" (click)="inserirCliente()"
+					class="ui-button-success"></button>
+		</div>
+
+		<div class="ui-g-2 ui-sm-11 ui-g-offset-7 ui-sm-offset-0">
+			<button pButton type="button" label="Limpar Filtro" icon="pi pi-times" (click)="limparFiltro()"
+					class="ui-button-secondary"></button>
+		</div>
+	</section>
+
+	<section class="ui-g ui-fluid">
+		<div class="ui-g-11">
+			<p-treeTable *ngIf="clientes" [value]="clientes.content" [columns]="cols" (onLazyLoad)="buscarClientesSocios($event)"
+						 (onNodeExpand)="buscarClientesDependentes($event)" [showLoader]="loader"
+						 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true"
+						 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
+						 [totalRecords]="clientes.totalElements" [(selection)]="clienteSelecionado"
+						 sortField="numeroSerie" sortOrder="-1" dataKey="id" selectionMode="single"
+						 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
+				<ng-template pTemplate="header" let-columns>
+					<tr>
+						<th *ngFor="let col of columns" id="cliente-list-table-header-{{ col.field }}"
+							[ngStyle]="{'width': !!col?.width ? col.width : 'auto'}">
+							{{ !!col?.header ? col.header : '' }}
+						</th>
+					</tr>
+
+					<tr class="tabela-filtro">
+						<th *ngFor="let col of columns" id="cliente-list-table-filter-{{ col.field }}">
+							<ng-template [ngIf]="!!col?.field">
+								<ng-template [ngIf]="!!col?.text">
+									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarClientesSocios()">
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.integer">
+									<p-inputNumber [(ngModel)]="filtro[col.field]" (onBlur)="buscarClientesSocios()"
+												   [maxFractionDigits]="0"></p-inputNumber>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.status">
+									<p-dropdown [options]="optionsStatus" [(ngModel)]="filtro[col.field]" [showClear]="true"
+												placeholder="Selecione..." (onChange)="buscarClientesSocios()"></p-dropdown>
+								</ng-template>
+							</ng-template>
+						</th>
+					</tr>
+				</ng-template>
+
+				<ng-template pTemplate="body" let-rowData let-columns="columns">
+					<tr [pSelectableRow]="rowData">
+						<td *ngFor="let col of columns; let i = index">
+							<p-treeTableToggler [rowNode]="rowData" *ngIf="i === 0"></p-treeTableToggler>
+
+							<ng-template [ngIf]="!!col.text">
+								{{ rowData[col.field] }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.integer">
+								{{ rowData[col.field] | number:'1.0-0':'pt-BR' }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.tipoCliente">
+								{{ formatTipoCliente(rowData[col.field]) }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.status">
+								{{ rowData[col.field] ? 'ATIVO' : 'INATIVO' }}
+							</ng-template>
+
+							{{ !col?.sufix ? '' : col.sufix }}
+						</td>
+					</tr>
+				</ng-template>
+
+				<ng-template let-columns pTemplate="emptymessage">
+					<tr>
+						<td [attr.colspan]="columns.length">
+							Nenhum registro encontrado
+						</td>
+					</tr>
+				</ng-template>
+			</p-treeTable>
+		</div>
+
+		<div class="ui-g-1 position-sticky centralized">
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Buscar" (click)="buscarClientesSocios()"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Editar" (click)="editarCliente()" [disabled]="disableEditar"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-pencil"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Atribuir Dependente" (click)="atribuirDependente()"
+						[disabled]="disableAtribuirDependente" icon="pi pi-user-plus"
+						class="ui-button-icon-only ui-button-secondary"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" [pTooltip]="clienteSelecionado?.ativo ? 'Inativar' : 'Ativar'" (click)="patchAtivo()"
+						[disabled]="disableEditar" icon="pi {{ clienteSelecionado?.ativo ? 'pi-lock' : 'pi-lock-open' }}"
+						class="ui-button-icon-only ui-button-secondary"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Excluir" (click)="excluirCliente()" [disabled]="disableExcluir"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-trash"></button>
+			</div>
+		</div>
+	</section>
+</p-card>
+
+<app-cliente-form *ngIf="viewClienteForm" [(visible)]="viewClienteForm" [cliente]="clienteSelecionado"
+				  [tipoCliente]="tipoClienteClienteForm" [idResponsavel]="responsavelClienteForm?.id"
+				  (onSalvar)="buscarClientesSocios()"></app-cliente-form>
