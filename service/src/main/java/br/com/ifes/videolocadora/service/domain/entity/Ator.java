@@ -36,8 +36,8 @@ public class Ator implements Serializable {
 	private Boolean excluido;
 
 	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name="rel_titulo_ator",
-			joinColumns={@JoinColumn(name="id_titulo")},
-			inverseJoinColumns={@JoinColumn(name="id_ator")})
+	@JoinTable(name = "rel_titulo_ator",
+			joinColumns = {@JoinColumn(name = "id_titulo", referencedColumnName = "id")},
+			inverseJoinColumns = {@JoinColumn(name = "id_ator", referencedColumnName = "id")})
 	private List<Titulo> titulos;
 }
