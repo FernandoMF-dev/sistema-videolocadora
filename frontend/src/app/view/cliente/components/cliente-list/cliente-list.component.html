@@ -3,7 +3,7 @@
 <p-card>
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-2">
-			<button pButton type="button" label="Novo Item" icon="pi pi-plus" (click)="inserirCliente()"
+			<button pButton type="button" label="Novo Cliente" icon="pi pi-plus" (click)="inserirCliente()"
 					class="ui-button-success"></button>
 		</div>
 
@@ -20,7 +20,7 @@
 						 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true"
 						 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
 						 [totalRecords]="clientes.totalElements" [(selection)]="clienteSelecionado"
-						 sortField="numeroSerie" sortOrder="-1" dataKey="id" selectionMode="single"
+						 sortField="numeroInscricao" sortOrder="-1" dataKey="id" selectionMode="single"
 						 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>

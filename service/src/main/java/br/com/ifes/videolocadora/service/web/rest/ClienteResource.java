@@ -37,7 +37,7 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(servico.salvar(dto));
 	}
 
-	@PostMapping("/filtro")
+	@PostMapping("/filtro/socio")
 	@Timed
 	public ResponseEntity<Page<ClienteDTO>> filtro(@RequestBody ClienteDTO dto, Pageable page) {
 		return ResponseEntity.ok().body(servico.filtrar(dto, page));

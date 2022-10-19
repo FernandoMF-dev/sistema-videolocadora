@@ -15,13 +15,13 @@ import org.springframework.stereotype.Repository;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>, JpaSpecificationExecutor<Cliente> {
 
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.ClienteDTO" +
-			"(c.id,c.numeroInscricao,c.nome,c.cpf,c.endereco,c.telefone,c.tipoCliente) " +
+			"(c.id,c.numeroInscricao,c.nome,c.cpf,c.endereco,c.telefone,c.tipoCliente, c.excluido) " +
 			" FROM Cliente c " +
 			" WHERE (c.excluido = FALSE) ")
 	Page<ClienteDTO> findAllList(Pageable page);
 
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.ClienteDTO" +
-			"(c.id,c.numeroInscricao,c.nome,c.cpf,c.endereco,c.telefone,c.tipoCliente) " +
+			"(c.id,c.numeroInscricao,c.nome,c.cpf,c.endereco,c.telefone,c.tipoCliente, c.excluido) " +
 			" FROM Cliente c " +
 			" WHERE (c.excluido = FALSE) " +
 			" AND (LOWER(c.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +

@@ -28,4 +28,6 @@ public class ClienteDTO implements Serializable {
 
 	private TipoClienteEnum tipoCliente;
 
+	private Boolean ativo;
+
 }
