@@ -43,14 +43,12 @@ public class TituloService {
 		Page<TituloListDTO> tituloList = repositorio.findAllList(page);
 		List<Long> idTitulos = tituloList.stream().map(TituloListDTO::getId).collect(Collectors.toList());
 		List<TituloAtor> relacaoList = repositorio.findAtorByTituloId(idTitulos);
-		relacaoList.forEach(relacao -> {
-			tituloList.getContent().forEach(titulo -> {
-				if(relacao.getIdTitulo().equals(titulo.getId())){
-					titulo.setAtoresNomes(titulo.getAtoresNomes().concat(relacao.getAtor().getNome()));
-					titulo.setAtoresNomes(titulo.getAtoresNomes().concat(", "));
-				}
-			});
-		});
+		relacaoList.forEach(relacao -> tituloList.getContent().forEach(titulo -> {
+			if (relacao.getIdTitulo().equals(titulo.getId())) {
+				titulo.setAtoresNomes(titulo.getAtoresNomes().concat(relacao.getAtor().getNome()));
+				titulo.setAtoresNomes(titulo.getAtoresNomes().concat(", "));
+			}
+		}));
 		return tituloList;
 	}
 
@@ -67,6 +65,7 @@ public class TituloService {
 	}
 
 	public Page<TituloListDTO> filtrar(TituloListDTO dto, Pageable pageable) {
+		// TODO Implementar filtragem por atributo na busca de tótilo
 		return repositorio.filtrar(dto, pageable);
 	}
 

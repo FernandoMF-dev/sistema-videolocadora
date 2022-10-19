@@ -2,8 +2,8 @@ package br.com.ifes.videolocadora.service.repository;
 
 
 import br.com.ifes.videolocadora.service.domain.entity.Titulo;
-import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
 import br.com.ifes.videolocadora.service.domain.entity.TituloAtor;
+import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
 import br.com.ifes.videolocadora.service.service.dto.TituloListDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,27 +19,17 @@ import java.util.List;
 public interface TituloRepository extends JpaRepository<Titulo, Long>, JpaSpecificationExecutor<Titulo> {
 
 	@Query(value = "SELECT new br.com.ifes.videolocadora.service.service.dto.TituloListDTO" +
-			"(t.id,t.nome,t.sinopse,t.ano,t.categoria," +
-			"c.id,c.nome,c.valor,c.prazoDevolucao," +
-			"t.diretor.nome) " +
-			"FROM Titulo t" +
-			" JOIN t.classe c WHERE t.excluido = FALSE ")
+			"(t.id, t.nome, t.sinopse, t.ano, t.categoria, c.id, c.nome, c.valor, c.prazoDevolucao, t.diretor.nome) " +
+			" FROM Titulo t " +
+			" JOIN t.classe c " +
+			" WHERE t.excluido = FALSE ")
 	Page<TituloListDTO> findAllList(Pageable page);
 
 	@Query("SELECT DISTINCT new br.com.ifes.videolocadora.service.service.dto.TituloListDTO" +
-			"(t.id,t.nome,t.sinopse,t.ano,t.categoria," +
-			"c.id,c.nome,c.valor,c.prazoDevolucao," +
-			"t.diretor.nome)" +
-			" FROM Titulo t" +
-			" JOIN t.classe c" +
-			" WHERE t.excluido = FALSE" +
-			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
-			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
-			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
-			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
-			" AND (LOWER(t.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
-
-			"")
+			"(t.id, t.nome, t.sinopse, t.ano, t.categoria, c.id, c.nome, c.valor, c.prazoDevolucao, t.diretor.nome) " +
+			" FROM Titulo t " +
+			" JOIN t.classe c " +
+			" WHERE t.excluido = FALSE")
 	Page<TituloListDTO> filtrar(@Param("filter") TituloListDTO filter, Pageable pageable);
 
 	@Query("SELECT ta from TituloAtor ta where ta.idTitulo in :ids")
