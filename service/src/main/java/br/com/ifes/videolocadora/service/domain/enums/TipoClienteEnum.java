@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TipoClienteEnum {
 
-	SOCIO("socio"),
-	DEPENDENTE("dependente");
+	SOCIO("Sócio"),
+	DEPENDENTE("Dependente");
 
 	private final String descricao;
 

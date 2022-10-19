@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long>, JpaSpecificationExecutor<Cliente> {
 
@@ -31,4 +33,8 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>, JpaSpec
 			" AND (:#{#filter.numeroInscricao} IS NULL OR c.numeroInscricao = :#{#filter.numeroInscricao}) " +
 			" AND (:#{#filter.tipoCliente} IS NULL OR c.tipoCliente = :#{#filter.tipoCliente}) ")
 	Page<ClienteDTO> filtrar(@Param("filter") ClienteDTO filter, Pageable pageable);
+
+	@Query("SELECT c FROM Cliente c " +
+			"INNER JOIN SocioDependente sd ON sd.idDependente = c.id AND sd.idSocio = :idResponsavel")
+	List<Cliente> buscarDependentesPorResponsavel(@Param("idResponsavel") Long idResponsavel);
 }

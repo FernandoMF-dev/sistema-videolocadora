@@ -34,7 +34,7 @@ public class ClienteResource {
 	@PostMapping()
 	@Timed
 	public ResponseEntity<ClienteDTO> salvar(@RequestBody ClienteDTO dto) {
-		return ResponseEntity.ok().body(servico.salvar(dto));
+		return ResponseEntity.ok().body(servico.inserir(dto));
 	}
 
 	@PostMapping("/filtro/socio")
