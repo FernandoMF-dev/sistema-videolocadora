@@ -53,33 +53,6 @@ export class ClasseSelectComponent extends DialogUtil {
 	}
 
 	buscarClasses(event?: LazyLoadEvent): void {
-		if (this.isFiltro()) {
-			this.filtrar(event);
-			return;
-		}
-		this.buscarTodosAtores(event);
-	}
-
-	private isFiltro(): boolean {
-		return !!this.filtro.nome || !!this.filtro.prazoDevolucao || !!this.filtro.valor;
-	}
-
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
-	}
-
-	private buscarTodosAtores(event?: LazyLoadEvent): void {
-		this.loader = true;
-		this.classeService.findAll<Classe>(event)
-			.pipe(finalize(() => this.loader = false))
-			.subscribe(
-				(res) => this.classes = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
-			);
-	}
-
-	private filtrar(event?: LazyLoadEvent): void {
 		this.loader = true;
 		this.classeService.filter<Classe>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
@@ -88,4 +61,10 @@ export class ClasseSelectComponent extends DialogUtil {
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}
+
+	private fecharDialog(): void {
+		this.onClose.emit();
+		this.visible = false;
+	}
+
 }

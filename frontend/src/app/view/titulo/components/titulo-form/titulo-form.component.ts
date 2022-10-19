@@ -30,7 +30,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 
 	form: FormGroup;
 	optionsCategoria: SelectItem[] = Categoria.getSelectItens();
-	optionsDiretor: SelectItem[] = [];
+	diretores: Diretor[] = [];
 
 	viewClasseSelect: boolean = false;
 	viewAtorSelect: boolean = false;
@@ -60,17 +60,8 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 		return this.form.controls['atores'].value;
 	}
 
-	get diretorSelecionado(): Diretor {
-		const diretor = new Diretor();
-		diretor.id = this.form.controls['diretor'].value;
-		return diretor;
-	}
-
 	ngOnInit(): void {
-		this.diretorService.getAsSelectItem().subscribe(res => {
-			this.optionsDiretor.push(...res);
-		});
-
+		this.buscarDiretores();
 		this.iniciarForm();
 
 		if (this.isEdicao) {
@@ -118,9 +109,18 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 		this.tituloService.findById<Titulo>(this.titulo.id)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
-				(res) => this.form.patchValue(res),
+				(res) => {
+					this.form.patchValue(res);
+				},
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
+	}
+
+	private buscarDiretores(): void {
+		this.diretorService.findAll<Diretor>().subscribe(
+			(res) => this.diretores = res,
+			(err) => this.pageNotificationService.addErrorMessage(err.message)
+		);
 	}
 
 	private fecharDialog(): void {
@@ -130,7 +130,6 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 
 	private salvar(): void {
 		const titulo: Titulo = Object.assign(new Titulo(), this.form.value);
-		titulo.diretor = this.diretorSelecionado;
 		if (this.isEdicao) {
 			this.editar(titulo);
 		} else {

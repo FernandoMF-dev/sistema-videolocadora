@@ -19,9 +19,8 @@
 
 			<div class="ui-g-4 ui-sm-12">
 				<label>Diretor*</label>
-				<p-dropdown [options]="optionsDiretor" filter="true"
-							formControlName="diretor" placeholder="Selecione...">
-				</p-dropdown>
+				<p-dropdown [options]="diretores" [filter]="true" optionLabel="nome" formControlName="diretor"
+							placeholder="Selecione..."></p-dropdown>
 			</div>
 
 			<div class="ui-g-6 ui-sm-12">

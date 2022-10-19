@@ -49,24 +49,6 @@ export class AtorSelectComponent extends DialogUtil {
 	}
 
 	buscarAtores(event?: LazyLoadEvent): void {
-		if (this.filtro.nome) {
-			this.filtrar(event);
-			return;
-		}
-		this.buscarTodosAtores(event);
-	}
-
-	private buscarTodosAtores(event?: LazyLoadEvent): void {
-		this.loader = true;
-		this.atorService.findAll<Ator>(event)
-			.pipe(finalize(() => this.loader = false))
-			.subscribe(
-				(res) => this.atores = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
-			);
-	}
-
-	private filtrar(event?: LazyLoadEvent): void {
 		this.loader = true;
 		this.atorService.filter<Ator>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
