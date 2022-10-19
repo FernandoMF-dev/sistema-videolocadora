@@ -59,7 +59,7 @@ export class TituloSelectComponent extends DialogUtil {
 
 	buscarTitulos(event?: LazyLoadEvent): void {
 		this.loader = true;
-		this.tituloService.filter<Titulo>(this.filtro, event)
+		this.tituloService.filterSelect<Titulo>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.titulos = res,

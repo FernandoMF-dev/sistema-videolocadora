@@ -37,7 +37,7 @@ public class ItemResource {
 	@PostMapping()
 	@Timed
 	public ResponseEntity<ItemDTO> salvar(@RequestBody ItemDTO dto) {
-		return ResponseEntity.ok().body(servico.salvar(dto));
+		return ResponseEntity.ok().body(servico.inserir(dto));
 	}
 
 	@GetMapping()

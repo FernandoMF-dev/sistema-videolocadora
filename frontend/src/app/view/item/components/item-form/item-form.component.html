@@ -25,25 +25,20 @@
 			<div class="ui-g-6 ui-sm-12">
 				<p-fieldset legend="Título">
 					<ng-template [ngIf]="!!titulo">
-						<div class="ui-g-8 ui-sm-12">
+						<div class="ui-g-12 ui-sm-12">
 							Nome
 							<input pInputText type="text" [readonly]="true" [ngModel]="titulo.nome" [ngModelOptions]="{standalone: true}">
 						</div>
 
-						<div class="ui-g-1 ui-sm-12">
+						<div class="ui-g-4 ui-sm-12">
 							Ano
 							<input pInputText type="text" [readonly]="true" [ngModel]="titulo.ano" [ngModelOptions]="{standalone: true}">
 						</div>
 
-						<div class="ui-g-3 ui-sm-12">
+						<div class="ui-g-8 ui-sm-12">
 							Categoria
 							<input pInputText type="text" [readonly]="true" [ngModel]="formatCategoria(titulo.categoria)"
 								   [ngModelOptions]="{standalone: true}">
-						</div>
-
-						<div class="ui-g-12 ui-sm-12" *ngIf="!!titulo?.atores?.length">
-							<button *ngFor="let ator of titulo.atores" pButton type="button" [label]="ator.nome"
-									class="ui-button-info tag-button"></button>
 						</div>
 					</ng-template>
 				</p-fieldset>

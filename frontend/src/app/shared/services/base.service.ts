@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PageChangeEvent } from '../models/events/page-change.event';
 import { Page } from '../models/page.model';
 import { RequestUtil } from '../utils/request.util';
 
@@ -27,11 +26,6 @@ export abstract class BaseService {
 
 	public findAll<T>(): Observable<T[]> {
 		return this.http.get<T[]>(this.getUrl());
-	}
-
-	public findAllPageChange<T>(event: PageChangeEvent): Observable<Page<T>> {
-		const params = RequestUtil.getParamsFromPageChangeEvent(event);
-		return this.http.get<Page<T>>(this.getUrl(), { params: params });
 	}
 
 	public filter<T>(filter: object, event?: LazyLoadEvent): Observable<Page<T>> {

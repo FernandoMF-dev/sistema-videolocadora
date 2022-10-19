@@ -64,5 +64,11 @@ public class TituloResource {
 		return ResponseEntity.ok().body(servico.filtrar(dto, page));
 	}
 
+	@PostMapping("/filtro-select")
+	@Timed
+	public ResponseEntity<Page<TituloDTO>> filtroSelect(@RequestBody TituloDTO filtro, Pageable page) {
+		return ResponseEntity.ok().body(servico.filtrarSelect(filtro, page));
+	}
+
 }
 

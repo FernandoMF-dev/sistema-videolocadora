@@ -2,11 +2,11 @@ import { SelectItem } from 'primeng';
 import { ConversionUtil } from '../../../shared/utils/conversion.util';
 
 export class CategoriaEnum {
-	public static readonly TESTE = 'CATEGORIA_TESTE';
+	public static readonly CATEGORIA_TESTE = 'CATEGORIA_TESTE';
 }
 
 export class Categoria {
-	public static readonly TESTE = new Categoria(CategoriaEnum.TESTE, 'Categoria de Teste');
+	public static readonly CATEGORIA_TESTE = new Categoria(CategoriaEnum.CATEGORIA_TESTE, 'Categoria de Teste');
 
 	private constructor(
 		public id: CategoriaEnum,
@@ -16,7 +16,7 @@ export class Categoria {
 
 	public static getValues(): Categoria[] {
 		return [
-			Categoria.TESTE
+			Categoria.CATEGORIA_TESTE
 		];
 	}
 

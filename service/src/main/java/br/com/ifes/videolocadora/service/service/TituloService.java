@@ -57,6 +57,10 @@ public class TituloService {
 		return repositorio.filtrar(dto, pageable);
 	}
 
+	public Page<TituloDTO> filtrarSelect(TituloDTO filtro, Pageable pageable) {
+		return repositorio.filtrarSelect(filtro, pageable);
+	}
+
 	private TituloDTO salvar(TituloDTO dto) {
 		Titulo entity = mapper.toEntity(dto);
 		List<Ator> atores = entity.getAtores();

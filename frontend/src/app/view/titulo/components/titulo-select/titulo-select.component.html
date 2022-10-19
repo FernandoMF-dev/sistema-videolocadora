@@ -3,7 +3,7 @@
 		<div class="ui-g-12 ui-sm-12">
 			<p-fieldset legend="Título Selecionado">
 				<div class="ui-g ui-fluid" *ngIf="!!tituloSelecionado">
-					<div class="ui-g-7 ui-sm-12">
+					<div class="ui-g-6 ui-sm-12">
 						Nome
 						<input pInputText type="text" [readonly]="true" [ngModel]="tituloSelecionado.nome">
 					</div>
@@ -18,9 +18,9 @@
 						<input pInputText type="text" [readonly]="true" [ngModel]="formatCategoria(tituloSelecionado.categoria)">
 					</div>
 
-					<div class="ui-g-2 ui-sm-12">
+					<div class="ui-g-3 ui-sm-12">
 						Classe
-						<input pInputText type="text" [readonly]="true" [ngModel]="formatCategoria(tituloSelecionado.classe.nome)">
+						<input pInputText type="text" [readonly]="true" [ngModel]="tituloSelecionado.classe.nome">
 					</div>
 				</div>
 			</p-fieldset>

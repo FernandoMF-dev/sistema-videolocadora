@@ -4,7 +4,6 @@ import br.com.ifes.videolocadora.service.domain.enums.TipoItemEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,7 +44,7 @@ public class Item implements Serializable {
 	@Column(name = "excluido")
 	private Boolean excluido;
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_titulo")
 	private Titulo titulo;
 

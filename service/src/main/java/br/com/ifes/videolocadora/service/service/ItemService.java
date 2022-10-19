@@ -30,10 +30,9 @@ public class ItemService {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	public ItemDTO salvar(ItemDTO dto) {
-		Item entity = mapper.toEntity(dto);
-		entity.setExcluido(false);
-		return mapper.toDto(repositorio.save(entity));
+	public ItemDTO inserir(ItemDTO dto) {
+		dto.setId(null);
+		return salvar(dto);
 	}
 
 	public List<ItemListDTO> obterTodos() {
@@ -42,6 +41,7 @@ public class ItemService {
 
 	public ItemDTO editar(Long id, ItemDTO dto) {
 		procurarPorId(id);
+		dto.setId(id);
 		return salvar(dto);
 	}
 
@@ -53,5 +53,11 @@ public class ItemService {
 
 	public Page<ItemListDTO> filtrar(ItemListDTO dto, Pageable page) {
 		return repositorio.filtrar(dto, page);
+	}
+
+	public ItemDTO salvar(ItemDTO dto) {
+		Item entity = mapper.toEntity(dto);
+		entity.setExcluido(false);
+		return mapper.toDto(repositorio.save(entity));
 	}
 }

@@ -29,4 +29,12 @@ public class TituloDTO implements Serializable {
 
 	private DiretorDTO diretor;
 
+	public TituloDTO(Long id, String nome, Integer ano, CategoriaEnum categoria,
+					 Long idClasse, String nomeClasse, Double valorClasse, Integer prazoDevolucaoClasse) {
+		this.id = id;
+		this.nome = nome;
+		this.ano = ano;
+		this.categoria = categoria;
+		this.classe = new ClasseDTO(idClasse, nomeClasse, valorClasse, prazoDevolucaoClasse);
+	}
 }

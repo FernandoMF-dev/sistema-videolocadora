@@ -2,11 +2,11 @@ import { SelectItem } from 'primeng';
 import { ConversionUtil } from '../../../shared/utils/conversion.util';
 
 export class TipoItemEnum {
-	public static readonly TESTE = 'TIPO_TESTE';
+	public static readonly TIPO_ITEM_TESTE = 'TIPO_ITEM_TESTE';
 }
 
 export class TipoItem {
-	public static readonly TESTE = new TipoItem(TipoItemEnum.TESTE, 'Tipo de Item de Teste');
+	public static readonly TIPO_ITEM_TESTE = new TipoItem(TipoItemEnum.TIPO_ITEM_TESTE, 'Tipo de Item de Teste');
 
 	private constructor(
 		public id: TipoItemEnum,
@@ -16,7 +16,7 @@ export class TipoItem {
 
 	public static getValues(): TipoItem[] {
 		return [
-			TipoItem.TESTE
+			TipoItem.TIPO_ITEM_TESTE
 		];
 	}
 
