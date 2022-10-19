@@ -9,7 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ClasseService {
 
@@ -31,8 +35,8 @@ public class ClasseService {
 		return mapper.toDto(repositorio.save(entity));
 	}
 
-	public Page<ClasseDTO> obterTodos(Pageable page) {
-		return repositorio.findAllList(page);
+	public List<ClasseDTO> obterTodos() {
+		return repositorio.findAllList();
 	}
 
 	public ClasseDTO editar(Long id, ClasseDTO dto) {

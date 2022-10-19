@@ -3,7 +3,6 @@ package br.com.ifes.videolocadora.service.web.rest;
 
 import br.com.ifes.videolocadora.service.service.DiretorService;
 import br.com.ifes.videolocadora.service.service.dto.DiretorDTO;
-import br.com.ifes.videolocadora.service.service.dto.SelectItemDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +29,7 @@ public class DiretorResource {
 
 	@GetMapping("/{id}")
 	@Timed
-	public ResponseEntity<DiretorDTO> obter(@PathVariable Long id) {
+	public ResponseEntity<DiretorDTO> obterPorId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(servico.obterPorId(id));
 	}
 
@@ -42,8 +41,8 @@ public class DiretorResource {
 
 	@GetMapping()
 	@Timed
-	public ResponseEntity<Page<DiretorDTO>> obterTodos(Pageable page) {
-		return ResponseEntity.ok().body(servico.obterTodos(page));
+	public ResponseEntity<List<DiretorDTO>> obterTodos() {
+		return ResponseEntity.ok().body(servico.obterTodos());
 	}
 
 	@PutMapping("/{id}")
@@ -65,10 +64,5 @@ public class DiretorResource {
 		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
 	}
 
-	@GetMapping("/dropdown")
-	@Timed
-	public ResponseEntity<List<SelectItemDTO>> obter() {
-		return ResponseEntity.ok().body(servico.obterSelectItem());
-	}
 }
 

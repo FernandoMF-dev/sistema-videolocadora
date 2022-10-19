@@ -4,7 +4,6 @@ import br.com.ifes.videolocadora.service.domain.enums.CategoriaEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -14,6 +13,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
@@ -49,15 +49,18 @@ public class Titulo implements Serializable {
 	@Column(name = "excluido")
 	private Boolean excluido;
 
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_classe")
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Classe classe;
 
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_diretor")
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 	private Diretor diretor;
 
-	@ManyToMany(mappedBy = "titulos", cascade = CascadeType.ALL)
+	@ManyToMany
+	@JoinTable(name = "rel_titulo_ator",
+			joinColumns = {@JoinColumn(name = "id_titulo", referencedColumnName = "id")},
+			inverseJoinColumns = {@JoinColumn(name = "id_ator", referencedColumnName = "id")})
 	private List<Ator> atores;
 
 }

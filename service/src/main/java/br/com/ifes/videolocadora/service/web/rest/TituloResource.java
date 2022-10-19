@@ -41,7 +41,7 @@ public class TituloResource {
 	@PostMapping()
 	@Timed
 	public ResponseEntity<TituloDTO> salvar(@RequestBody TituloDTO dto) {
-		return ResponseEntity.ok().body(servico.salvar(dto));
+		return ResponseEntity.ok().body(servico.inserir(dto));
 	}
 
 

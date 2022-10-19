@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificationExecutor<Item> {
 
@@ -19,7 +21,7 @@ public interface ItemRepository extends JpaRepository<Item, Long>, JpaSpecificat
 			"(i.id,i.numeroSerie,t.nome,i.dataAquisicao,i.tipoItem,t.categoria,c.nome,c.valor,c.prazoDevolucao,t.sinopse,t.id) " +
 			" FROM Item i join i.titulo t join t.classe c " +
 			" WHERE (i.excluido = FALSE) ")
-	Page<ItemListDTO> findAllList(Pageable page);
+	List<ItemListDTO> findAllList();
 
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.ItemListDTO" +
 			"(i.id,i.numeroSerie,t.nome,i.dataAquisicao,i.tipoItem,t.categoria,c.nome,c.valor,c.prazoDevolucao,t.sinopse,t.id) " +

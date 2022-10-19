@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/ator")
 @RequiredArgsConstructor
@@ -39,8 +41,8 @@ public class AtorResource {
 
 	@GetMapping()
 	@Timed
-	public ResponseEntity<Page<AtorDTO>> obterTodos(Pageable page) {
-		return ResponseEntity.ok().body(servico.obterTodos(page));
+	public ResponseEntity<List<AtorDTO>> obterTodos() {
+		return ResponseEntity.ok().body(servico.obterTodos());
 	}
 
 	@PutMapping("/{id}")

@@ -11,6 +11,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface AtorRepository extends JpaRepository<Ator, Long>, JpaSpecificationExecutor<Ator> {
 
@@ -18,7 +20,7 @@ public interface AtorRepository extends JpaRepository<Ator, Long>, JpaSpecificat
 			"(a.id,a.nome) " +
 			" FROM Ator a " +
 			" WHERE a.excluido = FALSE")
-	Page<AtorDTO> findAllList(Pageable page);
+	List<AtorDTO> findAllList();
 
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.AtorDTO" +
 			"(a.id,a.nome) " +

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class TituloService {
 
@@ -27,25 +28,13 @@ public class TituloService {
 				.orElseThrow(() -> new RuntimeException("Título não encontrado"));
 	}
 
-	@Transactional
 	public TituloDTO obterPorId(Long id) {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	//TODO: relacionamento ta full bugado, ajeitar isso
-	public TituloDTO salvar(TituloDTO dto) {
-		Titulo entity = mapper.toEntity(dto);
-		List<Ator> atores = entity.getAtores();
-		entity.setAtores(new ArrayList<>());
-		entity.setExcluido(false);
-		entity.getClasse().setExcluido(false);
-		entity.getDiretor().setExcluido(false);
-		Titulo savedEntity = repositorio.save(entity);
-		savedEntity.setAtores(atores);
-		savedEntity.getAtores().forEach(ator -> {
-			ator.setExcluido(false);
-		});
-		return mapper.toDto(repositorio.save(savedEntity));
+	public TituloDTO inserir(TituloDTO dto) {
+		dto.setId(null);
+		return salvar(dto);
 	}
 
 	public Page<TituloListDTO> obterTodos(Pageable page) {
@@ -54,6 +43,7 @@ public class TituloService {
 
 	public TituloDTO editar(Long id, TituloDTO dto) {
 		procurarPorId(id);
+		dto.setId(id);
 		return salvar(dto);
 	}
 
@@ -65,5 +55,19 @@ public class TituloService {
 
 	public Page<TituloListDTO> filtrar(TituloListDTO dto, Pageable pageable) {
 		return repositorio.filtrar(dto, pageable);
+	}
+
+	private TituloDTO salvar(TituloDTO dto) {
+		Titulo entity = mapper.toEntity(dto);
+		List<Ator> atores = entity.getAtores();
+		entity.setAtores(new ArrayList<>());
+		entity.setExcluido(false);
+		entity.getClasse().setExcluido(false);
+		entity.getDiretor().setExcluido(false);
+		entity = repositorio.save(entity);
+
+		entity.setAtores(atores);
+		entity.getAtores().forEach(ator -> ator.setExcluido(false));
+		return mapper.toDto(repositorio.save(entity));
 	}
 }

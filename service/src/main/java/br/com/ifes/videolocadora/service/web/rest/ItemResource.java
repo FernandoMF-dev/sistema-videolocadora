@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/item")
 @RequiredArgsConstructor
@@ -39,8 +41,8 @@ public class ItemResource {
 	}
 
 	@GetMapping()
-	public ResponseEntity<Page<ItemListDTO>> obterTodos(Pageable page) {
-		return ResponseEntity.ok().body(servico.obterTodos(page));
+	public ResponseEntity<List<ItemListDTO>> obterTodos() {
+		return ResponseEntity.ok().body(servico.obterTodos());
 	}
 
 	@PostMapping("/filtro")

@@ -23,7 +23,7 @@ public interface TituloRepository extends JpaRepository<Titulo, Long>, JpaSpecif
 			" JOIN t.classe c WHERE t.excluido = FALSE ")
 	Page<TituloListDTO> findAllList(Pageable page);
 
-	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.TituloListDTO" +
+	@Query("SELECT DISTINCT new br.com.ifes.videolocadora.service.service.dto.TituloListDTO" +
 			"(t.id,t.nome,t.sinopse,t.ano,t.categoria," +
 			"c.id,c.nome,c.valor,c.prazoDevolucao," +
 			"t.diretor.nome,a)" +
