@@ -24,13 +24,13 @@ public class TituloListDTO implements Serializable {
 
 	private ClasseDTO classe;
 
-	private String atores;
+	private String atoresNomes = "";
 
 	private String diretor;
 
 	public TituloListDTO(Long id, String nome, String sinopse, Integer ano,
 						 CategoriaEnum categoria,
-						 Long idClasse, String nomeClasse, Double valorClasse, Integer prazoDevolucaoClasse, String diretor, Object ator) {
+						 Long idClasse, String nomeClasse, Double valorClasse, Integer prazoDevolucaoClasse, String diretor) {
 		this.id = id;
 		this.nome = nome;
 		this.sinopse = sinopse;
@@ -38,7 +38,6 @@ public class TituloListDTO implements Serializable {
 		this.categoria = categoria;
 		this.classe = new ClasseDTO(idClasse, nomeClasse, valorClasse, prazoDevolucaoClasse);
 		this.diretor = diretor;
-		this.atores = "";
 	}
 
 }

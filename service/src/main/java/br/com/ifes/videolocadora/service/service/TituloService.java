@@ -2,6 +2,7 @@ package br.com.ifes.videolocadora.service.service;
 
 import br.com.ifes.videolocadora.service.domain.entity.Ator;
 import br.com.ifes.videolocadora.service.domain.entity.Titulo;
+import br.com.ifes.videolocadora.service.domain.entity.TituloAtor;
 import br.com.ifes.videolocadora.service.repository.TituloRepository;
 import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
 import br.com.ifes.videolocadora.service.service.dto.TituloListDTO;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -38,7 +40,18 @@ public class TituloService {
 	}
 
 	public Page<TituloListDTO> obterTodos(Pageable page) {
-		return repositorio.findAllList(page);
+		Page<TituloListDTO> tituloList = repositorio.findAllList(page);
+		List<Long> idTitulos = tituloList.stream().map(TituloListDTO::getId).collect(Collectors.toList());
+		List<TituloAtor> relacaoList = repositorio.findAtorByTituloId(idTitulos);
+		relacaoList.forEach(relacao -> {
+			tituloList.getContent().forEach(titulo -> {
+				if(relacao.getIdTitulo().equals(titulo.getId())){
+					titulo.setAtoresNomes(titulo.getAtoresNomes().concat(relacao.getAtor().getNome()));
+					titulo.setAtoresNomes(titulo.getAtoresNomes().concat(", "));
+				}
+			});
+		});
+		return tituloList;
 	}
 
 	public TituloDTO editar(Long id, TituloDTO dto) {
