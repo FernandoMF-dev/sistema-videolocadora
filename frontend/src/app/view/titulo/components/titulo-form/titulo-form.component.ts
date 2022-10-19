@@ -8,6 +8,8 @@ import { DialogUtil } from '../../../../shared/utils/dialog.util';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Ator } from '../../../ator/models/ator.model';
 import { Classe } from '../../../classe/models/classe.model';
+import { Diretor } from '../../../diretor/models/diretor.model';
+import { DiretorService } from '../../../diretor/services/diretor.service';
 import { Categoria } from '../../enums/categoria.enum';
 import { Titulo } from '../../models/titulo.model';
 import { TituloService } from '../../services/titulo.service';
@@ -28,6 +30,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 
 	form: FormGroup;
 	optionsCategoria: SelectItem[] = Categoria.getSelectItens();
+	optionsDiretor: SelectItem[] = [];
 
 	viewClasseSelect: boolean = false;
 	viewAtorSelect: boolean = false;
@@ -35,7 +38,8 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 	constructor(
 		private formBuilder: FormBuilder,
 		private pageNotificationService: PageNotificationService,
-		private tituloService: TituloService
+		private tituloService: TituloService,
+		private diretorService: DiretorService
 	) {
 		super();
 	}
@@ -56,7 +60,17 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 		return this.form.controls['atores'].value;
 	}
 
+	get diretorSelecionado(): Diretor {
+		const diretor = new Diretor();
+		diretor.id = this.form.controls['diretor'].value;
+		return diretor;
+	}
+
 	ngOnInit(): void {
+		this.diretorService.getAsSelectItem().subscribe(res => {
+			this.optionsDiretor.push(...res);
+		});
+
 		this.iniciarForm();
 
 		if (this.isEdicao) {
@@ -93,6 +107,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 			'sinopse': new FormControl('', []),
 			'ano': new FormControl(new Date().getFullYear(), [Validators.required, Validators.min(0)]),
 			'categoria': new FormControl(null, [Validators.required]),
+			'diretor': new FormControl(null, [Validators.required]),
 			'classe': new FormControl(null, [Validators.required]),
 			'atores': new FormControl([], [])
 		});
@@ -115,7 +130,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 
 	private salvar(): void {
 		const titulo: Titulo = Object.assign(new Titulo(), this.form.value);
-
+		titulo.diretor = this.diretorSelecionado;
 		if (this.isEdicao) {
 			this.editar(titulo);
 		} else {

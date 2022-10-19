@@ -20,7 +20,7 @@ public interface TituloRepository extends JpaRepository<Titulo, Long>, JpaSpecif
 			"t.diretor.nome,a) " +
 			"FROM Titulo t" +
 			" LEFT JOIN t.atores a" +
-			" JOIN t.classe c")
+			" JOIN t.classe c WHERE t.excluido = FALSE ")
 	Page<TituloListDTO> findAllList(Pageable page);
 
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.TituloListDTO" +

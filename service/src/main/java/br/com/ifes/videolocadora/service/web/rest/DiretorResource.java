@@ -3,6 +3,7 @@ package br.com.ifes.videolocadora.service.web.rest;
 
 import br.com.ifes.videolocadora.service.service.DiretorService;
 import br.com.ifes.videolocadora.service.service.dto.DiretorDTO;
+import br.com.ifes.videolocadora.service.service.dto.SelectItemDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/diretor")
@@ -60,6 +63,12 @@ public class DiretorResource {
 	@Timed
 	public ResponseEntity<Page<DiretorDTO>> filtro(@RequestBody DiretorDTO dto, Pageable pageable) {
 		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
+	}
+
+	@GetMapping("/dropdown")
+	@Timed
+	public ResponseEntity<List<SelectItemDTO>> obter() {
+		return ResponseEntity.ok().body(servico.obterSelectItem());
 	}
 }
 

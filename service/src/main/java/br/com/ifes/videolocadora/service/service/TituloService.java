@@ -1,5 +1,6 @@
 package br.com.ifes.videolocadora.service.service;
 
+import br.com.ifes.videolocadora.service.domain.entity.Ator;
 import br.com.ifes.videolocadora.service.domain.entity.Titulo;
 import br.com.ifes.videolocadora.service.repository.TituloRepository;
 import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
@@ -11,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -29,10 +32,20 @@ public class TituloService {
 		return mapper.toDto(procurarPorId(id));
 	}
 
+	//TODO: relacionamento ta full bugado, ajeitar isso
 	public TituloDTO salvar(TituloDTO dto) {
 		Titulo entity = mapper.toEntity(dto);
+		List<Ator> atores = entity.getAtores();
+		entity.setAtores(new ArrayList<>());
 		entity.setExcluido(false);
-		return mapper.toDto(repositorio.save(entity));
+		entity.getClasse().setExcluido(false);
+		entity.getDiretor().setExcluido(false);
+		Titulo savedEntity = repositorio.save(entity);
+		savedEntity.setAtores(atores);
+		savedEntity.getAtores().forEach(ator -> {
+			ator.setExcluido(false);
+		});
+		return mapper.toDto(repositorio.save(savedEntity));
 	}
 
 	public Page<TituloListDTO> obterTodos(Pageable page) {

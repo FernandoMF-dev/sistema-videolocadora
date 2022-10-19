@@ -1,4 +1,5 @@
 import { HttpClient } from '@angular/common/http';
+import { SelectItem } from 'primeng';
 import { LazyLoadEvent } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -19,6 +20,10 @@ export abstract class BaseService {
 
 	public getUrl(): string {
 		return `${ this.baseUrl }/${ this.entity }`;
+	}
+
+	public getAsSelectItem(): Observable<SelectItem[]> {
+		return this.http.get<SelectItem[]>(`${ this.getUrl() }/dropdown`);
 	}
 
 	public getUrlId(id: number | string): string {
