@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Service
 @Transactional
@@ -31,6 +32,7 @@ public class ClienteService {
 	public ClienteDTO salvar(ClienteDTO dto) {
 		Cliente entity = mapper.toEntity(dto);
 		entity.setExcluido(false);
+		entity.setNumeroInscricao(gerarNumeroInscricao());
 		return mapper.toDto(repositorio.save(entity));
 	}
 
@@ -51,6 +53,16 @@ public class ClienteService {
 
 	public Page<ClienteDTO> filtrar(ClienteDTO dto, Pageable pageable) {
 		return repositorio.filtrar(dto, pageable);
+	}
+
+	private Integer gerarNumeroInscricao(){
+		String hoje = LocalDateTime.now().toString();
+		hoje = hoje.replaceAll("-","");
+		hoje = hoje.replaceAll(":","");
+		hoje = hoje.replaceAll("T","");
+		hoje = hoje.replace(".","");
+		hoje = hoje.substring(12,21);
+		return  Integer.valueOf(hoje);
 	}
 
 }
