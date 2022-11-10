@@ -25,7 +25,7 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>, JpaSpec
 	Page<TreeNodeDTO> findAllList(Pageable page);
 
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.TreeNodeDTO" +
-			"(c.id, c.numeroInscricao,c.nome,c.cpf,c.endereco,c.telefone,c.tipoCliente, c.ativo) " +
+			"(c.id, c.numeroInscricao, c.nome, c.cpf, c.endereco, c.telefone, c.tipoCliente, c.ativo) " +
 			" FROM Cliente c " +
 			" WHERE (c.excluido = FALSE AND c.tipoCliente = 'SOCIO')" +
 			" AND (LOWER(c.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
@@ -34,6 +34,15 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>, JpaSpec
 			" AND (LOWER(c.telefone) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.telefone}, ''), '%'))) " +
 			" AND (:#{#filter.numeroInscricao} IS NULL OR c.numeroInscricao = :#{#filter.numeroInscricao}) ")
 	Page<TreeNodeDTO> filtrarSocioTree(@Param("filter") ClienteDTO filter, Pageable pageable);
+
+	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.TreeNodeDTO" +
+			"(c.id, sd.idSocio, c.numeroInscricao, c.nome, c.cpf, c.endereco, c.telefone, c.tipoCliente, c.ativo) " +
+			" FROM Cliente c " +
+			" INNER JOIN SocioDependente sd ON sd.idSocio = :idResponsavel AND sd.idDependente = c.id " +
+			" WHERE c.excluido = FALSE " +
+			" AND c.tipoCliente = 'DEPENDENTE' " +
+			" ORDER BY c.nome ")
+	List<TreeNodeDTO> buscarDependentesPorResponsavelTree(@Param("idResponsavel") Long idResponsavel);
 
 	@Query("SELECT c FROM Cliente c " +
 			" INNER JOIN SocioDependente sd ON sd.idDependente = c.id AND sd.idSocio = :idResponsavel")

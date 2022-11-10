@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/cliente")
 @RequiredArgsConstructor
@@ -44,6 +46,12 @@ public class ClienteResource {
 	@Timed
 	public ResponseEntity<Page<TreeNodeDTO>> filtrarSocioTree(@RequestBody ClienteDTO dto, Pageable page) {
 		return ResponseEntity.ok().body(servico.filtrarSocioTree(dto, page));
+	}
+
+	@GetMapping("/dependente")
+	@Timed
+	public ResponseEntity<List<TreeNodeDTO>> buscarDependentesPorResponsavelTree(@RequestParam("idResponsavel") Long idResponsavel) {
+		return ResponseEntity.ok().body(servico.buscarDependentesPorResponsavelTree(idResponsavel));
 	}
 
 	@PatchMapping("/{id}/ativo")
