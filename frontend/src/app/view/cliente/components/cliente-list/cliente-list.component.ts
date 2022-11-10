@@ -25,7 +25,7 @@ export class ClienteListComponent {
 
 	clientes: Page<TreeNodeModel<Cliente>> = new Page();
 	filtro: Cliente = new Cliente();
-	clienteSelecionado: any;
+	clienteSelecionado: TreeNodeModel<Cliente>;
 	loader: boolean = false;
 
 	optionsStatus: SelectItem[] = [
@@ -39,7 +39,7 @@ export class ClienteListComponent {
 
 	pageListEnum = PageListEnum;
 	cols = [
-		{ header: 'Nº Inscrição', field: 'numeroInscricao', width: '10%', integer: true },
+		{ header: 'Nº Inscrição', field: 'numeroInscricao', width: '15%', integer: true },
 		{ header: 'Nome', field: 'nome', text: true },
 		{ header: 'CPF', field: 'cpf', width: '10%', text: true },
 		{ header: 'Endereço', field: 'endereco', text: true },
@@ -93,7 +93,6 @@ export class ClienteListComponent {
 	}
 
 	atribuirDependente(): void {
-		console.log(this.clienteSelecionado.data);
 		this.responsavelClienteForm = this.clienteSelecionado.data;
 		this.clienteSelecionado = null;
 		this.tipoClienteClienteForm = TipoClienteEnum.DEPENDENTE;
@@ -112,7 +111,8 @@ export class ClienteListComponent {
 
 	buscarClientesSocios(event?: LazyLoadEvent): void {
 		this.loader = true;
-		this.clienteService.filterSocio(this.filtro, event)
+		this.clienteSelecionado = null;
+		this.clienteService.filtrarSocioTree(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => {
@@ -124,13 +124,14 @@ export class ClienteListComponent {
 
 	buscarClientesDependentes(event: NodeExpandEvent<Cliente>): void {
 		this.loader = true;
-		this.clienteService.filterDependente(event.node.data.id)
+		this.clienteService.buscarDependentesPorResponsavelTree(event.node.data.id)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => {
 					const socio: TreeNodeModel<Cliente> = this.clientes.content.find(element => element.data.id === event.node.data.id);
 					res.forEach(element => element.parent = socio);
-					socio.children = socio.children.concat(res);
+					socio.children = res;
+					this.clientes.content = [...this.clientes.content];
 				},
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);

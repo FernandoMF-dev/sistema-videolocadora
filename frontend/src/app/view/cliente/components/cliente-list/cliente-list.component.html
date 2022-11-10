@@ -15,7 +15,7 @@
 
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-11">
-			<p-treeTable *ngIf="clientes" [value]="clientes.content" [columns]="cols" (onLazyLoad)="buscarClientesSocios($event)"
+			<p-treeTable [value]="clientes.content" [columns]="cols" (onLazyLoad)="buscarClientesSocios($event)"
 						 (onNodeExpand)="buscarClientesDependentes($event)" [showLoader]="loader"
 						 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true"
 						 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
@@ -105,8 +105,12 @@
 			</div>
 
 			<div class="ui-g-12">
-				<button pButton type="button" [pTooltip]="clienteSelecionado?.ativo ? 'Inativar' : 'Ativar'" (click)="patchAtivo()"
-						[disabled]="disableEditar" icon="pi {{ clienteSelecionado?.ativo ? 'pi-lock' : 'pi-lock-open' }}"
+				<button *ngIf="clienteSelecionado?.data?.ativo" pButton type="button" pTooltip="Inativar"
+						[disabled]="disableEditar" icon="pi pi-lock" (click)="patchAtivo()"
+						class="ui-button-icon-only ui-button-secondary"></button>
+
+				<button *ngIf="!clienteSelecionado?.data?.ativo" pButton type="button" pTooltip="Ativar"
+						[disabled]="disableEditar" icon="pi pi-lock-open" (click)="patchAtivo()"
 						class="ui-button-icon-only ui-button-secondary"></button>
 			</div>
 

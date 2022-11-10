@@ -18,13 +18,13 @@ export class ClienteService extends BaseService {
 		super(http, 'cliente', environment.serviceUrl);
 	}
 
-	public filterSocio(filter: Cliente, event?: LazyLoadEvent): Observable<Page<TreeNodeModel<Cliente>>> {
+	public filtrarSocioTree(filter: Cliente, event?: LazyLoadEvent): Observable<Page<TreeNodeModel<Cliente>>> {
 		const params = RequestUtil.getParamsFromLazyLoadEvent(event);
 		return this.http.post<Page<TreeNodeModel<Cliente>>>(`${ this.getUrl() }/filtro/socio`, filter, { params });
 	}
 
-	public filterDependente(idSocio: number): Observable<TreeNodeModel<Cliente>[]> {
-		return this.http.get<TreeNodeModel<Cliente>[]>(`${ this.getUrl() }/dependente?idSocio=${ idSocio }`);
+	public buscarDependentesPorResponsavelTree(idResponsavel: number): Observable<TreeNodeModel<Cliente>[]> {
+		return this.http.get<TreeNodeModel<Cliente>[]>(`${ this.getUrl() }/dependente?idResponsavel=${ idResponsavel }`);
 	}
 
 	public patchAtivo(id: number, value: boolean): Observable<void> {
