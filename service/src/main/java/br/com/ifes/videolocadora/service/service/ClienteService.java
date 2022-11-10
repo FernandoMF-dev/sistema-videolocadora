@@ -66,8 +66,8 @@ public class ClienteService {
 		repositorio.save(entity);
 	}
 
-	public Page<TreeNodeDTO> filtrar(ClienteDTO dto, Pageable pageable) {
-		return repositorio.filtrar(dto, pageable);
+	public Page<TreeNodeDTO> filtrarSocioTree(ClienteDTO dto, Pageable pageable) {
+		return repositorio.filtrarSocioTree(dto, pageable);
 	}
 
 	private ClienteDTO salvar(ClienteDTO dto) {

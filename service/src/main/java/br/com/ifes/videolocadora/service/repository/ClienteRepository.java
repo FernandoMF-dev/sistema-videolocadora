@@ -20,24 +20,22 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long>, JpaSpec
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.TreeNodeDTO" +
 			"(c.id, sd.idSocio,c.numeroInscricao,c.nome,c.cpf,c.endereco,c.telefone,c.tipoCliente, c.ativo) " +
 			" FROM Cliente c " +
-			" left JOIN SocioDependente sd ON sd.idDependente = c.id" +
+			" LEFT JOIN SocioDependente sd ON sd.idDependente = c.id" +
 			" WHERE (c.excluido = FALSE)")
 	Page<TreeNodeDTO> findAllList(Pageable page);
 
 	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.TreeNodeDTO" +
-			"(c.id,sd.idSocio, c.numeroInscricao,c.nome,c.cpf,c.endereco,c.telefone,c.tipoCliente, c.ativo) " +
+			"(c.id, c.numeroInscricao,c.nome,c.cpf,c.endereco,c.telefone,c.tipoCliente, c.ativo) " +
 			" FROM Cliente c " +
-			" left JOIN SocioDependente sd ON sd.idDependente = c.id" +
-			" WHERE (c.excluido = FALSE)" +
+			" WHERE (c.excluido = FALSE AND c.tipoCliente = 'SOCIO')" +
 			" AND (LOWER(c.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +
 			" AND (LOWER(c.cpf) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.cpf}, ''), '%'))) " +
 			" AND (LOWER(c.endereco) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.endereco}, ''), '%'))) " +
 			" AND (LOWER(c.telefone) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.telefone}, ''), '%'))) " +
-			" AND (:#{#filter.numeroInscricao} IS NULL OR c.numeroInscricao = :#{#filter.numeroInscricao}) " +
-			" AND (:#{#filter.tipoCliente} IS NULL OR c.tipoCliente = :#{#filter.tipoCliente}) ")
-	Page<TreeNodeDTO> filtrar(@Param("filter") ClienteDTO filter, Pageable pageable);
+			" AND (:#{#filter.numeroInscricao} IS NULL OR c.numeroInscricao = :#{#filter.numeroInscricao}) ")
+	Page<TreeNodeDTO> filtrarSocioTree(@Param("filter") ClienteDTO filter, Pageable pageable);
 
 	@Query("SELECT c FROM Cliente c " +
-			"INNER JOIN SocioDependente sd ON sd.idDependente = c.id AND sd.idSocio = :idResponsavel")
+			" INNER JOIN SocioDependente sd ON sd.idDependente = c.id AND sd.idSocio = :idResponsavel")
 	List<Cliente> buscarDependentesPorResponsavel(@Param("idResponsavel") Long idResponsavel);
 }

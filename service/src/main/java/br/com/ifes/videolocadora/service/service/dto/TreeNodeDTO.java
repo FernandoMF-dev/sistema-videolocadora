@@ -22,16 +22,22 @@ public class TreeNodeDTO implements Serializable {
 
 	private TreeNodeDTO parent;
 
-	private Boolean leaf = true;
+	private Boolean leaf = false;
 
 	private Boolean selectable = true;
 
 	private Boolean expended = false;
 
-	public TreeNodeDTO(Long id, Long idResponsavel, Integer numeroInscricao, String nome, String cpf, String endereco, String telefone, TipoClienteEnum tipoCliente, Boolean ativo){
-		this.data = new ClienteDTO(id, idResponsavel,numeroInscricao,nome,cpf,endereco,telefone,tipoCliente,ativo);
-		children = new ArrayList<>();
+	public TreeNodeDTO(Long id, Integer numeroInscricao, String nome, String cpf,
+					   String endereco, String telefone, TipoClienteEnum tipoCliente, Boolean ativo) {
+		this(id, null, numeroInscricao, nome, cpf, endereco, telefone, tipoCliente, ativo);
+	}
 
+	public TreeNodeDTO(Long id, Long idResponsavel, Integer numeroInscricao, String nome, String cpf,
+					   String endereco, String telefone, TipoClienteEnum tipoCliente, Boolean ativo) {
+		this.data = new ClienteDTO(id, idResponsavel, numeroInscricao, nome, cpf, endereco, telefone, tipoCliente, ativo);
+		children = new ArrayList<>();
+		leaf = TipoClienteEnum.DEPENDENTE.equals(tipoCliente);
 	}
 
 }
