@@ -51,24 +51,25 @@
 					</tr>
 				</ng-template>
 
-				<ng-template pTemplate="body" let-rowData let-columns="columns">
-					<tr [ttSelectableRow]="rowData" >
+				<ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+					<tr [ttSelectableRow]="rowNode">
 						<td *ngFor="let col of columns; let i = index">
-							<p-treeTableToggler [rowNode]="rowData" *ngIf="i === 0"></p-treeTableToggler>
+							<p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+
 							<ng-template [ngIf]="!!col.text">
-								{{ rowData.node.data[col.field] }}
+								{{ rowData[col.field] }}
 							</ng-template>
 
 							<ng-template [ngIf]="!!col.integer">
-								{{ rowData.node.data[col.field] | number:'1.0-0':'pt-BR' }}
+								{{ rowData[col.field] | number:'1.0-0':'pt-BR' }}
 							</ng-template>
 
 							<ng-template [ngIf]="!!col.tipoCliente">
-								{{ formatTipoCliente(rowData.node.data[col.field]) }}
+								{{ formatTipoCliente(rowData[col.field]) }}
 							</ng-template>
 
 							<ng-template [ngIf]="!!col.status">
-								{{ rowData.node.data[col.field] ? 'ATIVO' : 'INATIVO' }}
+								{{ rowData[col.field] ? 'ATIVO' : 'INATIVO' }}
 							</ng-template>
 
 							{{ !col?.sufix ? '' : col.sufix }}

@@ -68,7 +68,7 @@ export class ClienteListComponent {
 	}
 
 	formatTipoCliente(tipoItem: TipoClienteEnum): string {
-		if(tipoItem){
+		if (tipoItem) {
 			return TipoCliente.findById(tipoItem).label;
 		}
 		return '';
@@ -86,7 +86,7 @@ export class ClienteListComponent {
 		this.tipoClienteClienteForm = this.clienteSelecionado.data.tipoCliente;
 
 		if (this.tipoClienteClienteForm === TipoClienteEnum.DEPENDENTE) {
-			this.responsavelClienteForm = { id: this.clienteSelecionado.data.idResponsavel }
+			this.responsavelClienteForm = { id: this.clienteSelecionado.data.idResponsavel };
 		}
 
 		this.viewClienteForm = true;
@@ -116,14 +116,10 @@ export class ClienteListComponent {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => {
-					this.clientes = res
+					this.clientes = res;
 				},
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
-	}
-
-	teste(e){
-		console.log(e);
 	}
 
 	buscarClientesDependentes(event: NodeExpandEvent<Cliente>): void {
