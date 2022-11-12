@@ -40,17 +40,17 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 		return `${ this.isEdicao ? 'EDITAR' : 'NOVO' } CLASSE`;
 	}
 
-	cancelar(): void {
-		this.onCancelar.emit();
-		this.fecharDialog();
-	}
-
 	ngOnInit(): void {
 		this.iniciarForm();
 
 		if (this.isEdicao) {
 			this.atualizarFormEdicao();
 		}
+	}
+
+	cancelar(): void {
+		this.onCancelar.emit();
+		this.fecharDialog();
 	}
 
 	validarSalvar(): void {
@@ -73,7 +73,7 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 
 	private atualizarFormEdicao(): void {
 		this.blockUI.start();
-		this.classeService.findById(this.classe.id)
+		this.classeService.findById<Classe>(this.classe.id)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.form.patchValue(res),
@@ -87,7 +87,7 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 	}
 
 	private salvar(): void {
-		const classe = Object.assign(new Classe(), this.form.value);
+		const classe: Classe = Object.assign(new Classe(), this.form.value);
 
 		if (this.isEdicao) {
 			this.editar(classe);

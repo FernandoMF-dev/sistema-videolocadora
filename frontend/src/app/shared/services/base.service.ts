@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { LazyLoadEvent } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Page } from '../models/page.model';
@@ -25,13 +24,12 @@ export abstract class BaseService {
 		return `${ this.getUrl() }/${ id }`;
 	}
 
-	public findAll<T>(tableEvent: Table | LazyLoadEvent): Observable<Page<T>> {
-		const params = RequestUtil.getParams(tableEvent);
-		return this.http.get<Page<T>>(this.getUrl(), { params: params });
+	public findAll<T>(): Observable<T[]> {
+		return this.http.get<T[]>(this.getUrl());
 	}
 
-	public filter<T>(filter: object, tableEvent: Table | LazyLoadEvent): Observable<Page<T>> {
-		const params = RequestUtil.getParams(tableEvent);
+	public filter<T>(filter: object, event?: LazyLoadEvent): Observable<Page<T>> {
+		const params = RequestUtil.getParamsFromLazyLoadEvent(event);
 		return this.http.post<Page<T>>(`${ this.getUrl() }/filtro`, filter, { params });
 	}
 

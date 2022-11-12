@@ -9,7 +9,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class DiretorService {
 
@@ -26,12 +30,13 @@ public class DiretorService {
 	}
 
 	public DiretorDTO salvar(DiretorDTO dto) {
-		dto.setExcluido(false);
-		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
+		Diretor entity = mapper.toEntity(dto);
+		entity.setExcluido(false);
+		return mapper.toDto(repositorio.save(entity));
 	}
 
-	public Page<DiretorDTO> obterTodos(Pageable page) {
-		return repositorio.findAllList(page);
+	public List<DiretorDTO> obterTodos() {
+		return repositorio.findAllList();
 	}
 
 	public DiretorDTO editar(Long id, DiretorDTO dto) {

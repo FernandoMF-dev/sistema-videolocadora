@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/diretor")
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class DiretorResource {
 
 	@GetMapping("/{id}")
 	@Timed
-	public ResponseEntity<DiretorDTO> obter(@PathVariable Long id) {
+	public ResponseEntity<DiretorDTO> obterPorId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(servico.obterPorId(id));
 	}
 
@@ -39,8 +41,8 @@ public class DiretorResource {
 
 	@GetMapping()
 	@Timed
-	public ResponseEntity<Page<DiretorDTO>> obterTodos(Pageable page) {
-		return ResponseEntity.ok().body(servico.obterTodos(page));
+	public ResponseEntity<List<DiretorDTO>> obterTodos() {
+		return ResponseEntity.ok().body(servico.obterTodos());
 	}
 
 	@PutMapping("/{id}")
@@ -61,5 +63,6 @@ public class DiretorResource {
 	public ResponseEntity<Page<DiretorDTO>> filtro(@RequestBody DiretorDTO dto, Pageable pageable) {
 		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
 	}
+
 }
 

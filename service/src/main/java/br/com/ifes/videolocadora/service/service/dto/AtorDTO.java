@@ -17,6 +17,4 @@ public class AtorDTO implements Serializable {
 
 	private String nome;
 
-	private Boolean excluido;
-
 }

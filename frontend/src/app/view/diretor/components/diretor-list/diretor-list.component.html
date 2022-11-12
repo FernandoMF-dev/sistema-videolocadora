@@ -3,7 +3,7 @@
 <p-card>
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-2">
-			<button pButton type="button" label="Novo DiretorModel" icon="pi pi-plus" (click)="inserirDiretor()"
+			<button pButton type="button" label="Novo Diretor" icon="pi pi-plus" (click)="inserirDiretor()"
 					class="ui-button-success"></button>
 		</div>
 
@@ -15,11 +15,11 @@
 
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-11">
-			<p-table #table *ngIf="diretores" [value]="diretores.content" [columns]="cols" (onLazyLoad)="buscarDiretores($event)"
+			<p-table *ngIf="diretores" [value]="diretores.content" [columns]="cols" (onLazyLoad)="buscarDiretores($event)"
 					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
 					 [totalRecords]="diretores.totalElements" [(selection)]="diretorSelecionado"
-					 sortField="nome" dataKey="id" selectionMode="multiple"
+					 sortField="nome" dataKey="id" selectionMode="single"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>

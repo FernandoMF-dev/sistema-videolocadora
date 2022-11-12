@@ -2,6 +2,7 @@ package br.com.ifes.videolocadora.service.domain.entity;
 
 import br.com.ifes.videolocadora.service.domain.key.SocioDependentePK;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Column;
@@ -19,6 +20,7 @@ import java.io.Serializable;
 @Table(name = "rel_socio_dependente")
 @IdClass(SocioDependentePK.class)
 @Entity
+@NoArgsConstructor
 public class SocioDependente implements Serializable {
 
 	@Id
@@ -37,4 +39,8 @@ public class SocioDependente implements Serializable {
 	@JoinColumn(name = "id_dependente", referencedColumnName = "id", insertable = false, updatable = false)
 	private Cliente dependente;
 
+	public SocioDependente(Long idSocio, Long idDependente) {
+		this.idSocio = idSocio;
+		this.idDependente = idDependente;
+	}
 }

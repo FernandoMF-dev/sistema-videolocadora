@@ -288,7 +288,10 @@ export class AppComponent implements AfterContentChecked, OnDestroy, OnInit {
 		this.menuService.itens = [
 			{ label: 'Ator', icon: 'star', routerLink: ['/', RouteNameEnum.ATOR] },
 			{ label: 'Diretor', icon: 'record_voice_over', routerLink: ['/', RouteNameEnum.DIRETOR] },
-			{ label: 'Classe', icon: 'note', routerLink: ['/', RouteNameEnum.CLASSE] }
+			{ label: 'Classe', icon: 'note', routerLink: ['/', RouteNameEnum.CLASSE] },
+			{ label: 'Título', icon: 'movie', routerLink: ['/', RouteNameEnum.TITULO] },
+			{ label: 'Item', icon: 'list', routerLink: ['/', RouteNameEnum.ITEM] },
+			{ label: 'Cliente', icon: 'person', routerLink: ['/', RouteNameEnum.CLIENTE] }
 		];
 	}
 }

@@ -11,13 +11,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ClasseRepository extends JpaRepository<Classe, Long>, JpaSpecificationExecutor<Classe> {
 
-	@Query("select new br.com.ifes.videolocadora.service.service.dto.ClasseDTO(c.id,c.nome,c.valor,c.prazoDevolucao,c.excluido) from Classe c where  c.excluido = false")
-	Page<ClasseDTO> findAllList(Pageable page);
+	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.ClasseDTO(c.id,c.nome,c.valor,c.prazoDevolucao) " +
+			" FROM Classe c " +
+			" WHERE c.excluido = FALSE")
+	List<ClasseDTO> findAllList();
 
-	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.ClasseDTO(c.id,c.nome,c.valor,c.prazoDevolucao,c.excluido)" +
+	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.ClasseDTO(c.id,c.nome,c.valor,c.prazoDevolucao)" +
 			" FROM Classe c " +
 			" WHERE (c.excluido = false ) " +
 			" AND (LOWER(c.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) " +

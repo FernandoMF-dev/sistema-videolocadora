@@ -1,5 +1,6 @@
 package br.com.ifes.videolocadora.service.service.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,10 +10,11 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TituloAtorDTO implements Serializable {
+@AllArgsConstructor
+public class SelectItemDTO implements Serializable {
 
-	private Long idTitulo;
+	private Long value;
 
-	private Long idAtor;
+	private String label;
 
 }

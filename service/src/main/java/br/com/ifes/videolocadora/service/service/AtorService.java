@@ -9,8 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.List;
+
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AtorService {
 
@@ -27,12 +31,13 @@ public class AtorService {
 	}
 
 	public AtorDTO salvar(AtorDTO dto) {
-		dto.setExcluido(false);
-		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
+		Ator entity = mapper.toEntity(dto);
+		entity.setExcluido(false);
+		return mapper.toDto(repositorio.save(entity));
 	}
 
-	public Page<AtorDTO> obterTodos(Pageable page) {
-		return repositorio.findAllList(page);
+	public List<AtorDTO> obterTodos() {
+		return repositorio.findAllList();
 	}
 
 	public AtorDTO editar(Long id, AtorDTO dto) {

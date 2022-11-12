@@ -13,8 +13,9 @@
 			</div>
 
 			<div class="ui-g-6 ui-sm-12">
-				<label>Prazo de Devolução (dias)*</label>
-				<p-inputNumber formControlName="prazoDevolucao" min="0" [maxFractionDigits]="0" [showButtons]="true"></p-inputNumber>
+				<label>Prazo de Devolução*</label>
+				<p-inputNumber formControlName="prazoDevolucao" min="0" suffix=" Dias"
+							   [maxFractionDigits]="0" [showButtons]="true"></p-inputNumber>
 			</div>
 		</div>
 

@@ -11,15 +11,22 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DiretorRepository extends JpaRepository<Diretor, Long>, JpaSpecificationExecutor<Diretor> {
 
-	@Query("select new br.com.ifes.videolocadora.service.service.dto.DiretorDTO(d.id,d.nome,d.excluido) from Diretor d where  d.excluido = false")
-	Page<DiretorDTO> findAllList(Pageable page);
-
-	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.DiretorDTO(d.id,d.nome,d.excluido)" +
+	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.DiretorDTO(d.id,d.nome) " +
 			" FROM Diretor d " +
-			" WHERE (d.excluido = false ) " +
+			" WHERE d.excluido = FALSE " +
+			" ORDER BY d.nome ")
+	List<DiretorDTO> findAllList();
+
+	@Query("SELECT new br.com.ifes.videolocadora.service.service.dto.DiretorDTO" +
+			"(d.id,d.nome)" +
+			" FROM Diretor d " +
+			" WHERE (d.excluido = FALSE) " +
 			" AND (LOWER(d.nome) LIKE LOWER(CONCAT('%', COALESCE(:#{#filter.nome}, ''), '%'))) ")
 	Page<DiretorDTO> filtrar(@Param("filter") DiretorDTO filtro, Pageable pageable);
+
 }

@@ -21,7 +21,4 @@ public class ClasseDTO implements Serializable {
 
 	private Integer prazoDevolucao;
 
-	private Boolean excluido;
-
-
 }

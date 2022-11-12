@@ -1,5 +1,15 @@
 /* You can add global styles to this file, and also import other style files */
 
+td, th {
+	overflow-wrap: break-word;
+}
+
+button.tag-button.ui-button {
+	width: fit-content;
+	height: fit-content;
+	margin-right: 0.5rem;
+}
+
 .position-sticky {
 	position: sticky;
 	top: 11%;
@@ -13,7 +23,6 @@
 .centralized {
 	align-content: center;
 	text-align: center;
-	align-self: center;
 	align-items: center;
 }
 
@@ -29,4 +38,21 @@ div.ui-dialog-mask.ui-dialog-visible {
 p-inputnumber > span.ui-inputnumber > span.ui-inputnumber-button-group > button.ui-inputnumber-button {
 	border-radius: 0;
 	height: 1rem;
+}
+
+p-dropdown > .ui-dropdown.ui-widget {
+	min-width: 0;
+
+	> div.ui-dropdown-label-container {
+		overflow: hidden;
+
+		> span.ui-dropdown-label {
+			text-overflow: ellipsis;
+		}
+	}
+}
+
+.ui-dialog {
+	max-width: 90vw;
+	max-height: 90vh;
 }

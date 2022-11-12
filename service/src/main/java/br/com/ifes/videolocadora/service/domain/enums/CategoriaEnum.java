@@ -6,4 +6,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CategoriaEnum {
+
+	CATEGORIA_TESTE("teste");
+
+	private final String descricao;
 }

@@ -1,0 +1,99 @@
+<p-dialog [(visible)]="visible" header="Selecionar Título" modal="true">
+	<div class="ui-g ui-fluid">
+		<div class="ui-g-12 ui-sm-12">
+			<p-fieldset legend="Título Selecionado">
+				<div class="ui-g ui-fluid" *ngIf="!!tituloSelecionado">
+					<div class="ui-g-6 ui-sm-12">
+						Nome
+						<input pInputText type="text" [readonly]="true" [ngModel]="tituloSelecionado.nome">
+					</div>
+
+					<div class="ui-g-1 ui-sm-12">
+						Ano
+						<input pInputText type="text" [readonly]="true" [ngModel]="tituloSelecionado.ano">
+					</div>
+
+					<div class="ui-g-2 ui-sm-12">
+						Categoria
+						<input pInputText type="text" [readonly]="true" [ngModel]="formatCategoria(tituloSelecionado.categoria)">
+					</div>
+
+					<div class="ui-g-3 ui-sm-12">
+						Classe
+						<input pInputText type="text" [readonly]="true" [ngModel]="tituloSelecionado.classe.nome">
+					</div>
+				</div>
+			</p-fieldset>
+		</div>
+
+		<div class="ui-g-12 ui-sm-12">
+			<p-table *ngIf="titulos" [value]="titulos.content" [columns]="cols" (onLazyLoad)="buscarTitulos($event)"
+					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
+					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
+					 [totalRecords]="titulos.totalElements" [(selection)]="tituloSelecionado"
+					 sortField="nome" dataKey="id" selectionMode="single"
+					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
+				<ng-template pTemplate="header" let-columns>
+					<tr>
+						<th *ngFor="let col of columns" id="titulo-select-table-header-{{ col.field }}">
+							{{ !!col?.header ? col.header : '' }}
+						</th>
+					</tr>
+
+					<tr class="tabela-filtro">
+						<th *ngFor="let col of columns" id="titulo-select-table-filter-{{ col.field }}">
+							<ng-template [ngIf]="!!col?.field">
+								<ng-template [ngIf]="!!col?.text">
+									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarTitulos()">
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.categoria">
+									<p-dropdown [options]="optionsCategoria" [(ngModel)]="filtro[col.field]" [showClear]="true"
+												placeholder="Selecione..." (onChange)="buscarTitulos()"></p-dropdown>
+								</ng-template>
+							</ng-template>
+						</th>
+					</tr>
+				</ng-template>
+
+				<ng-template pTemplate="body" let-rowData let-columns="columns">
+					<tr [pSelectableRow]="rowData">
+						<td *ngFor="let col of columns">
+							<ng-template [ngIf]="!!col.text">
+								{{ rowData[col.field] }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.categoria">
+								{{ formatCategoria(rowData[col.field]) }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.double">
+								{{ rowData[col.field1][col.field2] }}
+							</ng-template>
+						</td>
+					</tr>
+				</ng-template>
+
+				<ng-template pTemplate="emptymessage" let-columns>
+					<tr>
+						<td [attr.colspan]="columns.length">
+							Nenhum registro encontrado
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+
+	<p-footer>
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-6 ui-sm-12">
+				<button pButton type="button" icon="pi pi-times" label="Cancelar" (click)="cancelar()" class="ui-button-danger"></button>
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<button pButton type="submit" icon="pi pi-save" label="Salvar" (click)="salvar()" class="ui-button-success"></button>
+			</div>
+		</div>
+	</p-footer>
+</p-dialog>
