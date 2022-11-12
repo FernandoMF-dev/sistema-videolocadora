@@ -5,6 +5,8 @@ import br.com.ifes.videolocadora.service.repository.LocacaoRepository;
 import br.com.ifes.videolocadora.service.service.dto.LocacaoDTO;
 import br.com.ifes.videolocadora.service.service.mapper.LocacaoMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -28,5 +30,23 @@ public class LocacaoService {
 
 	public LocacaoDTO salvar(LocacaoDTO dto) {
 		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
+	}
+
+	public Page<LocacaoDTO> obterTodos(Pageable page) {
+		return repositorio.findAllList(page);
+	}
+
+	public LocacaoDTO editar(Long id, LocacaoDTO dto) {
+		procurarPorId(id);
+		return salvar(dto);
+	}
+
+	public void deletar(Long id) {
+		Locacao entity = procurarPorId(id);
+		repositorio.delete(entity);
+	}
+
+	public Page<LocacaoDTO> filtrar(LocacaoDTO dto, Pageable pageable) {
+		return repositorio.filtrar(dto, pageable);
 	}
 }

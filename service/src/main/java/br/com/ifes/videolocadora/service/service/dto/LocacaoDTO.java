@@ -1,6 +1,8 @@
 package br.com.ifes.videolocadora.service.service.dto;
 
+import br.com.ifes.videolocadora.service.domain.enums.CategoriaEnum;
 import br.com.ifes.videolocadora.service.domain.enums.SituacaoLocacaoEnum;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class LocacaoDTO implements Serializable {
 
 	private Long id;
@@ -27,7 +30,7 @@ public class LocacaoDTO implements Serializable {
 
 	private SituacaoLocacaoEnum situacao;
 
-	private String categoria;
+	private CategoriaEnum categoria;
 
 	private Long idItem;
 
