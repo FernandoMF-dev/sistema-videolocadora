@@ -286,6 +286,7 @@ export class AppComponent implements AfterContentChecked, OnDestroy, OnInit {
 
 	private iniciarMenuLateral(): void {
 		this.menuService.itens = [
+			{ label: 'Locação', icon: 'shopping_cart', routerLink: ['/', RouteNameEnum.LOCACAO] },
 			{ label: 'Ator', icon: 'star', routerLink: ['/', RouteNameEnum.ATOR] },
 			{ label: 'Diretor', icon: 'record_voice_over', routerLink: ['/', RouteNameEnum.DIRETOR] },
 			{ label: 'Classe', icon: 'note', routerLink: ['/', RouteNameEnum.CLASSE] },

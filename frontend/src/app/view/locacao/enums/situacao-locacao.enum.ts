@@ -3,14 +3,14 @@ import { ConversionUtil } from '../../../shared/utils/conversion.util';
 
 export class SituacaoLocacaoEnum {
 	public static readonly ABERTO = 'ABERTO';
-	public static readonly PAGO = 'PAGO';
+	public static readonly DEVOLVIDO = 'DEVOLVIDO';
 	public static readonly CANCELADO = 'CANCELADO';
 }
 
 export class SituacaoLocacao {
 
 	public static readonly ABERTO = new SituacaoLocacao(SituacaoLocacaoEnum.ABERTO, 'Aberto');
-	public static readonly PAGO = new SituacaoLocacao(SituacaoLocacaoEnum.PAGO, 'Pago');
+	public static readonly DEVOLVIDO = new SituacaoLocacao(SituacaoLocacaoEnum.DEVOLVIDO, 'Devolvido');
 	public static readonly CANCELADO = new SituacaoLocacao(SituacaoLocacaoEnum.CANCELADO, 'Cancelado');
 
 	private constructor(
@@ -22,7 +22,7 @@ export class SituacaoLocacao {
 	public static getValues(): SituacaoLocacao[] {
 		return [
 			SituacaoLocacao.ABERTO,
-			SituacaoLocacao.PAGO,
+			SituacaoLocacao.DEVOLVIDO,
 			SituacaoLocacao.CANCELADO
 		];
 	}
