@@ -1,0 +1,52 @@
+<form [formGroup]="form" (ngSubmit)="validarSalvar()">
+	<p-dialog [(visible)]="visible" [header]="tituloDialog" modal="true" styleClass="dialog-lg">
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-12 ui-sm-12">
+				<div class="ui-g-4 ui-sm-12">
+					<label>Data de Locação*</label>
+					<p-calendar formControlName="dataLocacao" dateFormat="dd/mm/yy" [locale]="dataBr" [showButtonBar]="true"></p-calendar>
+				</div>
+
+				<div class="ui-g-4 ui-sm-12">
+					<button pButton type="button" label="Selecionar Item" class="ui-button-info" icon="pi pi-image"
+							(click)="buscarItem()"></button>
+				</div>
+
+				<div class="ui-g-4 ui-sm-12">
+					<button pButton type="button" label="Selecionar Cliente" class="ui-button-info" icon="pi pi-id-card"
+							(click)="buscarCliente()"></button>
+				</div>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<p-fieldset legend="Informações Gerais"></p-fieldset>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<p-fieldset legend="Item">
+					<ng-template [ngIf]="!!item"></ng-template>
+				</p-fieldset>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<p-fieldset legend="Cliente">
+					<ng-template [ngIf]="!!cliente"></ng-template>
+				</p-fieldset>
+			</div>
+		</div>
+
+		<p-footer>
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="button" icon="pi pi-times" label="Cancelar"
+							(click)="cancelar()" class="ui-button-danger"></button>
+				</div>
+
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="submit" appFormSubmitMsg icon="pi pi-save" label="Salvar"
+							[formGroup]="form" class="ui-button-success"></button>
+				</div>
+			</div>
+		</p-footer>
+	</p-dialog>
+</form>
