@@ -89,7 +89,7 @@ export class ItemListComponent {
 	excluirItem(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR ITEM',
-			`Tem certeza que seja excluir o item "[${ this.itemSelecionado.numeroSerie }] ${ this.itemSelecionado.nomeTitulo }"?`,
+			`Tem certeza que deseja excluir o item "[${ this.itemSelecionado.numeroSerie }] ${ this.itemSelecionado.nomeTitulo }"?`,
 			this,
 			() => this.excluir()
 		);

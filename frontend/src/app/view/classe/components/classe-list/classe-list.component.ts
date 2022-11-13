@@ -71,7 +71,7 @@ export class ClasseListComponent {
 	excluirClasses(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR CLASSE',
-			`Tem certeza que seja excluir a classe "${ this.classeSelecionada.nome }"?`,
+			`Tem certeza que deseja excluir a classe "${ this.classeSelecionada.nome }"?`,
 			this,
 			() => this.excluir()
 		);

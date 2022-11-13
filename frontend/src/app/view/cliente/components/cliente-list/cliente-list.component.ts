@@ -140,7 +140,7 @@ export class ClienteListComponent {
 	excluirCliente(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR ITEM',
-			`Tem certeza que seja excluir o cliente "${ this.clienteSelecionado.data.nome }"?`,
+			`Tem certeza que deseja excluir o cliente "${ this.clienteSelecionado.data.nome }"?`,
 			this,
 			() => this.excluir()
 		);

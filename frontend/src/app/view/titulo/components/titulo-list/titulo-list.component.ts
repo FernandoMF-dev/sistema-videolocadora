@@ -62,7 +62,7 @@ export class TituloListComponent implements OnInit {
 	excluirTitulo(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR TÍTULO',
-			`Tem certeza que seja excluir o título "${ this.tituloSelecionado.nome }"`,
+			`Tem certeza que deseja excluir o título "${ this.tituloSelecionado.nome }"`,
 			this,
 			() => this.excluir()
 		);

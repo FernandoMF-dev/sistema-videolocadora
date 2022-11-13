@@ -66,7 +66,7 @@ export class AtorListComponent {
 	excluirAtores(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR ATOR(ES)',
-			`Tem certeza que seja excluir o/a ator/atriz "${ this.atorSelecionado.nome }"`,
+			`Tem certeza que deseja excluir o/a ator/atriz "${ this.atorSelecionado.nome }"`,
 			this,
 			() => this.excluir()
 		);

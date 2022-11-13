@@ -66,7 +66,7 @@ export class DiretorListComponent {
 	excluirDiretores(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR DIRETOR(ES)',
-			`Tem certeza que seja excluir o/a diretor(a) "${ this.diretorSelecionado.nome }"`,
+			`Tem certeza que deseja excluir o/a diretor(a) "${ this.diretorSelecionado.nome }"`,
 			this,
 			() => this.excluir()
 		);
