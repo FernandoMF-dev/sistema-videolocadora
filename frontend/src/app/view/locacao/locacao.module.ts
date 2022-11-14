@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { ClienteModule } from '../cliente/cliente.module';
 import { ItemModule } from '../item/item.module';
 import { LocacaoFormComponent } from './components/locacao-form/locacao-form.component';
 import { LocacaoListComponent } from './components/locacao-list/locacao-list.component';
@@ -19,7 +20,8 @@ import { LocacaoService } from './services/locacao.service';
 		SharedModule,
 		FormsModule,
 		ReactiveFormsModule,
-		ItemModule
+		ItemModule,
+		ClienteModule
 	],
 	providers: [
 		LocacaoService

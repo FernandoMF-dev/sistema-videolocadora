@@ -46,13 +46,13 @@
 			<div class="ui-g-4 ui-sm-12">
 				<p-fieldset legend="Item">
 					<ng-template [ngIf]="!!item">
-						<div class="ui-g-10 ui-sm-12">
+						<div class="ui-g-9 ui-sm-12">
 							Título
 							<input pInputText type="text" [readonly]="true" [ngModel]="item.nomeTitulo"
 								   [ngModelOptions]="{standalone: true}">
 						</div>
 
-						<div class="ui-g-2 ui-sm-12">
+						<div class="ui-g-3 ui-sm-12">
 							Nº Série
 							<p-inputNumber [ngModel]="item.numeroSerie" [disabled]="true" [maxFractionDigits]="0"
 										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
@@ -75,7 +75,37 @@
 
 			<div class="ui-g-4 ui-sm-12">
 				<p-fieldset legend="Cliente">
-					<ng-template [ngIf]="!!cliente"></ng-template>
+					<ng-template [ngIf]="!!cliente">
+						<div class="ui-g-9 ui-sm-12">
+							<label>Nome</label>
+							<input pInputText type="text" [ngModel]="cliente.nome" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-3 ui-sm-12">
+							<label>Nº Inscrição</label>
+							<p-inputNumber [ngModel]="cliente.numeroInscricao" [disabled]="true"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>Tipo</label>
+							<input pInputText type="text" [ngModel]="formatTipoCliente(cliente.tipoCliente)" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>CPF</label>
+							<p-inputMask [unmask]="true" [ngModel]="cliente.cpf" [readonly]="true" mask="999.999.999-99"
+										 [ngModelOptions]="{standalone: true}"></p-inputMask>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>Telefone</label>
+							<input pInputText type="tel" [ngModel]="cliente.telefone" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+					</ng-template>
 				</p-fieldset>
 			</div>
 		</div>
@@ -98,3 +128,5 @@
 
 <app-item-select *ngIf="viewItemSelect" [(visible)]="viewItemSelect" [itemSelecionado]="item"
 				 (onSalvar)="selecionarItem($event)"></app-item-select>
+
+<app-cliente-select *ngIf="viewClienteSelect" [(visible)]="viewClienteSelect" (onSalvar)="selecionarCliente($event)"></app-cliente-select>
