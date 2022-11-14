@@ -1,6 +1,7 @@
 package br.com.ifes.videolocadora.service.service;
 
 import br.com.ifes.videolocadora.service.domain.entity.Locacao;
+import br.com.ifes.videolocadora.service.domain.enums.SituacaoLocacaoEnum;
 import br.com.ifes.videolocadora.service.repository.LocacaoRepository;
 import br.com.ifes.videolocadora.service.service.dto.LocacaoDTO;
 import br.com.ifes.videolocadora.service.service.mapper.LocacaoMapper;
@@ -28,8 +29,10 @@ public class LocacaoService {
 		return mapper.toDto(procurarPorId(id));
 	}
 
-	public LocacaoDTO salvar(LocacaoDTO dto) {
-		return mapper.toDto(repositorio.save(mapper.toEntity(dto)));
+	public LocacaoDTO inserir(LocacaoDTO dto) {
+		dto.setSituacao(SituacaoLocacaoEnum.ABERTO);
+
+		return salvar(dto);
 	}
 
 	public Page<LocacaoDTO> obterTodos(Pageable page) {
@@ -48,5 +51,11 @@ public class LocacaoService {
 
 	public Page<LocacaoDTO> filtrar(LocacaoDTO dto, Pageable pageable) {
 		return repositorio.filtrar(dto, pageable);
+	}
+
+	private LocacaoDTO salvar(LocacaoDTO dto) {
+		Locacao entity = mapper.toEntity(dto);
+		entity = repositorio.save(entity);
+		return mapper.toDto(entity);
 	}
 }

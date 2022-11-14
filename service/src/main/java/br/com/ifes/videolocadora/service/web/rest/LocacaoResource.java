@@ -34,7 +34,7 @@ public class LocacaoResource {
 	@PostMapping()
 	@Timed
 	public ResponseEntity<LocacaoDTO> salvar(@RequestBody LocacaoDTO dto) {
-		return ResponseEntity.ok().body(servico.salvar(dto));
+		return ResponseEntity.ok().body(servico.inserir(dto));
 	}
 
 	@GetMapping
