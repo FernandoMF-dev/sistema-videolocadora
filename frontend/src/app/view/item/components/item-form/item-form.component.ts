@@ -34,7 +34,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 	dataBr = DateTimeUtil.dataBr;
 	optionsTipoItem: SelectItem[] = TipoItem.getSelectItens();
 
-	viewItemSelect: boolean = false;
+	viewTituloSelect: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -63,7 +63,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 	}
 
 	buscarTitulos(): void {
-		this.viewItemSelect = true;
+		this.viewTituloSelect = true;
 	}
 
 	formatCategoria(categoria: CategoriaEnum): string {

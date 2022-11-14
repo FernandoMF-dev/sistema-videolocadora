@@ -30,8 +30,14 @@ public class ItemResource {
 
 	@GetMapping("/{id}")
 	@Timed
-	public ResponseEntity<ItemDTO> obter(@PathVariable Long id) {
+	public ResponseEntity<ItemDTO> obterPorId(@PathVariable Long id) {
 		return ResponseEntity.ok().body(servico.obterPorId(id));
+	}
+
+	@GetMapping("/{id}/list")
+	@Timed
+	public ResponseEntity<ItemListDTO> obterPorIdAsList(@PathVariable Long id) {
+		return ResponseEntity.ok().body(servico.obterPorIdAsList(id));
 	}
 
 	@PostMapping()

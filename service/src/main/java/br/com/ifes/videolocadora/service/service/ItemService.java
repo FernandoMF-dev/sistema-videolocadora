@@ -30,6 +30,10 @@ public class ItemService {
 		return mapper.toDto(procurarPorId(id));
 	}
 
+	public ItemListDTO obterPorIdAsList(Long id) {
+		return mapper.toListDto(procurarPorId(id));
+	}
+
 	public ItemDTO inserir(ItemDTO dto) {
 		dto.setId(null);
 		return salvar(dto);
