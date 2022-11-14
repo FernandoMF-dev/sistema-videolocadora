@@ -96,4 +96,5 @@
 	</p-dialog>
 </form>
 
-<app-item-select *ngIf="viewItemSelect" [(visible)]="viewItemSelect" (onSalvar)="selecionarItem($event)"></app-item-select>
+<app-item-select *ngIf="viewItemSelect" [(visible)]="viewItemSelect" [itemSelecionado]="item"
+				 (onSalvar)="selecionarItem($event)"></app-item-select>

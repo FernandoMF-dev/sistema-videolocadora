@@ -1,0 +1,130 @@
+<p-dialog [(visible)]="visible" header="Selecionar Cliente" [modal]="true">
+	<div class="ui-g ui-fluid">
+		<div class="ui-g-12 ui-sm-12">
+			<p-fieldset legend="Cliente Selecionado" [toggleable]="true">
+				<div class="ui-g ui-fluid" *ngIf="!!selectedValue">
+					<div class="ui-g-6 ui-sm-12">
+						<label>Nome</label>
+						<input pInputText type="text" [ngModel]="selectedValue.nome" [readonly]="true"
+							   [ngModelOptions]="{standalone: true}">
+					</div>
+
+					<div class="ui-g-3 ui-sm-12">
+						<label>Nº Inscrição</label>
+						<p-inputNumber [ngModel]="selectedValue.numeroInscricao" [disabled]="true"
+									   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+					</div>
+
+					<div class="ui-g-3 ui-sm-12">
+						<label>Tipo</label>
+						<input pInputText type="text" [ngModel]="formatTipoCliente(selectedValue.tipoCliente)" [readonly]="true"
+							   [ngModelOptions]="{standalone: true}">
+					</div>
+
+					<div class="ui-g-4 ui-sm-12">
+						<label>Status</label>
+						<p-dropdown [options]="optionsStatus" [ngModel]="selectedValue.ativo" [readonly]="true"
+									[ngModelOptions]="{standalone: true}"></p-dropdown>
+					</div>
+
+					<div class="ui-g-4 ui-sm-12">
+						<label>CPF</label>
+						<p-inputMask [unmask]="true" [ngModel]="selectedValue.cpf" [readonly]="true" mask="999.999.999-99"
+									 [ngModelOptions]="{standalone: true}"></p-inputMask>
+					</div>
+
+					<div class="ui-g-4 ui-sm-12">
+						<label>Telefone</label>
+						<input pInputText type="tel" [ngModel]="selectedValue.telefone" [readonly]="true"
+							   [ngModelOptions]="{standalone: true}">
+					</div>
+				</div>
+			</p-fieldset>
+		</div>
+
+		<div class="ui-g-12 ui-sm-12">
+			<p-treeTable [value]="clientes.content" [columns]="cols" (onLazyLoad)="buscarClientesSocios($event)"
+						 (onNodeExpand)="buscarClientesDependentes($event)" [showLoader]="loader"
+						 [lazy]="true" [paginator]="true" [showCurrentPageReport]="true"
+						 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
+						 [totalRecords]="clientes.totalElements" [(selection)]="clienteSelecionado"
+						 sortField="numeroInscricao" sortOrder="-1" dataKey="id" selectionMode="single"
+						 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
+				<ng-template pTemplate="header" let-columns>
+					<tr>
+						<th *ngFor="let col of columns" id="cliente-list-table-header-{{ col.field }}"
+							[ngStyle]="{'width': !!col?.width ? col.width : 'auto'}">
+							{{ !!col?.header ? col.header : '' }}
+						</th>
+					</tr>
+
+					<tr class="tabela-filtro">
+						<th *ngFor="let col of columns" id="cliente-list-table-filter-{{ col.field }}">
+							<ng-template [ngIf]="!!col?.field">
+								<ng-template [ngIf]="!!col?.text">
+									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarClientesSocios()">
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.integer">
+									<p-inputNumber [(ngModel)]="filtro[col.field]" (onBlur)="buscarClientesSocios()"
+												   [maxFractionDigits]="0"></p-inputNumber>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.status">
+									<p-dropdown [options]="optionsStatus" [(ngModel)]="filtro[col.field]" [showClear]="true"
+												placeholder="Selecione..." (onChange)="buscarClientesSocios()"></p-dropdown>
+								</ng-template>
+							</ng-template>
+						</th>
+					</tr>
+				</ng-template>
+
+				<ng-template pTemplate="body" let-rowNode let-rowData="rowData" let-columns="columns">
+					<tr [ttSelectableRow]="rowNode">
+						<td *ngFor="let col of columns; let i = index">
+							<p-treeTableToggler [rowNode]="rowNode" *ngIf="i === 0"></p-treeTableToggler>
+
+							<ng-template [ngIf]="!!col.text">
+								{{ rowData[col.field] }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.integer">
+								{{ rowData[col.field] | number:'1.0-0':'pt-BR' }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.tipoCliente">
+								{{ formatTipoCliente(rowData[col.field]) }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.status">
+								{{ rowData[col.field] ? 'ATIVO' : 'INATIVO' }}
+							</ng-template>
+
+							{{ !col?.sufix ? '' : col.sufix }}
+						</td>
+					</tr>
+				</ng-template>
+
+				<ng-template let-columns pTemplate="emptymessage">
+					<tr>
+						<td [attr.colspan]="columns.length">
+							Nenhum registro encontrado
+						</td>
+					</tr>
+				</ng-template>
+			</p-treeTable>
+		</div>
+	</div>
+
+	<p-footer>
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-6 ui-sm-12">
+				<button pButton type="button" icon="pi pi-times" label="Cancelar" (click)="cancelar()" class="ui-button-danger"></button>
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<button pButton type="submit" icon="pi pi-save" label="Salvar" (click)="salvar()" class="ui-button-success"></button>
+			</div>
+		</div>
+	</p-footer>
+</p-dialog>

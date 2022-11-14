@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
-import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { SelectItem } from 'primeng';
 import { LazyLoadEvent } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
@@ -8,20 +7,20 @@ import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { NodeExpandEvent } from '../../../../shared/models/events/node-expand-collapse.event';
 import { Page } from '../../../../shared/models/page.model';
 import { TreeNodeModel } from '../../../../shared/models/tree-node.model';
-import { MensagemService } from '../../../../shared/services/mensagem.service';
-import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
+import { DialogUtil } from '../../../../shared/utils/dialog.util';
 import { TipoCliente, TipoClienteEnum } from '../../enums/tipo-cliente.enum';
 import { Cliente } from '../../models/cliente.model';
 import { ClienteService } from '../../services/cliente.service';
 
 @Component({
-	selector: 'app-cliente-list',
-	templateUrl: './cliente-list.component.html',
-	styleUrls: ['./cliente-list.component.scss']
+	selector: 'app-cliente-select',
+	templateUrl: './cliente-select.component.html',
+	styleUrls: ['./cliente-select.component.scss']
 })
-export class ClienteListComponent {
+export class ClienteSelectComponent extends DialogUtil {
 
-	@BlockUI() blockUI: NgBlockUI;
+	@Output() onCancelar: EventEmitter<void> = new EventEmitter<void>();
+	@Output() onSalvar: EventEmitter<Cliente> = new EventEmitter<Cliente>();
 
 	clientes: Page<TreeNodeModel<Cliente>> = new Page();
 	filtro: Cliente = new Cliente();
@@ -32,10 +31,6 @@ export class ClienteListComponent {
 		{ label: 'ATIVO', value: true },
 		{ label: 'INATIVO', value: false }
 	];
-
-	viewClienteForm: boolean = false;
-	responsavelClienteForm: Partial<Cliente>;
-	tipoClienteClienteForm: TipoClienteEnum;
 
 	pageListEnum = PageListEnum;
 	cols = [
@@ -50,21 +45,27 @@ export class ClienteListComponent {
 
 	constructor(
 		private clienteService: ClienteService,
-		private mensagemService: MensagemService,
 		private pageNotificationService: PageNotificationService
 	) {
+		super();
 	}
 
-	get disableEditar(): boolean {
-		return !this.clienteSelecionado;
+	get selectedValue(): Cliente {
+		if (!this.clienteSelecionado || !this.clienteSelecionado.data) {
+			return null;
+		}
+
+		return this.clienteSelecionado.data;
 	}
 
-	get disableAtribuirDependente(): boolean {
-		return this.disableEditar || this.clienteSelecionado.data.tipoCliente !== TipoClienteEnum.SOCIO;
+	cancelar(): void {
+		this.onCancelar.emit();
+		this.fecharDialog();
 	}
 
-	get disableExcluir(): boolean {
-		return !this.clienteSelecionado;
+	salvar(): void {
+		this.onSalvar.emit(this.selectedValue);
+		this.fecharDialog();
 	}
 
 	formatTipoCliente(tipoItem: TipoClienteEnum): string {
@@ -72,41 +73,6 @@ export class ClienteListComponent {
 			return TipoCliente.findById(tipoItem).label;
 		}
 		return '';
-	}
-
-	inserirCliente(): void {
-		this.clienteSelecionado = null;
-		this.responsavelClienteForm = null;
-		this.tipoClienteClienteForm = TipoClienteEnum.SOCIO;
-		this.viewClienteForm = true;
-	}
-
-	editarCliente(): void {
-		this.responsavelClienteForm = null;
-		this.tipoClienteClienteForm = this.clienteSelecionado.data.tipoCliente;
-
-		if (this.tipoClienteClienteForm === TipoClienteEnum.DEPENDENTE) {
-			this.responsavelClienteForm = { id: this.clienteSelecionado.data.idResponsavel };
-		}
-
-		this.viewClienteForm = true;
-	}
-
-	atribuirDependente(): void {
-		this.responsavelClienteForm = this.clienteSelecionado.data;
-		this.clienteSelecionado = null;
-		this.tipoClienteClienteForm = TipoClienteEnum.DEPENDENTE;
-		this.viewClienteForm = true;
-	}
-
-	patchAtivo(): void {
-		this.clienteSelecionado.data.ativo = !this.clienteSelecionado.data.ativo;
-		this.clienteService.patchAtivo(this.clienteSelecionado.data.id, this.clienteSelecionado.data.ativo).subscribe();
-	}
-
-	limparFiltro(): void {
-		this.filtro = new Cliente();
-		this.buscarClientesSocios();
 	}
 
 	buscarClientesSocios(event?: LazyLoadEvent): void {
@@ -135,25 +101,9 @@ export class ClienteListComponent {
 			);
 	}
 
-	excluirCliente(): void {
-		this.mensagemService.exibirMensagem(
-			'EXCLUIR ITEM',
-			`Tem certeza que deseja excluir o cliente "${ this.clienteSelecionado.data.nome }"?`,
-			this,
-			() => this.excluir()
-		);
+	private fecharDialog(): void {
+		this.onClose.emit();
+		this.visible = false;
 	}
 
-	private excluir(): void {
-		this.blockUI.start(MensagemUtil.BLOCKUI_EXCLUINDO);
-		this.clienteService.delete(this.clienteSelecionado.data.id)
-			.pipe(finalize(() => this.blockUI.stop()))
-			.subscribe(
-				() => {
-					this.pageNotificationService.addSuccessMessage('Cliente excluido com sucesso', 'Sucesso');
-					this.buscarClientesSocios();
-				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
-			);
-	}
 }

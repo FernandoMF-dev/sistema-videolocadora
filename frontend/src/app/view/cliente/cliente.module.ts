@@ -5,12 +5,14 @@ import { SharedModule } from '../../shared/shared.module';
 import { ClienteRoutingModule } from './cliente-routing.module';
 import { ClienteFormComponent } from './components/cliente-form/cliente-form.component';
 import { ClienteListComponent } from './components/cliente-list/cliente-list.component';
+import { ClienteSelectComponent } from './components/cliente-select/cliente-select.component';
 import { ClienteService } from './services/cliente.service';
 
 @NgModule({
 	declarations: [
 		ClienteListComponent,
-		ClienteFormComponent
+		ClienteFormComponent,
+		ClienteSelectComponent
 	],
 	imports: [
 		CommonModule,
@@ -21,6 +23,9 @@ import { ClienteService } from './services/cliente.service';
 	],
 	providers: [
 		ClienteService
+	],
+	exports: [
+		ClienteSelectComponent
 	]
 })
 export class ClienteModule {
