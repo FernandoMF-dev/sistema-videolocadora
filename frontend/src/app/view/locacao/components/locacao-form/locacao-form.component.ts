@@ -8,8 +8,10 @@ import { DialogUtil } from '../../../../shared/utils/dialog.util';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { Cliente } from '../../../cliente/models/cliente.model';
 import { ClienteService } from '../../../cliente/services/cliente.service';
-import { Item } from '../../../item/models/item.model';
+import { TipoItem, TipoItemEnum } from '../../../item/enums/tipo-item.enum';
+import { ItemList } from '../../../item/models/item-list.model';
 import { ItemService } from '../../../item/services/item.service';
+import { Categoria, CategoriaEnum } from '../../../titulo/enums/categoria.enum';
 import { LocacaoList } from '../../models/locacao-list.model';
 import { Locacao } from '../../models/locacao.model';
 import { LocacaoService } from '../../services/locacao.service';
@@ -29,7 +31,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 	@Output() onSalvar: EventEmitter<Locacao> = new EventEmitter<Locacao>();
 
 	form: FormGroup;
-	item: Item;
+	item: ItemList;
 	cliente: Cliente;
 	dataBr = DateTimeUtil.dataBr;
 
@@ -54,10 +56,15 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 		return `${ this.isEdicao ? 'EDITAR' : 'NOVO' } LOCACAO`;
 	}
 
+	get dataDevolucaoPrevista(): Date {
+		return this.form.controls['dataDevolucaoPrevista'].value;
+	}
+
 	ngOnInit(): void {
 		this.iniciarForm();
 
 		if (this.isEdicao) {
+			this.atualizarItemEdicao();
 			this.atualizarFormEdicao();
 		}
 	}
@@ -85,12 +92,19 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 		this.salvar();
 	}
 
+	formatTipoItem(tipoItem: TipoItemEnum): string {
+		return TipoItem.findById(tipoItem).label;
+	}
+
+	formatCategoria(categoria: CategoriaEnum): string {
+		return Categoria.findById(categoria).label;
+	}
+
 	private iniciarForm(): void {
 		this.form = this.formBuilder.group({
 			'id': new FormControl(null, []),
 			'dataLocacao': new FormControl(new Date(), [Validators.required]),
 			'dataDevolucaoPrevista': new FormControl(null, [Validators.required]),
-			'dataDevolucaoEfetiva': new FormControl(null, [Validators.required]),
 			'valorCobrado': new FormControl(null, [Validators.required]),
 			'idItem': new FormControl(null, [Validators.required]),
 			'idCliente': new FormControl(null, [Validators.required])
@@ -108,6 +122,16 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 					res.dataDevolucaoEfetiva = new Date(res.dataDevolucaoEfetiva);
 					this.form.patchValue(res);
 				},
+				(err) => this.pageNotificationService.addErrorMessage(err.message)
+			);
+	}
+
+	private atualizarItemEdicao(): void {
+		this.blockUI.start();
+		this.itemService.findByIdAsList(this.locacao.idItem)
+			.pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(
+				(res) => this.selecionarItem(res),
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}
@@ -156,5 +180,20 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 	private finalizarSalvar(entity: Locacao): void {
 		this.onSalvar.emit(entity);
 		this.fecharDialog();
+	}
+
+	selecionarItem(event: ItemList): void {
+		this.item = event;
+		this.form.patchValue({ 'idItem': event.id });
+		this.atualizarDataDevolucao();
+	}
+
+	atualizarDataDevolucao(): void {
+		if (!this.form.controls['dataLocacao'].value || !this.item || !this.item.prazoDevolucao) {
+			this.form.controls['dataDevolucaoPrevista'].setValue(null);
+		}
+
+		const devolucao = DateTimeUtil.addDays(this.form.controls['dataLocacao'].value, this.item.prazoDevolucao);
+		this.form.controls['dataDevolucaoPrevista'].setValue(devolucao);
 	}
 }

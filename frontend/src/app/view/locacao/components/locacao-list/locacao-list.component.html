@@ -112,3 +112,5 @@
 		</div>
 	</section>
 </p-card>
+
+<app-locacao-form *ngIf="viewLocacaoForm" [(visible)]="viewLocacaoForm" (onSalvar)="buscarLocacoes()"></app-locacao-form>

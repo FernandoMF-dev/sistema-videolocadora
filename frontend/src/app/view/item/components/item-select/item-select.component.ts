@@ -67,7 +67,10 @@ export class ItemSelectComponent extends DialogUtil {
 		this.itemService.filter<ItemList>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
-				(res) => this.itens = res,
+				(res) => {
+					res.content.forEach(element => element.dataAquisicao = DateTimeUtil.formatDate(element.dataAquisicao));
+					this.itens = res;
+				},
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}

@@ -10,4 +10,6 @@ export class LocacaoList {
 	situacao?: SituacaoLocacaoEnum;
 	tituloItem?: string;
 	nomeCliente?: string;
+	idItem?: number;
+	idCliente?: number;
 }

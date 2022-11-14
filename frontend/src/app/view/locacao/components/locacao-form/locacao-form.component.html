@@ -4,7 +4,8 @@
 			<div class="ui-g-12 ui-sm-12">
 				<div class="ui-g-4 ui-sm-12">
 					<label>Data de Locação*</label>
-					<p-calendar formControlName="dataLocacao" dateFormat="dd/mm/yy" [locale]="dataBr" [showButtonBar]="true"></p-calendar>
+					<p-calendar formControlName="dataLocacao" dateFormat="dd/mm/yy" [locale]="dataBr" [showButtonBar]="true"
+								(onInput)="atualizarDataDevolucao()" (onSelect)="atualizarDataDevolucao()"></p-calendar>
 				</div>
 
 				<div class="ui-g-4 ui-sm-12">
@@ -19,12 +20,56 @@
 			</div>
 
 			<div class="ui-g-4 ui-sm-12">
-				<p-fieldset legend="Informações Gerais"></p-fieldset>
+				<p-fieldset legend="Informações Gerais">
+					<ng-template [ngIf]="!!item">
+						<div class="ui-g-12 ui-sm-12">
+							Valor
+							<p-inputNumber [ngModel]="item.valor" mode="currency" [disabled]="true" locale="pt-BR" currency="BRL"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-8 ui-sm-12">
+							Data de Devolução
+							<p-calendar [ngModel]="dataDevolucaoPrevista" dateFormat="dd/mm/yy" [locale]="dataBr" [disabled]="true"
+										[ngModelOptions]="{standalone: true}"></p-calendar>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							Prazo
+							<p-inputNumber [ngModel]="item.prazoDevolucao" [disabled]="true" [maxFractionDigits]="0"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+					</ng-template>
+				</p-fieldset>
 			</div>
 
 			<div class="ui-g-4 ui-sm-12">
 				<p-fieldset legend="Item">
-					<ng-template [ngIf]="!!item"></ng-template>
+					<ng-template [ngIf]="!!item">
+						<div class="ui-g-10 ui-sm-12">
+							Título
+							<input pInputText type="text" [readonly]="true" [ngModel]="item.nomeTitulo"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-2 ui-sm-12">
+							Nº Série
+							<p-inputNumber [ngModel]="item.numeroSerie" [disabled]="true" [maxFractionDigits]="0"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-6 ui-sm-12">
+							Tipo
+							<input pInputText type="text" [readonly]="true" [ngModel]="formatTipoItem(item.tipoItem)"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-6 ui-sm-12">
+							Categoria
+							<input pInputText type="text" [readonly]="true" [ngModel]="formatCategoria(item.categoria)"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+					</ng-template>
 				</p-fieldset>
 			</div>
 
@@ -50,3 +95,5 @@
 		</p-footer>
 	</p-dialog>
 </form>
+
+<app-item-select *ngIf="viewItemSelect" [(visible)]="viewItemSelect" (onSalvar)="selecionarItem($event)"></app-item-select>
