@@ -1,7 +1,7 @@
 <p-dialog [(visible)]="visible" header="Selecionar Classe" modal="true">
 	<div class="ui-g ui-fluid">
 		<div class="ui-g-12 ui-sm-12">
-			<p-fieldset legend="Atores Selecionados">
+			<p-fieldset legend="Atores Selecionados" [toggleable]="true">
 				<button *ngFor="let ator of atoresSelecionados" pButton type="button" [label]="ator.nome" icon="pi pi-times"
 						class="ui-button-info tag-button" (click)="removerAtor(ator.id)"></button>
 			</p-fieldset>

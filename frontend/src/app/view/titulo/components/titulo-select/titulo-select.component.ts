@@ -6,7 +6,6 @@ import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { Page } from '../../../../shared/models/page.model';
 import { DialogUtil } from '../../../../shared/utils/dialog.util';
-import { Classe } from '../../../classe/models/classe.model';
 import { Categoria, CategoriaEnum } from '../../enums/categoria.enum';
 import { Titulo } from '../../models/titulo.model';
 import { TituloService } from '../../services/titulo.service';

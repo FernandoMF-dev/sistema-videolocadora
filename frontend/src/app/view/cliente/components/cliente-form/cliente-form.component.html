@@ -2,7 +2,7 @@
 	<p-dialog [(visible)]="visible" [header]="tituloDialog" modal="true" styleClass="dialog-lg">
 		<div class="ui-g ui-fluid">
 			<div *ngIf="idResponsavel" class="ui-g-12 ui-sm-12">
-				<p-fieldset legend="Sócio Responsável">
+				<p-fieldset legend="Sócio Responsável" [toggleable]="true" [collapsed]="true">
 					<ng-template [ngIf]="responsavel">
 						<div class="ui-g-8 ui-sm-12">
 							<label>Nome</label>
