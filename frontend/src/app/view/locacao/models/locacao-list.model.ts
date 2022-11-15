@@ -7,7 +7,7 @@ export class LocacaoList {
 	dataDevolucaoEfetiva?: Date;
 	valorCobrado?: number;
 	valorMulta?: number;
-	situacao?: SituacaoLocacaoEnum;
+	situacao?: SituacaoLocacaoEnum = SituacaoLocacaoEnum.ABERTO;
 	tituloItem?: string = '';
 	nomeCliente?: string = '';
 	idItem?: number;

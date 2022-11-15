@@ -27,4 +27,12 @@ export class DateTimeUtil {
 		result.setDate(result.getDate() + days);
 		return result;
 	}
+
+	public static compareDate(a: Date, b: Date): number {
+		const _a = new Date(a.setHours(0, 0, 0, 0));
+		const _b = new Date(b.setHours(0, 0, 0, 0));
+
+		return _a.getTime() - _b.getTime();
+	}
+
 }

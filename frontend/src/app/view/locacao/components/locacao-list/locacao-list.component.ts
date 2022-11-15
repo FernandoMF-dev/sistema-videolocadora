@@ -89,7 +89,14 @@ export class LocacaoListComponent {
 		this.locacaoService.filter<LocacaoList>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
-				(res) => this.locacoes = res,
+				(res) => {
+					this.locacoes = res;
+					this.locacoes.content.forEach(element => {
+						element.dataLocacao = DateTimeUtil.formatDate(element.dataLocacao);
+						element.dataDevolucaoPrevista = DateTimeUtil.formatDate(element.dataDevolucaoPrevista);
+						element.dataDevolucaoEfetiva = DateTimeUtil.formatDate(element.dataDevolucaoEfetiva);
+					});
+				},
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
 			);
 	}

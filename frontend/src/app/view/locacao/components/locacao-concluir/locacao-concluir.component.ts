@@ -40,8 +40,13 @@ export class LocacaoConcluirComponent extends DialogUtil implements OnInit {
 		return this.form.controls['dataDevolucao'].value;
 	}
 
+	get dialogHeader(): string {
+		return `Concluir Devolução do item "${ this.locacao.tituloItem }"`;
+	}
+
 	ngOnInit(): void {
 		this.iniciarForm();
+		this.updateValorMulta();
 	}
 
 	cancelar(): void {
@@ -88,14 +93,14 @@ export class LocacaoConcluirComponent extends DialogUtil implements OnInit {
 	}
 
 	updateValorMulta(): void {
-		const disableValorMulta: boolean = !this.dataDevolucao || this.dataDevolucao <= this.locacao.dataDevolucaoPrevista;
+		const disable: boolean = !this.dataDevolucao || DateTimeUtil.compareDate(this.dataDevolucao, this.locacao.dataDevolucaoPrevista) > 0;
 
-		if (disableValorMulta !== this.disableValorMulta) {
+		if (disable === this.disableValorMulta) {
 			return;
 		}
 
-		this.disableValorMulta = disableValorMulta;
-		if (disableValorMulta) {
+		this.disableValorMulta = disable;
+		if (disable) {
 			this.form.controls['valorMulta'].setValue(null);
 			this.form.setValidators([]);
 		} else {

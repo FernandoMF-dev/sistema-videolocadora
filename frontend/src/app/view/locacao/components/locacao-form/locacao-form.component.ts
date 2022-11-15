@@ -124,9 +124,9 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => {
-					res.dataLocacao = new Date(res.dataLocacao);
-					res.dataDevolucaoPrevista = new Date(res.dataDevolucaoPrevista);
-					res.dataDevolucaoEfetiva = new Date(res.dataDevolucaoEfetiva);
+					res.dataLocacao = DateTimeUtil.formatDate(res.dataLocacao);
+					res.dataDevolucaoPrevista = DateTimeUtil.formatDate(res.dataDevolucaoPrevista);
+					res.dataDevolucaoEfetiva = DateTimeUtil.formatDate(res.dataDevolucaoEfetiva);
 					this.form.patchValue(res);
 				},
 				(err) => this.pageNotificationService.addErrorMessage(err.message)
@@ -211,6 +211,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 	atualizarDataDevolucao(): void {
 		if (!this.form.controls['dataLocacao'].value || !this.item || !this.item.prazoDevolucao) {
 			this.form.controls['dataDevolucaoPrevista'].setValue(null);
+			return;
 		}
 
 		const devolucao = DateTimeUtil.addDays(this.form.controls['dataLocacao'].value, this.item.prazoDevolucao);
