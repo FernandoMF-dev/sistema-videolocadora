@@ -2,6 +2,7 @@ package br.com.ifes.videolocadora.service.repository;
 
 
 import br.com.ifes.videolocadora.service.domain.entity.Locacao;
+import br.com.ifes.videolocadora.service.service.dto.LocacaoDTO;
 import br.com.ifes.videolocadora.service.service.dto.LocacaoListDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,5 +37,13 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long>, JpaSpec
 			" AND (:#{#filter.situacao} IS NULL OR l.situacao = :#{#filter.situacao}) " +
 			" ORDER BY l.dataDevolucaoPrevista DESC ")
 	Page<LocacaoListDTO> filtrar(@Param("filter") LocacaoListDTO filter, Pageable page);
+
+
+	@Query("SELECT CASE WHEN COUNT(l) > 0 THEN true ELSE false END " +
+			"FROM Locacao l " +
+			" WHERE l.situacao = 'ABERTO' " +
+			" AND (:#{#dto.id} IS NULL OR l.id <> :#{#dto.id}) " +
+			" AND l.item.id = :#{#dto.idItem}")
+	boolean isLocacaoSobreposta(@Param("dto") LocacaoDTO dto);
 
 }

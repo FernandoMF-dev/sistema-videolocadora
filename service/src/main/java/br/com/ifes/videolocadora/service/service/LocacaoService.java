@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -63,6 +64,10 @@ public class LocacaoService {
 	}
 
 	private LocacaoDTO salvar(LocacaoDTO dto) {
+		if (isLocacaoSobreposta(dto)) {
+			throw new RuntimeException("Item já locado");
+		}
+
 		Locacao entity = mapper.toEntity(dto);
 		entity = repositorio.save(entity);
 		return mapper.toDto(entity);
@@ -75,5 +80,9 @@ public class LocacaoService {
 		entity.setValorCobrado(dto.getValorCobrado());
 		entity.setValorMulta(dto.getValorMulta());
 		repositorio.save(entity);
+	}
+
+	private boolean isLocacaoSobreposta(LocacaoDTO dto) {
+		return Objects.equals(SituacaoLocacaoEnum.ABERTO, dto.getSituacao()) && repositorio.isLocacaoSobreposta(dto);
 	}
 }
