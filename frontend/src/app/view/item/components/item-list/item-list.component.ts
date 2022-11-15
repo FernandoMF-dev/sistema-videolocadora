@@ -82,7 +82,7 @@ export class ItemListComponent {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.itens = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -116,7 +116,7 @@ export class ItemListComponent {
 					this.pageNotificationService.addSuccessMessage('Item excluido com sucesso', 'Sucesso');
 					this.buscarItens();
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 }

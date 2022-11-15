@@ -97,7 +97,7 @@ export class LocacaoListComponent {
 						element.dataDevolucaoEfetiva = DateTimeUtil.formatDate(element.dataDevolucaoEfetiva);
 					});
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -124,7 +124,7 @@ export class LocacaoListComponent {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				() => this.buscarLocacoes(),
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

@@ -54,7 +54,7 @@ export class AtorSelectComponent extends DialogUtil {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.atores = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

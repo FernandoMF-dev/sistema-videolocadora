@@ -62,7 +62,7 @@ export class TituloSelectComponent extends DialogUtil {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.titulos = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

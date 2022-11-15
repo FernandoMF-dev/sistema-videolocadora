@@ -88,7 +88,7 @@ export class LocacaoConcluirComponent extends DialogUtil implements OnInit {
 					this.onSalvar.emit(entity);
 					this.fecharDialog();
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

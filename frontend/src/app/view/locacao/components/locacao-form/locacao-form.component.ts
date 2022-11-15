@@ -129,7 +129,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 					res.dataDevolucaoEfetiva = DateTimeUtil.formatDate(res.dataDevolucaoEfetiva);
 					this.form.patchValue(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -139,7 +139,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.selecionarItem(res),
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -149,7 +149,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.selecionarCliente(res),
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -177,7 +177,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.INSERIR_SUCESSO);
 					this.finalizarSalvar(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -190,7 +190,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.EDITAR_SUCESSO);
 					this.finalizarSalvar(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

@@ -55,7 +55,7 @@ export class ClasseListComponent {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.classes = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -95,7 +95,7 @@ export class ClasseListComponent {
 					this.pageNotificationService.addSuccessMessage('Classe excluida com sucesso', 'Sucesso');
 					this.buscarClasses();
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

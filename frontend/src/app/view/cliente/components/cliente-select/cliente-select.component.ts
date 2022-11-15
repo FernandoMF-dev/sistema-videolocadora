@@ -82,7 +82,7 @@ export class ClienteSelectComponent extends DialogUtil {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.clientes = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -97,7 +97,7 @@ export class ClienteSelectComponent extends DialogUtil {
 					socio.children = res;
 					this.clientes.content = [...this.clientes.content];
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

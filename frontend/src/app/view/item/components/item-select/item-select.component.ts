@@ -71,7 +71,7 @@ export class ItemSelectComponent extends DialogUtil {
 					res.content.forEach(element => element.dataAquisicao = DateTimeUtil.formatDate(element.dataAquisicao));
 					this.itens = res;
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
