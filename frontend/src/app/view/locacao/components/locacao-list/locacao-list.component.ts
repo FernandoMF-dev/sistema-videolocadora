@@ -11,6 +11,7 @@ import { ConversionUtil } from '../../../../shared/utils/conversion.util';
 import { DateTimeUtil } from '../../../../shared/utils/date-time.util';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { SituacaoLocacao, SituacaoLocacaoEnum } from '../../enums/situacao-locacao.enum';
+import { ConcluirDevolucao } from '../../models/concluir-devolucao.model';
 import { LocacaoList } from '../../models/locacao-list.model';
 import { LocacaoService } from '../../services/locacao.service';
 
@@ -44,6 +45,7 @@ export class LocacaoListComponent {
 	];
 
 	viewLocacaoForm: boolean = false;
+	viewLocacaoConcluir: boolean = false;
 
 	constructor(
 		private locacaoService: LocacaoService,
@@ -78,6 +80,10 @@ export class LocacaoListComponent {
 		this.viewLocacaoForm = true;
 	}
 
+	concluirDevolucao(): void {
+		this.viewLocacaoConcluir = true;
+	}
+
 	buscarLocacoes(event?: LazyLoadEvent): void {
 		this.loader = true;
 		this.locacaoService.filter<LocacaoList>(this.filtro, event)
@@ -96,15 +102,6 @@ export class LocacaoListComponent {
 		return SituacaoLocacao.findById(situacaoLocacao).label;
 	}
 
-	verificarConcluirDevolucao(): void {
-		this.mensagemService.exibirMensagem(
-			'DEVOLUÇÃO',
-			`Concluir a devolução do item "${ this.locacaoSelecionada.tituloItem }"?`,
-			this,
-			() => this.concluirDevolucao()
-		);
-	}
-
 	verificarCancelarLocacao(): void {
 		this.mensagemService.exibirMensagem(
 			'CANCELAR LOCAÇÃO',
@@ -112,16 +109,6 @@ export class LocacaoListComponent {
 			this,
 			() => this.cancelarLocacao()
 		);
-	}
-
-	private concluirDevolucao(): void {
-		this.blockUI.start(MensagemUtil.BLOCKUI_CARREGANDO);
-		this.locacaoService.concluirDevolucao(this.locacaoSelecionada.id)
-			.pipe(finalize(() => this.blockUI.stop()))
-			.subscribe(
-				() => this.buscarLocacoes(),
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
-			);
 	}
 
 	private cancelarLocacao(): void {
@@ -134,4 +121,10 @@ export class LocacaoListComponent {
 			);
 	}
 
+	afterConcluirDevolucao(event: ConcluirDevolucao): void {
+		this.locacaoSelecionada.situacao = SituacaoLocacaoEnum.DEVOLVIDO;
+		this.locacaoSelecionada.dataDevolucaoEfetiva = event.dataDevolucao;
+		this.locacaoSelecionada.valorCobrado = event.valorCobrado;
+		this.locacaoSelecionada.valorMulta = event.valorMulta;
+	}
 }

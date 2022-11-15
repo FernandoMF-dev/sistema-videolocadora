@@ -76,7 +76,6 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 		this.viewItemSelect = true;
 	}
 
-
 	buscarCliente(): void {
 		this.viewClienteSelect = true;
 	}

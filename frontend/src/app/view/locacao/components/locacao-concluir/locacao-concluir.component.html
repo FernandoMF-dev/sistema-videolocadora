@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="validarSalvar()">
+	<p-dialog [(visible)]="visible" header="Concluir Devolução do item '{{ locacao.tituloItem }}'" modal="true" styleClass="dialog-lg">
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-4 ui-sm-12">
+				<label>Data de Devolução*</label>
+				<p-calendar formControlName="dataDevolucao" dateFormat="dd/mm/yy" [locale]="dataBr" [showButtonBar]="true"
+							(onSelect)="updateValorMulta()" (onInput)="updateValorMulta()" (onClearClick)="updateValorMulta()"></p-calendar>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<label>Valor Cobrado*</label>
+				<p-inputNumber formControlName="valorCobrado" mode="currency" locale="pt-BR" currency="BRL" min="0"
+							   [showButtons]="true" [step]="5"></p-inputNumber>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<label>Valor da Multa</label>
+				<p-inputNumber formControlName="valorMulta" mode="currency" locale="pt-BR" currency="BRL" min="0"
+							   [showButtons]="true" [step]="5" [disabled]="disableValorMulta"></p-inputNumber>
+			</div>
+		</div>
+
+		<p-footer>
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="button" icon="pi pi-times" label="Cancelar"
+							(click)="cancelar()" class="ui-button-danger"></button>
+				</div>
+
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="submit" appFormSubmitMsg icon="pi pi-save" label="Salvar"
+							[formGroup]="form" class="ui-button-success"></button>
+				</div>
+			</div>
+		</p-footer>
+	</p-dialog>
+</form>

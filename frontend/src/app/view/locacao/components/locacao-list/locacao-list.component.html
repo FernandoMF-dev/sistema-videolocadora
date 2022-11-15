@@ -100,8 +100,7 @@
 			</div>
 
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Concluír Devolução" (click)="verificarConcluirDevolucao()"
-						[disabled]="disableDevolucao"
+				<button pButton type="button" pTooltip="Concluír Devolução" (click)="concluirDevolucao()" [disabled]="disableDevolucao"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-check-circle"></button>
 			</div>
 
@@ -115,3 +114,6 @@
 
 <app-locacao-form *ngIf="viewLocacaoForm" [(visible)]="viewLocacaoForm" [locacao]="locacaoSelecionada"
 				  (onSalvar)="buscarLocacoes()"></app-locacao-form>
+
+<app-locacao-concluir *ngIf="viewLocacaoConcluir" [(visible)]="viewLocacaoConcluir" [locacao]="locacaoSelecionada"
+					  (onSalvar)="afterConcluirDevolucao($event)"></app-locacao-concluir>
