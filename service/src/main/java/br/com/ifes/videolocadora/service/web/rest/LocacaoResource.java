@@ -2,7 +2,9 @@ package br.com.ifes.videolocadora.service.web.rest;
 
 
 import br.com.ifes.videolocadora.service.service.LocacaoService;
+import br.com.ifes.videolocadora.service.service.dto.ConcluirLocacaoDTO;
 import br.com.ifes.videolocadora.service.service.dto.LocacaoDTO;
+import br.com.ifes.videolocadora.service.service.dto.LocacaoListDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -39,7 +42,7 @@ public class LocacaoResource {
 
 	@GetMapping
 	@Timed
-	public ResponseEntity<Page<LocacaoDTO>> obterTodos(Pageable page) {
+	public ResponseEntity<Page<LocacaoListDTO>> obterTodos(Pageable page) {
 		return ResponseEntity.ok().body(servico.obterTodos(page));
 	}
 
@@ -58,8 +61,15 @@ public class LocacaoResource {
 
 	@PostMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<LocacaoDTO>> filtro(@RequestBody LocacaoDTO dto, Pageable page) {
+	public ResponseEntity<Page<LocacaoListDTO>> filtro(@RequestBody LocacaoListDTO dto, Pageable page) {
 		return ResponseEntity.ok().body(servico.filtrar(dto, page));
+	}
+
+	@PatchMapping("/devolver")
+	@Timed
+	public ResponseEntity<Void> devolver(@RequestBody ConcluirLocacaoDTO dto) {
+		servico.devolver(dto);
+		return ResponseEntity.noContent().build();
 	}
 
 }

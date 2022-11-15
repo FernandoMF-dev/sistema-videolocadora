@@ -126,5 +126,6 @@ export class LocacaoListComponent {
 		this.locacaoSelecionada.dataDevolucaoEfetiva = event.dataDevolucao;
 		this.locacaoSelecionada.valorCobrado = event.valorCobrado;
 		this.locacaoSelecionada.valorMulta = event.valorMulta;
+		this.buscarLocacoes();
 	}
 }

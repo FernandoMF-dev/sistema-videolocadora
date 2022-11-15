@@ -3,7 +3,9 @@ package br.com.ifes.videolocadora.service.service;
 import br.com.ifes.videolocadora.service.domain.entity.Locacao;
 import br.com.ifes.videolocadora.service.domain.enums.SituacaoLocacaoEnum;
 import br.com.ifes.videolocadora.service.repository.LocacaoRepository;
+import br.com.ifes.videolocadora.service.service.dto.ConcluirLocacaoDTO;
 import br.com.ifes.videolocadora.service.service.dto.LocacaoDTO;
+import br.com.ifes.videolocadora.service.service.dto.LocacaoListDTO;
 import br.com.ifes.videolocadora.service.service.mapper.LocacaoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,7 +37,7 @@ public class LocacaoService {
 		return salvar(dto);
 	}
 
-	public Page<LocacaoDTO> obterTodos(Pageable page) {
+	public Page<LocacaoListDTO> obterTodos(Pageable page) {
 		return repositorio.findAllList(page);
 	}
 
@@ -49,7 +51,7 @@ public class LocacaoService {
 		repositorio.delete(entity);
 	}
 
-	public Page<LocacaoDTO> filtrar(LocacaoDTO dto, Pageable pageable) {
+	public Page<LocacaoListDTO> filtrar(LocacaoListDTO dto, Pageable pageable) {
 		return repositorio.filtrar(dto, pageable);
 	}
 
@@ -57,5 +59,14 @@ public class LocacaoService {
 		Locacao entity = mapper.toEntity(dto);
 		entity = repositorio.save(entity);
 		return mapper.toDto(entity);
+	}
+
+	public void devolver(ConcluirLocacaoDTO dto) {
+		Locacao entity = procurarPorId(dto.getId());
+		entity.setSituacao(SituacaoLocacaoEnum.DEVOLVIDO);
+		entity.setDataDevolucaoEfetiva(dto.getDataDevolucao());
+		entity.setValorCobrado(dto.getValorCobrado());
+		entity.setValorMulta(dto.getValorMulta());
+		repositorio.save(entity);
 	}
 }

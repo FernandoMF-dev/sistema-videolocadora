@@ -8,8 +8,8 @@ export class LocacaoList {
 	valorCobrado?: number;
 	valorMulta?: number;
 	situacao?: SituacaoLocacaoEnum;
-	tituloItem?: string;
-	nomeCliente?: string;
+	tituloItem?: string = '';
+	nomeCliente?: string = '';
 	idItem?: number;
 	idCliente?: number;
 }
