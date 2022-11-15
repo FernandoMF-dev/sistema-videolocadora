@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -37,18 +38,24 @@ public class LocacaoService {
 		return salvar(dto);
 	}
 
-	public Page<LocacaoListDTO> obterTodos(Pageable page) {
-		return repositorio.findAllList(page);
+	public List<LocacaoListDTO> obterTodos() {
+		return repositorio.findAllList();
+	}
+
+	public LocacaoDTO editar(LocacaoDTO dto) {
+		return editar(dto.getId(), dto);
 	}
 
 	public LocacaoDTO editar(Long id, LocacaoDTO dto) {
 		procurarPorId(id);
+		dto.setId(id);
 		return salvar(dto);
 	}
 
 	public void deletar(Long id) {
-		Locacao entity = procurarPorId(id);
-		repositorio.delete(entity);
+		LocacaoDTO dto = obterPorId(id);
+		dto.setSituacao(SituacaoLocacaoEnum.CANCELADO);
+		editar(dto);
 	}
 
 	public Page<LocacaoListDTO> filtrar(LocacaoListDTO dto, Pageable pageable) {
