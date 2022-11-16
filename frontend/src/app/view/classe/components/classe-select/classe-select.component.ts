@@ -58,7 +58,7 @@ export class ClasseSelectComponent extends DialogUtil {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.classes = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

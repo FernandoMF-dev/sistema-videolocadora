@@ -50,7 +50,7 @@ export class DiretorListComponent {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.diretores = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -66,7 +66,7 @@ export class DiretorListComponent {
 	excluirDiretores(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR DIRETOR(ES)',
-			`Tem certeza que seja excluir o/a diretor(a) "${ this.diretorSelecionado.nome }"`,
+			`Tem certeza que deseja excluir o/a diretor(a) "${ this.diretorSelecionado.nome }"`,
 			this,
 			() => this.excluir()
 		);
@@ -86,7 +86,7 @@ export class DiretorListComponent {
 					this.pageNotificationService.addSuccessMessage('Diretor excluido com sucesso', 'Sucesso');
 					this.buscarDiretores();
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

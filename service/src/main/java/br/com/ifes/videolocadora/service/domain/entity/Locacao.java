@@ -4,7 +4,6 @@ import br.com.ifes.videolocadora.service.domain.enums.SituacaoLocacaoEnum;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -51,12 +50,12 @@ public class Locacao implements Serializable {
 	@Column(name = "situacao")
 	private SituacaoLocacaoEnum situacao;
 
-	@JoinColumn(name = "id_item")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_item", referencedColumnName = "id")
 	private Item item;
 
-	@JoinColumn(name = "id_cliente")
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "id_cliente", referencedColumnName = "id")
 	private Cliente cliente;
 
 }

@@ -1,0 +1,151 @@
+<p-dialog [(visible)]="visible" header="Selecionar Item" modal="true">
+	<div class="ui-g ui-fluid">
+		<div class="ui-g-12 ui-sm-12">
+			<p-fieldset legend="Item Selecionado" [toggleable]="true">
+				<div class="ui-g ui-fluid" *ngIf="!!itemSelecionado">
+					<div class="ui-g-2 ui-sm-12">
+						Nº Série
+						<p-inputNumber [ngModel]="itemSelecionado.numeroSerie" [disabled]="true" [maxFractionDigits]="0"></p-inputNumber>
+					</div>
+
+					<div class="ui-g-7 ui-sm-12">
+						Título
+						<input pInputText type="text" [readonly]="true" [ngModel]="itemSelecionado.nomeTitulo">
+					</div>
+
+					<div class="ui-g-3 ui-sm-12">
+						Valor
+						<p-inputNumber [ngModel]="itemSelecionado.valor" mode="currency" [disabled]="true"
+									   locale="pt-BR" currency="BRL"></p-inputNumber>
+					</div>
+
+					<div class="ui-g-3 ui-sm-12">
+						Tipo
+						<input pInputText type="text" [readonly]="true" [ngModel]="formatTipoItem(itemSelecionado.tipoItem)">
+					</div>
+
+					<div class="ui-g-3 ui-sm-12">
+						Categoria
+						<input pInputText type="text" [readonly]="true" [ngModel]="formatCategoria(itemSelecionado.categoria)">
+					</div>
+
+					<div class="ui-g-3 ui-sm-12">
+						Prazo de Devolução
+						<p-inputNumber [ngModel]="itemSelecionado.prazoDevolucao" [disabled]="true" [maxFractionDigits]="0"></p-inputNumber>
+					</div>
+
+					<div class="ui-g-3 ui-sm-12">
+						Data de Aquisição
+						<p-calendar [ngModel]="itemSelecionado.dataAquisicao" dateFormat="dd/mm/yy"
+									[locale]="dataBr" [disabled]="true"></p-calendar>
+					</div>
+				</div>
+			</p-fieldset>
+		</div>
+
+		<div class="ui-g-12 ui-sm-12">
+			<p-table *ngIf="itens" [value]="itens.content" [columns]="cols" (onLazyLoad)="buscarItens($event)"
+					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
+					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
+					 [totalRecords]="itens.totalElements" [(selection)]="itemSelecionado"
+					 sortField="numeroSerie" sortOrder="-1" dataKey="id" selectionMode="single"
+					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
+				<ng-template pTemplate="header" let-columns>
+					<tr>
+						<th *ngFor="let col of columns" id="item-list-table-header-{{ col.field }}"
+							[ngStyle]="{'width': !!col?.width ? col.width : 'auto'}">
+							{{ !!col?.header ? col.header : '' }}
+						</th>
+					</tr>
+
+					<tr class="tabela-filtro">
+						<th *ngFor="let col of columns" id="item-list-table-filter-{{ col.field }}">
+							<ng-template [ngIf]="!!col?.field">
+								<ng-template [ngIf]="!!col?.text">
+									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarItens()">
+								</ng-template>
+
+								<ng-template [ngIf]="!!col?.date">
+									<p-calendar [(ngModel)]="filtro[col.field]" dateFormat="dd/mm/yy" [locale]="dataBr"
+												[showButtonBar]="true" (onSelect)="buscarItens()" (onInput)="buscarItens()"></p-calendar>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.currency">
+									<p-inputNumber [(ngModel)]="filtro[col.field]" mode="currency" (onBlur)="buscarItens()"
+												   locale="pt-BR" currency="BRL"></p-inputNumber>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.integer">
+									<p-inputNumber [(ngModel)]="filtro[col.field]" (onBlur)="buscarItens()"
+												   [maxFractionDigits]="0"></p-inputNumber>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.tipoItem">
+									<p-dropdown [options]="optionsTipoItem" [(ngModel)]="filtro[col.field]" [showClear]="true"
+												placeholder="Selecione..." (onChange)="buscarItens()"></p-dropdown>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.categoria">
+									<p-dropdown [options]="optionsCategoria" [(ngModel)]="filtro[col.field]" [showClear]="true"
+												placeholder="Selecione..." (onChange)="buscarItens()"></p-dropdown>
+								</ng-template>
+							</ng-template>
+						</th>
+					</tr>
+				</ng-template>
+
+				<ng-template pTemplate="body" let-rowData let-columns="columns">
+					<tr [pSelectableRow]="rowData" [pTooltip]="rowData['sinopse']" tooltipPosition="bottom">
+						<td *ngFor="let col of columns">
+							<ng-template [ngIf]="!!col.text">
+								{{ rowData[col.field] }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.date">
+								{{ rowData[col.field] | date: 'dd/MM/yyyy' }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.currency">
+								{{ formatCurrency(rowData[col.field]) }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.integer">
+								{{ rowData[col.field] | number:'1.0-0':'pt-BR' }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.tipoItem">
+								{{ formatTipoItem(rowData[col.field]) }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.categoria">
+								{{ formatCategoria(rowData[col.field]) }}
+							</ng-template>
+
+							{{ !col?.sufix ? '' : col.sufix }}
+						</td>
+					</tr>
+				</ng-template>
+
+				<ng-template let-columns pTemplate="emptymessage">
+					<tr>
+						<td [attr.colspan]="columns.length">
+							Nenhum registro encontrado
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+	</div>
+
+	<p-footer>
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-6 ui-sm-12">
+				<button pButton type="button" icon="pi pi-times" label="Cancelar" (click)="cancelar()" class="ui-button-danger"></button>
+			</div>
+
+			<div class="ui-g-6 ui-sm-12">
+				<button pButton type="submit" icon="pi pi-save" label="Salvar" (click)="salvar()" class="ui-button-success"></button>
+			</div>
+		</div>
+	</p-footer>
+</p-dialog>

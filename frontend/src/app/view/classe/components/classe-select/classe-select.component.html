@@ -1,7 +1,7 @@
 <p-dialog [(visible)]="visible" header="Selecionar Classe" modal="true">
 	<div class="ui-g ui-fluid">
 		<div class="ui-g-12 ui-sm-12">
-			<p-fieldset legend="Classe Selecionada">
+			<p-fieldset legend="Classe Selecionada" [toggleable]="true">
 				<div class="ui-g ui-fluid" *ngIf="!!classeSelecionada">
 					<div class="ui-g-4 ui-sm-12">
 						<label>Nome</label>

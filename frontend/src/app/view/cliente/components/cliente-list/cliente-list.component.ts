@@ -115,10 +115,8 @@ export class ClienteListComponent {
 		this.clienteService.filtrarSocioTree(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
-				(res) => {
-					this.clientes = res;
-				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(res) => this.clientes = res,
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -133,14 +131,14 @@ export class ClienteListComponent {
 					socio.children = res;
 					this.clientes.content = [...this.clientes.content];
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
 	excluirCliente(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR ITEM',
-			`Tem certeza que seja excluir o cliente "${ this.clienteSelecionado.data.nome }"?`,
+			`Tem certeza que deseja excluir o cliente "${ this.clienteSelecionado.data.nome }"?`,
 			this,
 			() => this.excluir()
 		);
@@ -155,7 +153,7 @@ export class ClienteListComponent {
 					this.pageNotificationService.addSuccessMessage('Cliente excluido com sucesso', 'Sucesso');
 					this.buscarClientesSocios();
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 }

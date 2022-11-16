@@ -1,0 +1,115 @@
+<h2>LOCAÇÃO</h2>
+
+<p-card>
+	<section class="ui-g ui-fluid">
+		<div class="ui-g-2">
+			<button pButton type="button" label="Nova Locação" icon="pi pi-plus" (click)="inserirLocacao()"
+					class="ui-button-success"></button>
+		</div>
+
+		<div class="ui-g-2 ui-sm-11 ui-g-offset-7 ui-sm-offset-0">
+			<button pButton type="button" label="Limpar Filtro" icon="pi pi-times" (click)="limparFiltro()"
+					class="ui-button-secondary"></button>
+		</div>
+	</section>
+
+	<section class="ui-g ui-fluid">
+		<div class="ui-g-11">
+			<p-table *ngIf="locacoes" [value]="locacoes.content" [columns]="cols" (onLazyLoad)="buscarLocacoes($event)"
+					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
+					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE" dataKey="id"
+					 [totalRecords]="locacoes.totalElements" [(selection)]="locacaoSelecionada" selectionMode="single"
+					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
+				<ng-template pTemplate="header" let-columns>
+					<tr>
+						<th *ngFor="let col of columns" id="locacao-list-table-header-{{ col.field }}"
+							[ngStyle]="{'width': !!col?.width ? col.width : 'auto'}">
+							{{ !!col?.header ? col.header : '' }}
+						</th>
+					</tr>
+
+					<tr class="tabela-filtro">
+						<th *ngFor="let col of columns" id="locacao-list-table-filter-{{ col.field }}">
+							<ng-template [ngIf]="!!col?.field">
+								<ng-template [ngIf]="!!col?.text">
+									<input pInputText type="text" [(ngModel)]="filtro[col.field]" (change)="buscarLocacoes()">
+								</ng-template>
+
+								<ng-template [ngIf]="!!col?.date">
+									<p-calendar [(ngModel)]="filtro[col.field]" dateFormat="dd/mm/yy" [locale]="dataBr"
+												[showButtonBar]="true"
+												(onSelect)="buscarLocacoes()" (onInput)="buscarLocacoes()"></p-calendar>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.currency">
+									<p-inputNumber [(ngModel)]="filtro[col.field]" mode="currency" (onBlur)="buscarLocacoes()"
+												   locale="pt-BR" currency="BRL"></p-inputNumber>
+								</ng-template>
+
+								<ng-template [ngIf]="!!col.situacaoLocacao">
+									<p-dropdown [options]="optionsSituacaoLocacao" [(ngModel)]="filtro[col.field]" [showClear]="true"
+												placeholder="Selecione..." (onChange)="buscarLocacoes()"></p-dropdown>
+								</ng-template>
+							</ng-template>
+						</th>
+					</tr>
+				</ng-template>
+
+				<ng-template pTemplate="body" let-rowData let-columns="columns">
+					<tr [pSelectableRow]="rowData">
+						<td *ngFor="let col of columns">
+							<ng-template [ngIf]="!!col.text">
+								{{ rowData[col.field] }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.date">
+								{{ rowData[col.field] | date: 'dd/MM/yyyy' }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.currency">
+								{{ formatCurrency(rowData[col.field]) }}
+							</ng-template>
+
+							<ng-template [ngIf]="!!col.situacaoLocacao">
+								{{ formatSituacaoLocacao(rowData[col.field]) }}
+							</ng-template>
+						</td>
+					</tr>
+				</ng-template>
+
+				<ng-template let-columns pTemplate="emptymessage">
+					<tr>
+						<td [attr.colspan]="columns.length">
+							Nenhum registro encontrado
+						</td>
+					</tr>
+				</ng-template>
+			</p-table>
+		</div>
+
+		<div class="ui-g-1 position-sticky centralized">
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Buscar" (click)="buscarLocacoes()"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Editar" (click)="editarLocacao()" [disabled]="disableEditar"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-pencil"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Concluír Devolução" (click)="concluirDevolucao()" [disabled]="disableDevolucao"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-check-circle"></button>
+			</div>
+
+			<div class="ui-g-12">
+				<button pButton type="button" pTooltip="Cancelar" (click)="verificarCancelarLocacao()" [disabled]="disableCancelar"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-times-circle"></button>
+			</div>
+		</div>
+	</section>
+</p-card>
+
+<app-locacao-concluir *ngIf="viewLocacaoConcluir" [(visible)]="viewLocacaoConcluir" [locacao]="locacaoSelecionada"
+					  (onSalvar)="afterConcluirDevolucao($event)"></app-locacao-concluir>

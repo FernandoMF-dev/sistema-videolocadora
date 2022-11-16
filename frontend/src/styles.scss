@@ -52,7 +52,11 @@ p-dropdown > .ui-dropdown.ui-widget {
 	}
 }
 
-.ui-dialog {
+div.ui-dialog {
 	max-width: 90vw;
 	max-height: 90vh;
+
+	&.min-height > .ui-dialog-content {
+		min-height: 45vh;
+	}
 }

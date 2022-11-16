@@ -5,13 +5,15 @@ import { SharedModule } from '../../shared/shared.module';
 import { TituloModule } from '../titulo/titulo.module';
 import { ItemFormComponent } from './components/item-form/item-form.component';
 import { ItemListComponent } from './components/item-list/item-list.component';
+import { ItemSelectComponent } from './components/item-select/item-select.component';
 import { ItemRoutingModule } from './item-routing.module';
 import { ItemService } from './services/item.service';
 
 @NgModule({
 	declarations: [
 		ItemListComponent,
-		ItemFormComponent
+		ItemFormComponent,
+		ItemSelectComponent
 	],
 	imports: [
 		CommonModule,
@@ -23,6 +25,9 @@ import { ItemService } from './services/item.service';
 	],
 	providers: [
 		ItemService
+	],
+	exports: [
+		ItemSelectComponent
 	]
 })
 export class ItemModule {

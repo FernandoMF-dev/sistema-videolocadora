@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { SelectItem } from 'primeng';
 import { LazyLoadEvent } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
+import { RouteNameEnum } from '../../../../shared/enums/route-name.enum';
 import { Page } from '../../../../shared/models/page.model';
 import { MensagemService } from '../../../../shared/services/mensagem.service';
 import { ConversionUtil } from '../../../../shared/utils/conversion.util';
@@ -50,8 +52,14 @@ export class ItemListComponent {
 	constructor(
 		private itemService: ItemService,
 		private mensagemService: MensagemService,
-		private pageNotificationService: PageNotificationService
+		private pageNotificationService: PageNotificationService,
+		private router: Router,
+		private route: ActivatedRoute
 	) {
+	}
+
+	get disableLocar(): boolean {
+		return !this.itemSelecionado || this.itemSelecionado.locado;
 	}
 
 	get disableEditar(): boolean {
@@ -82,14 +90,14 @@ export class ItemListComponent {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.itens = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
 	excluirItem(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR ITEM',
-			`Tem certeza que seja excluir o item "[${ this.itemSelecionado.numeroSerie }] ${ this.itemSelecionado.nomeTitulo }"?`,
+			`Tem certeza que deseja excluir o item "[${ this.itemSelecionado.numeroSerie }] ${ this.itemSelecionado.nomeTitulo }"?`,
 			this,
 			() => this.excluir()
 		);
@@ -116,7 +124,12 @@ export class ItemListComponent {
 					this.pageNotificationService.addSuccessMessage('Item excluido com sucesso', 'Sucesso');
 					this.buscarItens();
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
+	}
+
+	locarItem(): void {
+		const params = { 'item': this.itemSelecionado.id };
+		this.router.navigate(['..', RouteNameEnum.LOCACAO, RouteNameEnum.CADASTRO], { relativeTo: this.route, queryParams: params });
 	}
 }

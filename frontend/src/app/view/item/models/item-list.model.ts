@@ -13,4 +13,5 @@ export class ItemList {
 	prazoDevolucao?: number;
 	sinopse?: string = '';
 	idTitulo?: number;
+	locado?: boolean;
 }

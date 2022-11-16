@@ -50,7 +50,7 @@ export class AtorListComponent {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.atores = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -66,7 +66,7 @@ export class AtorListComponent {
 	excluirAtores(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR ATOR(ES)',
-			`Tem certeza que seja excluir o/a ator/atriz "${ this.atorSelecionado.nome }"`,
+			`Tem certeza que deseja excluir o/a ator/atriz "${ this.atorSelecionado.nome }"`,
 			this,
 			() => this.excluir()
 		);
@@ -86,7 +86,7 @@ export class AtorListComponent {
 					this.pageNotificationService.addSuccessMessage('Ator excluido com sucesso', 'Sucesso');
 					this.buscarAtores();
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

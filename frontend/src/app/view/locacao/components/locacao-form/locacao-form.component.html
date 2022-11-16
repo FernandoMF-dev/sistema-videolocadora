@@ -1,0 +1,134 @@
+<h2>{{ tituloDialog }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="validarSalvar()">
+	<p-card>
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-12 ui-sm-12">
+				<div class="ui-g-4 ui-sm-12">
+					<label>Data de Locação*</label>
+					<p-calendar formControlName="dataLocacao" dateFormat="dd/mm/yy" [locale]="dataBr" [showButtonBar]="true"
+								(onInput)="atualizarDataDevolucao()" (onSelect)="atualizarDataDevolucao()"></p-calendar>
+				</div>
+
+				<div class="ui-g-4 ui-sm-12">
+					<button pButton type="button" label="Selecionar Item" class="ui-button-info" icon="pi pi-image"
+							(click)="buscarItem()"></button>
+				</div>
+
+				<div class="ui-g-4 ui-sm-12">
+					<button pButton type="button" label="Selecionar Cliente" class="ui-button-info" icon="pi pi-id-card"
+							(click)="buscarCliente()"></button>
+				</div>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<p-fieldset legend="Informações Gerais">
+					<ng-template [ngIf]="!!item">
+						<div class="ui-g-12 ui-sm-12">
+							Valor
+							<p-inputNumber [ngModel]="item.valor" mode="currency" [disabled]="true" locale="pt-BR" currency="BRL"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-8 ui-sm-12">
+							Data de Devolução
+							<p-calendar [ngModel]="dataDevolucaoPrevista" dateFormat="dd/mm/yy" [locale]="dataBr" [disabled]="true"
+										[ngModelOptions]="{standalone: true}"></p-calendar>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							Prazo
+							<p-inputNumber [ngModel]="item.prazoDevolucao" [disabled]="true" [maxFractionDigits]="0"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+					</ng-template>
+				</p-fieldset>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<p-fieldset legend="Item">
+					<ng-template [ngIf]="!!item">
+						<div class="ui-g-9 ui-sm-12">
+							Título
+							<input pInputText type="text" [readonly]="true" [ngModel]="item.nomeTitulo"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-3 ui-sm-12">
+							Nº Série
+							<p-inputNumber [ngModel]="item.numeroSerie" [disabled]="true" [maxFractionDigits]="0"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-6 ui-sm-12">
+							Tipo
+							<input pInputText type="text" [readonly]="true" [ngModel]="formatTipoItem(item.tipoItem)"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-6 ui-sm-12">
+							Categoria
+							<input pInputText type="text" [readonly]="true" [ngModel]="formatCategoria(item.categoria)"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+					</ng-template>
+				</p-fieldset>
+			</div>
+
+			<div class="ui-g-4 ui-sm-12">
+				<p-fieldset legend="Cliente">
+					<ng-template [ngIf]="!!cliente">
+						<div class="ui-g-9 ui-sm-12">
+							<label>Nome</label>
+							<input pInputText type="text" [ngModel]="cliente.nome" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-3 ui-sm-12">
+							<label>Nº Inscrição</label>
+							<p-inputNumber [ngModel]="cliente.numeroInscricao" [disabled]="true"
+										   [ngModelOptions]="{standalone: true}"></p-inputNumber>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>Tipo</label>
+							<input pInputText type="text" [ngModel]="formatTipoCliente(cliente.tipoCliente)" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>CPF</label>
+							<p-inputMask [unmask]="true" [ngModel]="cliente.cpf" [readonly]="true" mask="999.999.999-99"
+										 [ngModelOptions]="{standalone: true}"></p-inputMask>
+						</div>
+
+						<div class="ui-g-4 ui-sm-12">
+							<label>Telefone</label>
+							<input pInputText type="tel" [ngModel]="cliente.telefone" [readonly]="true"
+								   [ngModelOptions]="{standalone: true}">
+						</div>
+					</ng-template>
+				</p-fieldset>
+			</div>
+		</div>
+
+		<p-footer>
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="button" icon="pi pi-times" label="Cancelar"
+							(click)="cancelar()" class="ui-button-danger"></button>
+				</div>
+
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton type="submit" appFormSubmitMsg icon="pi pi-save" label="Salvar"
+							[formGroup]="form" class="ui-button-success"></button>
+				</div>
+			</div>
+		</p-footer>
+	</p-card>
+</form>
+
+<app-item-select *ngIf="viewItemSelect" [(visible)]="viewItemSelect" [itemSelecionado]="item"
+				 (onSalvar)="selecionarItem($event)" [locado]="false"></app-item-select>
+
+<app-cliente-select *ngIf="viewClienteSelect" [(visible)]="viewClienteSelect" (onSalvar)="selecionarCliente($event)"></app-cliente-select>

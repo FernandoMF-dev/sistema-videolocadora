@@ -6,4 +6,6 @@ export class RouteNameEnum {
 	public static readonly ITEM = 'item';
 	public static readonly CLIENTE = 'cliente';
 	public static readonly LOCACAO = 'locacao';
+
+	public static readonly CADASTRO = 'cadastro';
 }

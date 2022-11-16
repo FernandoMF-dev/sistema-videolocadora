@@ -34,7 +34,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 	dataBr = DateTimeUtil.dataBr;
 	optionsTipoItem: SelectItem[] = TipoItem.getSelectItens();
 
-	viewItemSelect: boolean = false;
+	viewTituloSelect: boolean = false;
 
 	constructor(
 		private formBuilder: FormBuilder,
@@ -63,7 +63,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 	}
 
 	buscarTitulos(): void {
-		this.viewItemSelect = true;
+		this.viewTituloSelect = true;
 	}
 
 	formatCategoria(categoria: CategoriaEnum): string {
@@ -105,10 +105,10 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => {
-					res.dataAquisicao = new Date(res.dataAquisicao);
+					res.dataAquisicao = DateTimeUtil.formatDate(res.dataAquisicao);
 					this.form.patchValue(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -118,7 +118,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.selecionarTitulo(res),
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -146,7 +146,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.INSERIR_SUCESSO);
 					this.finalizarSalvar(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -159,7 +159,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.EDITAR_SUCESSO);
 					this.finalizarSalvar(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

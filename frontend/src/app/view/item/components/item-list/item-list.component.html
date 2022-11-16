@@ -66,8 +66,11 @@
 				</ng-template>
 
 				<ng-template pTemplate="body" let-rowData let-columns="columns">
-					<tr [pSelectableRow]="rowData" [pTooltip]="!rowData['sinopse'] ? '' : rowData['sinopse']" tooltipPosition="bottom">
-						<td *ngFor="let col of columns">
+					<tr [pSelectableRow]="rowData" [pTooltip]="rowData['sinopse']" tooltipPosition="bottom">
+						<td *ngFor="let col of columns; let i = index">
+							<em *ngIf="i === 0 && rowData['locado']" pTooltip="Este item está locado"
+								class="icon-locado pi pi-shopping-cart"></em>
+
 							<ng-template [ngIf]="!!col.text">
 								{{ rowData[col.field] }}
 							</ng-template>
@@ -109,8 +112,8 @@
 
 		<div class="ui-g-1 position-sticky centralized">
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Buscar" (click)="buscarItens()"
-						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
+				<button pButton type="button" pTooltip="Locar" (click)="locarItem()" [disabled]="disableLocar"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-shopping-cart"></button>
 			</div>
 
 			<div class="ui-g-12">

@@ -75,7 +75,7 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.form.patchValue(res),
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -103,7 +103,7 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.INSERIR_SUCESSO);
 					this.finalizarSalvar(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -116,7 +116,7 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.EDITAR_SUCESSO);
 					this.finalizarSalvar(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

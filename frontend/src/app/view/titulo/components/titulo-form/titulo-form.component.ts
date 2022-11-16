@@ -112,14 +112,14 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 				(res) => {
 					this.form.patchValue(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
 	private buscarDiretores(): void {
 		this.diretorService.findAll<Diretor>().subscribe(
 			(res) => this.diretores = res,
-			(err) => this.pageNotificationService.addErrorMessage(err.message)
+			(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 		);
 	}
 
@@ -146,7 +146,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.INSERIR_SUCESSO);
 					this.finalizarSalvar(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -159,7 +159,7 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 					this.pageNotificationService.addSuccessMessage(MensagemUtil.EDITAR_SUCESSO);
 					this.finalizarSalvar(res);
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 

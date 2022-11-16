@@ -62,7 +62,7 @@ export class TituloListComponent implements OnInit {
 	excluirTitulo(): void {
 		this.mensagemService.exibirMensagem(
 			'EXCLUIR TÍTULO',
-			`Tem certeza que seja excluir o título "${ this.tituloSelecionado.nome }"`,
+			`Tem certeza que deseja excluir o título "${ this.tituloSelecionado.nome }"`,
 			this,
 			() => this.excluir()
 		);
@@ -76,7 +76,7 @@ export class TituloListComponent implements OnInit {
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.titulos = res,
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
@@ -89,7 +89,7 @@ export class TituloListComponent implements OnInit {
 					this.pageNotificationService.addSuccessMessage('Título excluido com sucesso', 'Sucesso');
 					this.buscarTitulos();
 				},
-				(err) => this.pageNotificationService.addErrorMessage(err.message)
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
 
