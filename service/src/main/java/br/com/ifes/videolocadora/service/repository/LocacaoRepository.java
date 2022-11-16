@@ -26,7 +26,10 @@ public interface LocacaoRepository extends JpaRepository<Locacao, Long>, JpaSpec
 	@Query(value = "SELECT new br.com.ifes.videolocadora.service.service.dto.LocacaoListDTO" +
 			"(l.id, l.dataLocacao, l.dataDevolucaoPrevista, l.dataDevolucaoEfetiva, l.valorCobrado, l.valorMulta, l.situacao, " +
 			QueryUtil.TITULO_ITEM_CONCAT + " ,c.nome, l.item.id, l.cliente.id) " +
-			" FROM Locacao l JOIN l.item i JOIN i.titulo t JOIN l.cliente c " +
+			" FROM Locacao l " +
+			" INNER JOIN l.item i " +
+			" INNER JOIN i.titulo t " +
+			" INNER JOIN l.cliente c " +
 			" WHERE (:#{#filter.dataLocacao} IS NULL OR l.dataLocacao = :#{#filter.dataLocacao}) " +
 			" AND (:#{#filter.dataDevolucaoEfetiva} IS NULL OR l.dataDevolucaoEfetiva = :#{#filter.dataDevolucaoEfetiva}) " +
 			" AND (:#{#filter.dataDevolucaoPrevista} IS NULL OR l.dataDevolucaoPrevista = :#{#filter.dataDevolucaoPrevista}) " +

@@ -105,7 +105,7 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => {
-					res.dataAquisicao = new Date(res.dataAquisicao);
+					res.dataAquisicao = DateTimeUtil.formatDate(res.dataAquisicao);
 					this.form.patchValue(res);
 				},
 				(err) => this.pageNotificationService.addErrorMessage(err.error.message)

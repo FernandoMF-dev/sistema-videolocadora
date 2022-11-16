@@ -127,6 +127,6 @@
 </form>
 
 <app-item-select *ngIf="viewItemSelect" [(visible)]="viewItemSelect" [itemSelecionado]="item"
-				 (onSalvar)="selecionarItem($event)"></app-item-select>
+				 (onSalvar)="selecionarItem($event)" [locado]="false"></app-item-select>
 
 <app-cliente-select *ngIf="viewClienteSelect" [(visible)]="viewClienteSelect" (onSalvar)="selecionarCliente($event)"></app-cliente-select>

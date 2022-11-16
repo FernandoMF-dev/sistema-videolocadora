@@ -38,4 +38,6 @@ public class ItemListDTO implements Serializable {
 
 	private Long idTitulo;
 
+	private Boolean locado;
+
 }

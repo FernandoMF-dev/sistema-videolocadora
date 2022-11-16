@@ -21,6 +21,7 @@ import { ItemService } from '../../services/item.service';
 export class ItemSelectComponent extends DialogUtil {
 
 	@Input() itemSelecionado: ItemList;
+	@Input() locado: boolean = null;
 
 	@Output() onCancelar: EventEmitter<void> = new EventEmitter<void>();
 	@Output() onSalvar: EventEmitter<ItemList> = new EventEmitter<ItemList>();
@@ -64,6 +65,7 @@ export class ItemSelectComponent extends DialogUtil {
 
 	buscarItens(event?: LazyLoadEvent): void {
 		this.loader = true;
+		this.filtro.locado = this.locado;
 		this.itemService.filter<ItemList>(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
