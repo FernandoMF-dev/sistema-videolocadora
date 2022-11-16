@@ -67,7 +67,10 @@
 
 				<ng-template pTemplate="body" let-rowData let-columns="columns">
 					<tr [pSelectableRow]="rowData" [pTooltip]="rowData['sinopse']" tooltipPosition="bottom">
-						<td *ngFor="let col of columns">
+						<td *ngFor="let col of columns; let i = index">
+							<em *ngIf="i === 0 && rowData['locado']" pTooltip="Este item está locado"
+								class="icon-locado pi pi-shopping-cart"></em>
+
 							<ng-template [ngIf]="!!col.text">
 								{{ rowData[col.field] }}
 							</ng-template>
