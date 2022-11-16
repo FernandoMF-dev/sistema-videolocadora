@@ -112,8 +112,8 @@
 
 		<div class="ui-g-1 position-sticky centralized">
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Buscar" (click)="buscarItens()"
-						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
+				<button pButton type="button" pTooltip="Locar" (click)="locarItem()" [disabled]="disableLocar"
+						class="ui-button-icon-only ui-button-secondary" icon="pi pi-shopping-cart"></button>
 			</div>
 
 			<div class="ui-g-12">

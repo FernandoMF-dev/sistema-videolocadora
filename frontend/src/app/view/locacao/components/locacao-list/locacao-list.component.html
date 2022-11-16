@@ -111,8 +111,5 @@
 	</section>
 </p-card>
 
-<app-locacao-form *ngIf="viewLocacaoForm" [(visible)]="viewLocacaoForm" [locacao]="locacaoSelecionada"
-				  (onSalvar)="buscarLocacoes()"></app-locacao-form>
-
 <app-locacao-concluir *ngIf="viewLocacaoConcluir" [(visible)]="viewLocacaoConcluir" [locacao]="locacaoSelecionada"
 					  (onSalvar)="afterConcluirDevolucao($event)"></app-locacao-concluir>

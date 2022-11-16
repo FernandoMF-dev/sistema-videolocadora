@@ -1,5 +1,7 @@
+<h2>{{ tituloDialog }}</h2>
+
 <form [formGroup]="form" (ngSubmit)="validarSalvar()">
-	<p-dialog [(visible)]="visible" [header]="tituloDialog" modal="true" styleClass="dialog-lg min-height">
+	<p-card>
 		<div class="ui-g ui-fluid">
 			<div class="ui-g-12 ui-sm-12">
 				<div class="ui-g-4 ui-sm-12">
@@ -123,7 +125,7 @@
 				</div>
 			</div>
 		</p-footer>
-	</p-dialog>
+	</p-card>
 </form>
 
 <app-item-select *ngIf="viewItemSelect" [(visible)]="viewItemSelect" [itemSelecionado]="item"

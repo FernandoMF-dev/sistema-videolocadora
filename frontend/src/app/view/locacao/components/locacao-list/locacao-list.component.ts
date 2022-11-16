@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { SelectItem } from 'primeng';
 import { LazyLoadEvent } from 'primeng/api';
 import { finalize } from 'rxjs/operators';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
+import { RouteNameEnum } from '../../../../shared/enums/route-name.enum';
 import { Page } from '../../../../shared/models/page.model';
 import { MensagemService } from '../../../../shared/services/mensagem.service';
 import { ConversionUtil } from '../../../../shared/utils/conversion.util';
@@ -44,13 +46,14 @@ export class LocacaoListComponent {
 		{ header: 'Situação', field: 'situacao', situacaoLocacao: true }
 	];
 
-	viewLocacaoForm: boolean = false;
 	viewLocacaoConcluir: boolean = false;
 
 	constructor(
 		private locacaoService: LocacaoService,
 		private mensagemService: MensagemService,
-		private pageNotificationService: PageNotificationService
+		private pageNotificationService: PageNotificationService,
+		private router: Router,
+		private route: ActivatedRoute
 	) {
 	}
 
@@ -73,11 +76,12 @@ export class LocacaoListComponent {
 
 	inserirLocacao(): void {
 		this.locacaoSelecionada = null;
-		this.viewLocacaoForm = true;
+		this.router.navigate([RouteNameEnum.CADASTRO], { relativeTo: this.route });
 	}
 
 	editarLocacao(): void {
-		this.viewLocacaoForm = true;
+		const params = { 'id': this.locacaoSelecionada.id };
+		this.router.navigate([RouteNameEnum.CADASTRO], { relativeTo: this.route, queryParams: params });
 	}
 
 	concluirDevolucao(): void {

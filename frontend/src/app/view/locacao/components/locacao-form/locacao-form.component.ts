@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { finalize } from 'rxjs/operators';
+import { RouteParamEnum } from '../../../../shared/enums/route-param.enum';
 import { DateTimeUtil } from '../../../../shared/utils/date-time.util';
-import { DialogUtil } from '../../../../shared/utils/dialog.util';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
 import { TipoCliente, TipoClienteEnum } from '../../../cliente/enums/tipo-cliente.enum';
 import { Cliente } from '../../../cliente/models/cliente.model';
@@ -14,7 +15,6 @@ import { ItemList } from '../../../item/models/item-list.model';
 import { ItemService } from '../../../item/services/item.service';
 import { Categoria, CategoriaEnum } from '../../../titulo/enums/categoria.enum';
 import { SituacaoLocacaoEnum } from '../../enums/situacao-locacao.enum';
-import { LocacaoList } from '../../models/locacao-list.model';
 import { Locacao } from '../../models/locacao.model';
 import { LocacaoService } from '../../services/locacao.service';
 
@@ -23,16 +23,18 @@ import { LocacaoService } from '../../services/locacao.service';
 	templateUrl: './locacao-form.component.html',
 	styleUrls: ['./locacao-form.component.scss']
 })
-export class LocacaoFormComponent extends DialogUtil implements OnInit {
+export class LocacaoFormComponent implements OnInit {
 
 	@BlockUI() blockUI: NgBlockUI;
-
-	@Input() locacao: Locacao | LocacaoList;
 
 	@Output() onCancelar: EventEmitter<void> = new EventEmitter<void>();
 	@Output() onSalvar: EventEmitter<Locacao> = new EventEmitter<Locacao>();
 
+	paramIdLocacao: number;
+	paramIdItem: number;
+
 	form: FormGroup;
+	locacao: Locacao;
 	item: ItemList;
 	cliente: Cliente;
 	dataBr = DateTimeUtil.dataBr;
@@ -45,9 +47,10 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 		private pageNotificationService: PageNotificationService,
 		private locacaoService: LocacaoService,
 		private clienteService: ClienteService,
-		private itemService: ItemService
+		private itemService: ItemService,
+		private router: Router,
+		private route: ActivatedRoute
 	) {
-		super();
 	}
 
 	get isEdicao(): boolean {
@@ -64,12 +67,9 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 
 	ngOnInit(): void {
 		this.iniciarForm();
-
-		if (this.isEdicao) {
-			this.atualizarItemEdicao();
-			this.atualizarClienteEdicao();
-			this.atualizarFormEdicao();
-		}
+		this.buscarParametrosUrl();
+		this.buscarLocacaoEdicao();
+		this.buscarItemParam();
 	}
 
 	buscarItem(): void {
@@ -82,7 +82,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 
 	cancelar(): void {
 		this.onCancelar.emit();
-		this.fecharDialog();
+		this.finalizar();
 	}
 
 	validarSalvar(): void {
@@ -118,6 +118,40 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 		});
 	}
 
+	private buscarParametrosUrl(): void {
+		this.route.queryParams.subscribe(params => {
+			this.paramIdLocacao = params[RouteParamEnum.ID] ? parseInt(params[RouteParamEnum.ID], 10) : null;
+			this.paramIdItem = params[RouteParamEnum.ITEM] ? parseInt(params[RouteParamEnum.ITEM], 10) : null;
+		});
+	}
+
+	private buscarLocacaoEdicao(): void {
+		if (this.paramIdLocacao == null) {
+			return;
+		}
+
+		this.blockUI.start();
+		this.locacaoService.findById<Locacao>(this.paramIdLocacao)
+			.pipe(finalize(() => this.blockUI.stop()))
+			.subscribe(
+				(res) => {
+					this.locacao = res;
+					this.atualizarItemEdicao();
+					this.atualizarClienteEdicao();
+					this.atualizarFormEdicao();
+				},
+				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
+			);
+	}
+
+	private buscarItemParam(): void {
+		if (this.paramIdItem == null) {
+			return;
+		}
+
+		this.atualizarItemEdicao(this.paramIdItem);
+	}
+
 	private atualizarFormEdicao(): void {
 		this.blockUI.start();
 		this.locacaoService.findById<Locacao>(this.locacao.id)
@@ -133,9 +167,9 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private atualizarItemEdicao(): void {
+	private atualizarItemEdicao(idItem: number = this.locacao.idItem): void {
 		this.blockUI.start();
-		this.itemService.findByIdAsList(this.locacao.idItem)
+		this.itemService.findByIdAsList(idItem)
 			.pipe(finalize(() => this.blockUI.stop()))
 			.subscribe(
 				(res) => this.selecionarItem(res),
@@ -153,9 +187,8 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
+	private finalizar(): void {
+		this.router.navigate(['..'], { relativeTo: this.route });
 	}
 
 	private salvar(): void {
@@ -196,7 +229,7 @@ export class LocacaoFormComponent extends DialogUtil implements OnInit {
 
 	private finalizarSalvar(entity: Locacao): void {
 		this.onSalvar.emit(entity);
-		this.fecharDialog();
+		this.finalizar();
 	}
 
 	selecionarItem(event: ItemList): void {
