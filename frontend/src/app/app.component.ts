@@ -1,4 +1,5 @@
 import { AfterContentChecked, Component, ElementRef, NgZone, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { MenuOrientation, MenusService } from '@nuvem/primeng-components';
 import { ScrollPanel } from 'primeng';
 import { RouteNameEnum } from './shared/enums/route-name.enum';
@@ -48,14 +49,27 @@ export class AppComponent implements AfterContentChecked, OnDestroy, OnInit {
 	constructor(
 		public renderer2: Renderer2,
 		public zone: NgZone,
+		private router: Router,
 		public menuService: MenusService
 	) {
+		router.events.subscribe((val) => {
+			if (val instanceof NavigationEnd) {
+				this.userOnHandle();
+			}
+		});
+	}
+
+	private userOnHandle() {
+		if (!sessionStorage.getItem('usuario')) {
+			this.router.navigateByUrl(RouteNameEnum.LOGIN);
+		}
 	}
 
 	ngOnInit(): void {
 		this.zone.runOutsideAngular(() => this.bindRipple());
 
 		this.iniciarMenuLateral();
+		this.userOnHandle();
 	}
 
 	bindRipple() {

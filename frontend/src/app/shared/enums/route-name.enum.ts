@@ -8,4 +8,5 @@ export class RouteNameEnum {
 	public static readonly LOCACAO = 'locacao';
 
 	public static readonly CADASTRO = 'cadastro';
+	public static readonly LOGIN = 'login';
 }

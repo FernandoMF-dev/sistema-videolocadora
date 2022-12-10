@@ -48,6 +48,11 @@ const routes: Routes = [
 		path: RouteNameEnum.LOCACAO,
 		loadChildren: './view/locacao/locacao.module#LocacaoModule',
 		data: { breadcrumb: 'Locação' }
+	},
+	{
+		path: RouteNameEnum.LOGIN,
+		loadChildren: './view/login/login.module#LoginModule',
+		data: { breadcrumb: 'Login' }
 	}
 ];
 
