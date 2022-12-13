@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { Authentication, User } from '@nuvem/angular-base';
 import { AppComponent } from '../../app.component';
 
@@ -8,7 +9,11 @@ import { AppComponent } from '../../app.component';
 })
 export class AppTopbarComponent {
 
-	constructor(public app: AppComponent, private readonly _authentication: Authentication<User>) {
+	constructor(
+		public app: AppComponent,
+		private router: Router,
+		private readonly _authentication: Authentication<User>
+	) {
 	}
 
 	get usuario() {
@@ -17,5 +22,9 @@ export class AppTopbarComponent {
 
 	isAuthenticated() {
 		return this._authentication.isAuthenticated();
+	}
+
+	logout(): void {
+		sessionStorage.removeItem('usuario');
 	}
 }
