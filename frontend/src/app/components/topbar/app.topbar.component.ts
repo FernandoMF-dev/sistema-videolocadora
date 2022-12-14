@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Authentication, User } from '@nuvem/angular-base';
 import { AppComponent } from '../../app.component';
 import { KeyStorageEnum } from '../../shared/enums/key-storage.enum';
+import { RouteNameEnum } from '../../shared/enums/route-name.enum';
 
 @Component({
 	selector: 'app-topbar',
@@ -27,5 +28,6 @@ export class AppTopbarComponent {
 
 	logout(): void {
 		sessionStorage.removeItem(KeyStorageEnum.USUARIO);
+		this.router.navigateByUrl(RouteNameEnum.LOGIN);
 	}
 }
