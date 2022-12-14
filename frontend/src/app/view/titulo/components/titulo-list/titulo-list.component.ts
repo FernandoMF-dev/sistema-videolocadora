@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PageNotificationService } from '@nuvem/primeng-components';
 import { BlockUI, NgBlockUI } from 'ng-block-ui';
 import { finalize } from 'rxjs/operators';
+import { KeyStorageEnum } from '../../../../shared/enums/key-storage.enum';
 import { PageListEnum } from '../../../../shared/enums/page-list.enum';
 import { PageChangeEvent } from '../../../../shared/models/events/page-change.event';
 import { Page } from '../../../../shared/models/page.model';
@@ -23,6 +24,7 @@ export class TituloListComponent implements OnInit {
 	titulos: Page<Titulo> = new Page<Titulo>();
 	tituloSelecionado: Titulo;
 	loader: boolean = false;
+	isAutenticated: boolean = !!sessionStorage.getItem(KeyStorageEnum.USUARIO);
 	viewTituloForm: boolean = false;
 
 	constructor(

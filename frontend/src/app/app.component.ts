@@ -2,6 +2,7 @@ import { AfterContentChecked, Component, ElementRef, NgZone, OnDestroy, OnInit, 
 import { NavigationEnd, Router } from '@angular/router';
 import { MenuOrientation, MenusService } from '@nuvem/primeng-components';
 import { ScrollPanel } from 'primeng';
+import { KeyStorageEnum } from './shared/enums/key-storage.enum';
 import { RouteNameEnum } from './shared/enums/route-name.enum';
 
 @Component({
@@ -59,16 +60,19 @@ export class AppComponent implements AfterContentChecked, OnDestroy, OnInit {
 		});
 	}
 
+	private get isAutenticado(): boolean {
+		return !!sessionStorage.getItem(KeyStorageEnum.USUARIO);
+	}
+
 	private userOnHandle() {
-		if (!sessionStorage.getItem('usuario')) {
+		this.iniciarMenuLateral();
+		if (!this.isAutenticado && this.router.url !== `/${ RouteNameEnum.TITULO }`) {
 			this.router.navigateByUrl(RouteNameEnum.LOGIN);
 		}
 	}
 
 	ngOnInit(): void {
 		this.zone.runOutsideAngular(() => this.bindRipple());
-
-		this.iniciarMenuLateral();
 		this.userOnHandle();
 	}
 
@@ -300,13 +304,14 @@ export class AppComponent implements AfterContentChecked, OnDestroy, OnInit {
 
 	private iniciarMenuLateral(): void {
 		this.menuService.itens = [
-			{ label: 'Locação', icon: 'shopping_cart', routerLink: ['/', RouteNameEnum.LOCACAO] },
-			{ label: 'Ator', icon: 'star', routerLink: ['/', RouteNameEnum.ATOR] },
-			{ label: 'Diretor', icon: 'record_voice_over', routerLink: ['/', RouteNameEnum.DIRETOR] },
-			{ label: 'Classe', icon: 'note', routerLink: ['/', RouteNameEnum.CLASSE] },
+			{ label: 'Locação', icon: 'shopping_cart', routerLink: ['/', RouteNameEnum.LOCACAO], visible: this.isAutenticado },
+			{ label: 'Ator', icon: 'star', routerLink: ['/', RouteNameEnum.ATOR], visible: this.isAutenticado },
+			{ label: 'Diretor', icon: 'record_voice_over', routerLink: ['/', RouteNameEnum.DIRETOR], visible: this.isAutenticado },
+			{ label: 'Classe', icon: 'note', routerLink: ['/', RouteNameEnum.CLASSE], visible: this.isAutenticado },
 			{ label: 'Título', icon: 'movie', routerLink: ['/', RouteNameEnum.TITULO] },
-			{ label: 'Item', icon: 'list', routerLink: ['/', RouteNameEnum.ITEM] },
-			{ label: 'Cliente', icon: 'person', routerLink: ['/', RouteNameEnum.CLIENTE] }
+			{ label: 'Item', icon: 'list', routerLink: ['/', RouteNameEnum.ITEM], visible: this.isAutenticado },
+			{ label: 'Cliente', icon: 'person', routerLink: ['/', RouteNameEnum.CLIENTE], visible: this.isAutenticado },
+			{ label: 'Login', icon: 'person', routerLink: ['/', RouteNameEnum.LOGIN], visible: !this.isAutenticado }
 		];
 	}
 }

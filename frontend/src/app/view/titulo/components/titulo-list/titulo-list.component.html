@@ -1,7 +1,7 @@
 <h2>TÍTULOS</h2>
 
 <p-card>
-	<section class="ui-g ui-fluid">
+	<section class="ui-g ui-fluid" *ngIf="isAutenticated">
 		<div class="ui-g-2">
 			<button pButton type="button" label="Novo Titulo" icon="pi pi-plus" (click)="inserirTitulo()"
 					class="ui-button-success"></button>
@@ -9,7 +9,7 @@
 	</section>
 
 	<section class="ui-g ui-fluid">
-		<div class="ui-g-11">
+		<div [ngClass]="{'ui-g-11': isAutenticated, 'ui-g-12': !isAutenticated}">
 			<ng-template class="ui-g-12" [ngIf]="!loader">
 				<div *ngFor="let rowData of titulos.content" class="ui-g-4">
 					<app-titulo-card [value]="rowData" [selected]="rowData.id === tituloSelecionado?.id"
@@ -30,7 +30,7 @@
 			</div>
 		</div>
 
-		<div class="ui-g-1 position-sticky centralized">
+		<div class="ui-g-1 position-sticky centralized" *ngIf="isAutenticated">
 			<div class="ui-g-12">
 				<button pButton type="button" pTooltip="Buscar" (click)="buscarTitulos()"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>

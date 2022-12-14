@@ -6,6 +6,11 @@ import { RouteNameEnum } from './shared/enums/route-name.enum';
 
 const routes: Routes = [
 	{
+		path: '',
+		redirectTo: RouteNameEnum.TITULO,
+		pathMatch: 'full'
+	},
+	{
 		path: 'diario-erros',
 		component: DiarioErrosComponent,
 		data: { breadcrumb: 'Diário de Erros' }
