@@ -6,7 +6,7 @@ import { PageChangeEvent } from '../models/events/page-change.event';
 
 export class RequestUtil {
 
-	public static getParamsWithPageAndSize(page?: number, size?: number): HttpParams {
+	public static getPageableWithPageAndSize(page?: number, size?: number): HttpParams {
 		let params: HttpParams = new HttpParams();
 
 		if (!page) {
@@ -23,41 +23,41 @@ export class RequestUtil {
 		return params;
 	}
 
-	public static getParamsFromLazyLoadEvent(event?: LazyLoadEvent, pageable?: { sort: string }): HttpParams {
+	public static getPageableFromLazyLoadEvent(event?: LazyLoadEvent, pageable?: { sort: string }): HttpParams {
 		if (!event) {
-			return this.formatParams(new HttpParams(), event, pageable);
+			return this.formatPageableParams(new HttpParams(), event, pageable);
 		}
 
-		let params: HttpParams = this.getParamsWithPageAndSize(event.first / event.rows, event.rows);
-		params = params.set('sort', this.formatSortField(event));
+		let params: HttpParams = this.getPageableWithPageAndSize(event.first / event.rows, event.rows);
+		params = params.set('sort', this.formatPageableSortField(event));
 
-		return this.formatParams(params, event, pageable);
+		return this.formatPageableParams(params, event, pageable);
 	}
 
-	public static getParamsFromPageChangeEvent(event?: PageChangeEvent, pageable?: { sort: string }): HttpParams {
+	public static getPageableFromPageChangeEvent(event?: PageChangeEvent, pageable?: { sort: string }): HttpParams {
 		if (!event) {
-			return this.formatParams(new HttpParams(), null, pageable);
+			return this.formatPageableParams(new HttpParams(), null, pageable);
 		}
 
-		let params: HttpParams = this.getParamsWithPageAndSize(event.page, event.rows);
-		params = params.set('sort', this.formatSortField());
+		let params: HttpParams = this.getPageableWithPageAndSize(event.page, event.rows);
+		params = params.set('sort', this.formatPageableSortField());
 
-		return this.formatParams(params, null, pageable);
+		return this.formatPageableParams(params, null, pageable);
 	}
 
-	private static formatParams(params: HttpParams, tableEvent?: Table | LazyLoadEvent, pageable?: { sort: string }): HttpParams {
+	private static formatPageableParams(params: HttpParams, tableEvent?: Table | LazyLoadEvent, pageable?: { sort: string }): HttpParams {
 		if (!tableEvent && !!pageable && !!pageable.sort) {
 			params = params.append('sort', pageable.sort);
 		}
 
 		if (!tableEvent && !pageable) {
-			params = RequestUtil.getParamsWithPageAndSize();
+			params = RequestUtil.getPageableWithPageAndSize();
 		}
 
 		return params;
 	}
 
-	private static formatSortField(sorter?: Table | LazyLoadEvent): string {
+	private static formatPageableSortField(sorter?: Table | LazyLoadEvent): string {
 		if (!sorter) {
 			return '';
 		}

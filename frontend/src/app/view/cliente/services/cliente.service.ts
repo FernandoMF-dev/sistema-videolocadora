@@ -19,7 +19,7 @@ export class ClienteService extends BaseService {
 	}
 
 	public filtrarSocioTree(filter: Cliente, event?: LazyLoadEvent): Observable<Page<TreeNodeModel<Cliente>>> {
-		const params = RequestUtil.getParamsFromLazyLoadEvent(event);
+		const params = RequestUtil.getPageableFromLazyLoadEvent(event);
 		return this.http.post<Page<TreeNodeModel<Cliente>>>(`${ this.getUrl() }/filtro/socio`, filter, { params });
 	}
 

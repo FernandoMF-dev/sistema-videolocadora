@@ -29,7 +29,7 @@ export abstract class BaseService {
 	}
 
 	public filter<T>(filter: object, event?: LazyLoadEvent): Observable<Page<T>> {
-		const params = RequestUtil.getParamsFromLazyLoadEvent(event);
+		const params = RequestUtil.getPageableFromLazyLoadEvent(event);
 		return this.http.post<Page<T>>(`${ this.getUrl() }/filtro`, filter, { params });
 	}
 

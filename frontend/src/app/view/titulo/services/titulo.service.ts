@@ -19,12 +19,12 @@ export class TituloService extends BaseService {
 	}
 
 	public findAllPageChange(event: PageChangeEvent): Observable<Page<Titulo>> {
-		const params = RequestUtil.getParamsFromPageChangeEvent(event);
+		const params = RequestUtil.getPageableFromPageChangeEvent(event);
 		return this.http.get<Page<Titulo>>(this.getUrl(), { params: params });
 	}
 
 	public filterSelect<T>(filter: Titulo, event?: LazyLoadEvent): Observable<Page<Titulo>> {
-		const params = RequestUtil.getParamsFromLazyLoadEvent(event);
+		const params = RequestUtil.getPageableFromLazyLoadEvent(event);
 		return this.http.post<Page<Titulo>>(`${ this.getUrl() }/filtro-select`, filter, { params });
 	}
 
