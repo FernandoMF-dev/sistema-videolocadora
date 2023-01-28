@@ -6,17 +6,22 @@ export class Page<T> {
 	size: number;
 	number: number;
 	numberOfElements: number;
-	sort: string;
 	first: boolean;
-	pageable: {
-		offset: number;
-		pageNumber: number;
-		pageSize: number;
-		paged: boolean;
-		unpaged: boolean;
-		sort: {
-			sorted: boolean;
-			unsorted: boolean;
-		}
-	};
+	pageable: PagePageable;
+	sort: PageSort;
+}
+
+class PagePageable {
+	offset: number;
+	pageNumber: number;
+	pageSize: number;
+	paged: boolean;
+	unpaged: boolean;
+	sort: PageSort;
+}
+
+class PageSort {
+	empty: boolean;
+	sorted: boolean;
+	unsorted: boolean;
 }

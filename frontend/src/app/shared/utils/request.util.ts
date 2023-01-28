@@ -6,17 +6,20 @@ import { PageChangeEvent } from '../models/events/page-change.event';
 
 export class RequestUtil {
 
-	public static getParamsFromObject(obj: object, ignoreNull: boolean = false, ignoreUndefined: boolean = true): HttpParams {
+	public static getParamsFromObject(obj: object, config: Partial<ParseParamConfig> = {}): HttpParams {
+		const fullConfig: ParseParamConfig = Object.assign(new ParseParamConfig(), config);
 		let params: HttpParams = new HttpParams();
 
 		for (const key in obj) {
 			if (obj.hasOwnProperty(key)) {
 				const value: any = obj[key];
 
-				if (typeof value === 'object' && value != null) {
-					params = params.append(key, value.toString());
-				} else if ((value !== null || !ignoreNull) && (value !== undefined || !ignoreUndefined)) {
-					params = params.append(key, `${ value }`);
+				if (this.doesValueMatchConfig(value, fullConfig)) {
+					if (typeof value === 'object' && value != null) {
+						params = params.append(key, value.toString());
+					} else {
+						params = params.append(key, value);
+					}
 				}
 			}
 		}
@@ -99,4 +102,19 @@ export class RequestUtil {
 		return !sorter.sortField ? '' : `${ sorter.sortField },${ direction }`;
 	}
 
+	private static doesValueMatchConfig(value: any, config: ParseParamConfig): boolean {
+		return (typeof value === 'boolean' || !!value || !config.ignoreNonBooleanFalsy)
+			&& (value !== null || !config.ignoreNull)
+			&& (value !== undefined || !config.ignoreUndefined);
+	}
+
+}
+
+export class ParseParamConfig {
+	constructor(
+		public ignoreNonBooleanFalsy: boolean = true,
+		public ignoreNull: boolean = true,
+		public ignoreUndefined: boolean = true
+	) {
+	}
 }
