@@ -111,11 +111,6 @@ export class ClienteFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
-	}
-
 	private salvar(): void {
 		const entity: Cliente = Object.assign(new Cliente(), this.form.value);
 

@@ -19,4 +19,8 @@ export class DialogUtil {
 		this.visibleChange.emit(b);
 	}
 
+	protected fecharDialog(): void {
+		this.visible = false;
+	}
+
 }

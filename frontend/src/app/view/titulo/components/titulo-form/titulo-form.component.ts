@@ -123,11 +123,6 @@ export class TituloFormComponent extends DialogUtil implements OnInit {
 		);
 	}
 
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
-	}
-
 	private salvar(): void {
 		const titulo: Titulo = Object.assign(new Titulo(), this.form.value);
 		if (this.isEdicao) {

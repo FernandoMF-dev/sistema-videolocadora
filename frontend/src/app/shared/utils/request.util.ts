@@ -6,6 +6,24 @@ import { PageChangeEvent } from '../models/events/page-change.event';
 
 export class RequestUtil {
 
+	public static getParamsFromObject(obj: object, ignoreNull: boolean = false, ignoreUndefined: boolean = true): HttpParams {
+		let params: HttpParams = new HttpParams();
+
+		for (const key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				const value: any = obj[key];
+
+				if (typeof value === 'object' && value != null) {
+					params = params.set(key, value.toString());
+				} else if ((value !== null || !ignoreNull) && (value !== undefined || !ignoreUndefined)) {
+					params = params.set(key, `${ value }`);
+				}
+			}
+		}
+
+		return params;
+	}
+
 	public static getPageableWithPageAndSize(page?: number, size?: number): HttpParams {
 		let params: HttpParams = new HttpParams();
 

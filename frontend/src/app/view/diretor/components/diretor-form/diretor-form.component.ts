@@ -79,11 +79,6 @@ export class DiretorFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
-	}
-
 	private salvar(): void {
 		const diretor = Object.assign(new Diretor(), this.form.value);
 

@@ -79,11 +79,6 @@ export class AtorFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
-	}
-
 	private salvar(): void {
 		const ator = Object.assign(new Ator(), this.form.value);
 

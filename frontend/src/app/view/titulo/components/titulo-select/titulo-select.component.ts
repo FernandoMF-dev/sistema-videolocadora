@@ -66,8 +66,4 @@ export class TituloSelectComponent extends DialogUtil {
 			);
 	}
 
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
-	}
 }

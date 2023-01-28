@@ -81,11 +81,6 @@ export class ClasseFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
-	}
-
 	private salvar(): void {
 		const classe: Classe = Object.assign(new Classe(), this.form.value);
 

@@ -122,11 +122,6 @@ export class ItemFormComponent extends DialogUtil implements OnInit {
 			);
 	}
 
-	private fecharDialog(): void {
-		this.onClose.emit();
-		this.visible = false;
-	}
-
 	private salvar(): void {
 		const item: Item = Object.assign(new Item(), this.form.value);
 
