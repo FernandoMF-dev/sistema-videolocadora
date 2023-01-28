@@ -8,6 +8,7 @@ import { PageChangeEvent } from '../../../../shared/models/events/page-change.ev
 import { Page } from '../../../../shared/models/page.model';
 import { MensagemService } from '../../../../shared/services/mensagem.service';
 import { MensagemUtil } from '../../../../shared/utils/mensagem.util';
+import { TituloListFilter } from '../../models/titulo-list-filter.model';
 import { Titulo } from '../../models/titulo.model';
 import { TituloService } from '../../services/titulo.service';
 
@@ -21,11 +22,13 @@ export class TituloListComponent implements OnInit {
 	@BlockUI() blockUI: NgBlockUI;
 
 	pageListEnum = PageListEnum;
+	filtro: TituloListFilter = new TituloListFilter();
 	titulos: Page<Titulo> = new Page<Titulo>();
 	tituloSelecionado: Titulo;
 	loader: boolean = false;
 	isAutenticated: boolean = !!sessionStorage.getItem(KeyStorageEnum.USUARIO);
 	viewTituloForm: boolean = false;
+	viewTituloFilter: boolean = false;
 
 	constructor(
 		private tituloService: TituloService,
@@ -70,11 +73,15 @@ export class TituloListComponent implements OnInit {
 		);
 	}
 
+	abrirFiltro(): void {
+		this.viewTituloFilter = true;
+	}
+
 	buscarTitulos(event?: PageChangeEvent): void {
 		this.limparSelecao();
 		this.loader = true;
 
-		this.tituloService.findAllPageChange(event)
+		this.tituloService.filterWithPageChange(this.filtro, event)
 			.pipe(finalize(() => this.loader = false))
 			.subscribe(
 				(res) => this.titulos = res,
@@ -94,5 +101,4 @@ export class TituloListComponent implements OnInit {
 				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
-
 }

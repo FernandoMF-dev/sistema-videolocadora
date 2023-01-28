@@ -2,33 +2,33 @@
 	<div class="ui-g ui-fluid">
 		<div class="ui-g-6 ui-sm-12">
 			<label>Nome</label>
-			<input pInputText type="text" [ngModel]="filtro.nome">
+			<input pInputText type="text" [(ngModel)]="filtro.nome">
 		</div>
 
 		<div class="ui-g-2 ui-sm-12">
 			<label>Ano</label>
-			<p-inputNumber [ngModel]="filtro.ano" [min]="0" [maxFractionDigits]="0" [step]="10"
-						   [showButtons]="true" [useGrouping]="false"></p-inputNumber>
+			<p-inputNumber [(ngModel)]="filtro.ano" [min]="0" [maxFractionDigits]="0" [step]="10"
+						   [showButtons]="false" [useGrouping]="false"></p-inputNumber>
 		</div>
 
 		<div class="ui-g-4 ui-sm-12">
 			<label>Categoria</label>
-			<p-dropdown [options]="optionsCategoria" [ngModel]="filtro.categoria" placeholder="Selecione..."></p-dropdown>
+			<p-dropdown [options]="optionsCategoria" [(ngModel)]="filtro.categoria" placeholder="Selecione..." appendTo="body"></p-dropdown>
 		</div>
 
 		<div class="ui-g-4 ui-sm-12">
 			<label>Diretor</label>
-			<input pInputText type="text" [ngModel]="filtro.diretor">
+			<input pInputText type="text" [(ngModel)]="filtro.diretor">
 		</div>
 
 		<div class="ui-g-4 ui-sm-12">
 			<label>Classe</label>
-			<input pInputText type="text" [ngModel]="filtro.classe">
+			<input pInputText type="text" [(ngModel)]="filtro.classe">
 		</div>
 
 		<div class="ui-g-4 ui-sm-12">
 			<label>Ator</label>
-			<input pInputText type="text" [ngModel]="filtro.ator">
+			<input pInputText type="text" [(ngModel)]="filtro.ator">
 		</div>
 	</div>
 

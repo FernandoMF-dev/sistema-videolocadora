@@ -6,6 +6,11 @@
 			<button pButton type="button" label="Novo Titulo" icon="pi pi-plus" (click)="inserirTitulo()"
 					class="ui-button-success"></button>
 		</div>
+
+		<div class="ui-g-2 ui-g-offset-8">
+			<button pButton type="button" label="Filtrar" (click)="abrirFiltro()"
+					class="ui-button-secondary" icon="pi pi-search"></button>
+		</div>
 	</section>
 
 	<section class="ui-g ui-fluid">
@@ -32,11 +37,6 @@
 
 		<div class="ui-g-1 position-sticky centralized" *ngIf="isAutenticated">
 			<div class="ui-g-12">
-				<button pButton type="button" pTooltip="Buscar" (click)="buscarTitulos()"
-						class="ui-button-icon-only ui-button-secondary" icon="pi pi-search"></button>
-			</div>
-
-			<div class="ui-g-12">
 				<button pButton type="button" pTooltip="Editar" (click)="editarTitulo()" [disabled]="disableEditar"
 						class="ui-button-icon-only ui-button-secondary" icon="pi pi-pencil"></button>
 			</div>
@@ -49,5 +49,8 @@
 	</section>
 </p-card>
 
-<app-titulo-form *ngIf="viewTituloForm" (onSalvar)="buscarTitulos()" [(visible)]="viewTituloForm"
+<app-titulo-form *ngIf="viewTituloForm" [(visible)]="viewTituloForm" (onSalvar)="buscarTitulos()"
 				 [titulo]="tituloSelecionado"></app-titulo-form>
+
+<app-titulo-filter *ngIf="viewTituloFilter" [(visible)]="viewTituloFilter" (onSalvar)="filtro = $event; buscarTitulos()"
+				   [filtro]="filtro"></app-titulo-filter>

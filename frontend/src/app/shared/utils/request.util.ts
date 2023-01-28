@@ -14,14 +14,29 @@ export class RequestUtil {
 				const value: any = obj[key];
 
 				if (typeof value === 'object' && value != null) {
-					params = params.set(key, value.toString());
+					params = params.append(key, value.toString());
 				} else if ((value !== null || !ignoreNull) && (value !== undefined || !ignoreUndefined)) {
-					params = params.set(key, `${ value }`);
+					params = params.append(key, `${ value }`);
 				}
 			}
 		}
 
 		return params;
+	}
+
+	public static mergeParams(...params: HttpParams[]): HttpParams {
+		let result: HttpParams = new HttpParams();
+
+		params.forEach(p => {
+			const keys: string[] = p.keys();
+
+			keys.forEach(key => {
+				const values: string[] = p.getAll(key);
+				result = result.append(key, values.toString());
+			});
+		});
+
+		return result;
 	}
 
 	public static getPageableWithPageAndSize(page?: number, size?: number): HttpParams {
