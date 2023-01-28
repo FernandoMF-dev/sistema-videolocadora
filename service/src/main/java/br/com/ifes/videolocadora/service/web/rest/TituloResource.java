@@ -4,6 +4,7 @@ package br.com.ifes.videolocadora.service.web.rest;
 import br.com.ifes.videolocadora.service.service.TituloService;
 import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
 import br.com.ifes.videolocadora.service.service.dto.TituloListDTO;
+import br.com.ifes.videolocadora.service.service.dto.TituloListFilterDTO;
 import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,8 +35,8 @@ public class TituloResource {
 
 	@GetMapping
 	@Timed
-	public ResponseEntity<Page<TituloListDTO>> obterTodos(Pageable page) {
-		return ResponseEntity.ok().body(servico.obterTodos(page));
+	public ResponseEntity<Page<TituloListDTO>> obterTodos(TituloListFilterDTO filter, Pageable page) {
+		return ResponseEntity.ok().body(servico.obterTodos(filter, page));
 	}
 
 	@PostMapping()

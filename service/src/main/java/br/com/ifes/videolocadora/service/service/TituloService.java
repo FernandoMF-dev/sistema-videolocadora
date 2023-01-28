@@ -6,6 +6,7 @@ import br.com.ifes.videolocadora.service.domain.entity.TituloAtor;
 import br.com.ifes.videolocadora.service.repository.TituloRepository;
 import br.com.ifes.videolocadora.service.service.dto.TituloDTO;
 import br.com.ifes.videolocadora.service.service.dto.TituloListDTO;
+import br.com.ifes.videolocadora.service.service.dto.TituloListFilterDTO;
 import br.com.ifes.videolocadora.service.service.mapper.TituloMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -40,8 +41,8 @@ public class TituloService {
 		return salvar(dto);
 	}
 
-	public Page<TituloListDTO> obterTodos(Pageable page) {
-		Page<TituloListDTO> tituloList = repositorio.findAllList(page);
+	public Page<TituloListDTO> obterTodos(TituloListFilterDTO filter, Pageable page) {
+		Page<TituloListDTO> tituloList = repositorio.filtrar(filter, page);
 		List<Long> idTitulos = tituloList.stream().map(TituloListDTO::getId).collect(Collectors.toList());
 		List<TituloAtor> relacaoList = repositorio.findAtorByTituloId(idTitulos);
 
