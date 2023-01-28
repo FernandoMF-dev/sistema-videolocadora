@@ -15,10 +15,10 @@
 
 	<section class="ui-g ui-fluid">
 		<div class="ui-g-11">
-			<p-table *ngIf="locacoes" [value]="locacoes.content" [columns]="cols" (onLazyLoad)="buscarLocacoes($event)"
+			<p-table [value]="locacoes.content" [columns]="cols" (onLazyLoad)="buscarLocacoes($event)" [(selection)]="locacaoSelecionada"
 					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
-					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE" dataKey="id"
-					 [totalRecords]="locacoes.totalElements" [(selection)]="locacaoSelecionada" selectionMode="single"
+					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
+					 [totalRecords]="locacoes.totalElements" dataKey="id" selectionMode="single"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>

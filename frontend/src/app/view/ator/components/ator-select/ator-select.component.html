@@ -8,11 +8,10 @@
 		</div>
 
 		<div class="ui-g-12 ui-sm-12">
-			<p-table *ngIf="atores" [value]="atores.content" [columns]="cols" (onLazyLoad)="buscarAtores($event)"
+			<p-table [value]="atores.content" [columns]="cols" (onLazyLoad)="buscarAtores($event)" [(selection)]="atoresSelecionados"
 					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="atores.totalElements" [(selection)]="atoresSelecionados"
-					 sortField="nome" dataKey="id" selectionMode="multiple"
+					 [totalRecords]="atores.totalElements" sortField="nome" dataKey="id" selectionMode="multiple"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>

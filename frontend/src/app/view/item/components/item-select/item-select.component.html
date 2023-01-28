@@ -44,11 +44,10 @@
 		</div>
 
 		<div class="ui-g-12 ui-sm-12">
-			<p-table *ngIf="itens" [value]="itens.content" [columns]="cols" (onLazyLoad)="buscarItens($event)"
+			<p-table [value]="itens.content" [columns]="cols" (onLazyLoad)="buscarItens($event)" [(selection)]="itemSelecionado"
 					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="itens.totalElements" [(selection)]="itemSelecionado"
-					 sortField="numeroSerie" sortOrder="-1" dataKey="id" selectionMode="single"
+					 [totalRecords]="itens.totalElements" sortField="numeroSerie" sortOrder="-1" dataKey="id" selectionMode="single"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>

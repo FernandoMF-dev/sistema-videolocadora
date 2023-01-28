@@ -13,7 +13,8 @@
 
 		<div class="ui-g-4 ui-sm-12">
 			<label>Categoria</label>
-			<p-dropdown [options]="optionsCategoria" [(ngModel)]="filtro.categoria" placeholder="Selecione..." appendTo="body"></p-dropdown>
+			<p-dropdown [options]="optionsCategoria" [(ngModel)]="filtro.categoria" [showClear]="true"
+						placeholder="Selecione..." appendTo="body"></p-dropdown>
 		</div>
 
 		<div class="ui-g-4 ui-sm-12">

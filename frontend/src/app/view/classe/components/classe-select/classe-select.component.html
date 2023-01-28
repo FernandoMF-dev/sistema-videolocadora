@@ -23,11 +23,10 @@
 		</div>
 
 		<div class="ui-g-12 ui-sm-12">
-			<p-table *ngIf="classes" [value]="classes.content" [columns]="cols" (onLazyLoad)="buscarClasses($event)"
+			<p-table [value]="classes.content" [columns]="cols" (onLazyLoad)="buscarClasses($event)" [(selection)]="classeSelecionada"
 					 [lazy]="true" [paginator]="true" [showLoader]="loader" [showCurrentPageReport]="true" [responsive]="true"
 					 [rows]="pageListEnum.INITIAL_ROWS" [rowsPerPageOptions]="pageListEnum.ROWS_PER_PAGE"
-					 [totalRecords]="classes.totalElements" [(selection)]="classeSelecionada"
-					 sortField="nome" dataKey="id" selectionMode="single"
+					 [totalRecords]="classes.totalElements" sortField="valor" [sortOrder]="1" dataKey="id" selectionMode="single"
 					 currentPageReportTemplate="Exibindo do {first}º ao {last}º registro de {totalRecords}">
 				<ng-template pTemplate="header" let-columns>
 					<tr>
