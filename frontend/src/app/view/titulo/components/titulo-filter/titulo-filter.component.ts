@@ -5,7 +5,7 @@ import { Categoria } from '../../enums/categoria.enum';
 import { TituloListFilter } from '../../models/titulo-list-filter.model';
 
 @Component({
-	selector: 'app-item-filter',
+	selector: 'app-titulo-filter',
 	templateUrl: './titulo-filter.component.html',
 	styleUrls: ['./titulo-filter.component.scss']
 })
