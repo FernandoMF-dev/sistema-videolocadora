@@ -63,10 +63,6 @@ export class LocacaoConcluirComponent extends DialogUtil implements OnInit {
 		this.salvar();
 	}
 
-	private fecharDialog(): void {
-		this.visible = false;
-	}
-
 	private iniciarForm(): void {
 		this.form = this.formBuilder.group({
 			'id': new FormControl(this.locacao.id, [Validators.required]),

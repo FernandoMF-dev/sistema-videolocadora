@@ -57,8 +57,4 @@ export class AtorSelectComponent extends DialogUtil {
 				(err) => this.pageNotificationService.addErrorMessage(err.error.message)
 			);
 	}
-
-	private fecharDialog(): void {
-		this.visible = false;
-	}
 }

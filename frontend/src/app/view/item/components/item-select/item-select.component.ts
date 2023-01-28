@@ -88,9 +88,4 @@ export class ItemSelectComponent extends DialogUtil {
 	formatCategoria(categoria: CategoriaEnum): string {
 		return Categoria.findById(categoria).label;
 	}
-
-	private fecharDialog(): void {
-		this.visible = false;
-	}
-
 }

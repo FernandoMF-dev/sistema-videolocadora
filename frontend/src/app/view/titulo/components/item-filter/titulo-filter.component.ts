@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { SelectItem } from 'primeng';
 import { DialogUtil } from '../../../../shared/utils/dialog.util';
+import { Categoria } from '../../enums/categoria.enum';
 import { TituloListFilter } from '../../models/titulo-list-filter.model';
 
 @Component({
@@ -14,6 +16,8 @@ export class TituloFilterComponent extends DialogUtil {
 	@Output() onCancelar: EventEmitter<TituloListFilter> = new EventEmitter<TituloListFilter>();
 	@Output() onLimpar: EventEmitter<TituloListFilter> = new EventEmitter<TituloListFilter>();
 	@Output() onSalvar: EventEmitter<TituloListFilter> = new EventEmitter<TituloListFilter>();
+
+	optionsCategoria: SelectItem[] = Categoria.getSelectItens();
 
 	cancelar(): void {
 		this.onCancelar.emit(this.filtro);
