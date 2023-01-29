@@ -4,6 +4,10 @@ application:
 spring:
     application:
         name: Videolocadora
+    security:
+        user:
+            name: admin
+            password: admin
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://localhost:5432/db_database
