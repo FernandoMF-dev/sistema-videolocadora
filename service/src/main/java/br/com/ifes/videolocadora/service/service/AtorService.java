@@ -51,7 +51,7 @@ public class AtorService {
 		repositorio.save(entity);
 	}
 
-	public Page<AtorDTO> filtrar(AtorDTO dto, Pageable pageable) {
-		return repositorio.filtrar(dto, pageable);
+	public Page<AtorDTO> filtrar(AtorDTO filter, Pageable pageable) {
+		return repositorio.filtrar(filter, pageable);
 	}
 }

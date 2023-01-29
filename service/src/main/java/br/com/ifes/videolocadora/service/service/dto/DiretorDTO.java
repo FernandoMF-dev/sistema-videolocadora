@@ -15,6 +15,6 @@ public class DiretorDTO implements Serializable {
 
 	private Long id;
 
-	private String nome;
+	private String nome = "";
 
 }

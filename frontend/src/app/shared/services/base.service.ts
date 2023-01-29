@@ -16,11 +16,11 @@ export abstract class BaseService {
 		this.baseUrl = `${ servicoUrl }${ environment.apiUrl }`;
 	}
 
-	public getUrl(): string {
+	protected getUrl(): string {
 		return `${ this.baseUrl }/${ this.entity }`;
 	}
 
-	public getUrlId(id: number | string): string {
+	protected getUrlId(id: number | string): string {
 		return `${ this.getUrl() }/${ id }`;
 	}
 
@@ -29,8 +29,10 @@ export abstract class BaseService {
 	}
 
 	public filter<T>(filter: object, event?: LazyLoadEvent): Observable<Page<T>> {
-		const params = RequestUtil.getPageableFromLazyLoadEvent(event);
-		return this.http.post<Page<T>>(`${ this.getUrl() }/filtro`, filter, { params });
+		const pageableParams = RequestUtil.getPageableFromLazyLoadEvent(event);
+		const filterParams = RequestUtil.getParamsFromObject(filter);
+		const params = RequestUtil.mergeParams(pageableParams, filterParams);
+		return this.http.get<Page<T>>(`${ this.getUrl() }/filtro`, { params });
 	}
 
 	public findById<T>(id: number | string): Observable<T> {

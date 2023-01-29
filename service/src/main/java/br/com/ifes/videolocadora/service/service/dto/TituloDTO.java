@@ -15,9 +15,9 @@ public class TituloDTO implements Serializable {
 
 	private Long id;
 
-	private String nome;
+	private String nome = "";
 
-	private String sinopse;
+	private String sinopse = "";
 
 	private Integer ano;
 

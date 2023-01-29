@@ -58,10 +58,10 @@ public class ClasseResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping("/filtro")
+	@GetMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<ClasseDTO>> filtro(@RequestBody ClasseDTO dto, Pageable pageable) {
-		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
+	public ResponseEntity<Page<ClasseDTO>> filtro(ClasseDTO filter, Pageable pageable) {
+		return ResponseEntity.ok().body(servico.filtrar(filter, pageable));
 	}
 }
 
