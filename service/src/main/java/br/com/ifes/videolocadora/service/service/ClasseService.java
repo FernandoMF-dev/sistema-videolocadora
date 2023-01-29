@@ -50,8 +50,8 @@ public class ClasseService {
 		repositorio.save(entity);
 	}
 
-	public Page<ClasseDTO> filtrar(ClasseDTO dto, Pageable pageable) {
-		return repositorio.filtrar(dto, pageable);
+	public Page<ClasseDTO> filtrar(ClasseDTO filter, Pageable pageable) {
+		return repositorio.filtrar(filter, pageable);
 	}
 
 }

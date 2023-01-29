@@ -29,9 +29,9 @@ public class LocacaoListDTO implements Serializable {
 
 	private SituacaoLocacaoEnum situacao;
 
-	private String tituloItem;
+	private String tituloItem = "";
 
-	private String nomeCliente;
+	private String nomeCliente = "";
 
 	private Long idItem;
 

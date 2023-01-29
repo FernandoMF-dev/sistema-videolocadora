@@ -42,10 +42,10 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(servico.inserir(dto));
 	}
 
-	@PostMapping("/filtro/socio")
+	@GetMapping("/filtro/socio")
 	@Timed
-	public ResponseEntity<Page<TreeNodeDTO>> filtrarSocioTree(@RequestBody ClienteDTO dto, Pageable page) {
-		return ResponseEntity.ok().body(servico.filtrarSocioTree(dto, page));
+	public ResponseEntity<Page<TreeNodeDTO>> filtrarSocioTree(ClienteDTO filtro, Pageable page) {
+		return ResponseEntity.ok().body(servico.filtrarSocioTree(filtro, page));
 	}
 
 	@GetMapping("/dependente")

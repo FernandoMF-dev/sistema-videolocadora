@@ -50,8 +50,8 @@ public class DiretorService {
 		repositorio.save(entity);
 	}
 
-	public Page<DiretorDTO> filtrar(DiretorDTO dto, Pageable pageable) {
-		return repositorio.filtrar(dto, pageable);
+	public Page<DiretorDTO> filtrar(DiretorDTO filter, Pageable pageable) {
+		return repositorio.filtrar(filter, pageable);
 	}
 
 }

@@ -15,7 +15,7 @@ public class ClasseDTO implements Serializable {
 
 	private Long id;
 
-	private String nome;
+	private String nome = "";
 
 	private Double valor;
 

@@ -55,8 +55,8 @@ public class ItemService {
 		repositorio.save(entity);
 	}
 
-	public Page<ItemListDTO> filtrar(ItemListDTO dto, Pageable page) {
-		return repositorio.filtrar(dto, page);
+	public Page<ItemListDTO> filtrar(ItemListDTO filter, Pageable page) {
+		return repositorio.filtrar(filter, page);
 	}
 
 	public ItemDTO salvar(ItemDTO dto) {

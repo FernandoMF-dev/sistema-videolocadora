@@ -19,16 +19,20 @@ export class ClienteService extends BaseService {
 	}
 
 	public filtrarSocioTree(filter: Cliente, event?: LazyLoadEvent): Observable<Page<TreeNodeModel<Cliente>>> {
-		const params = RequestUtil.getPageableFromLazyLoadEvent(event);
-		return this.http.post<Page<TreeNodeModel<Cliente>>>(`${ this.getUrl() }/filtro/socio`, filter, { params });
+		const pageableParams = RequestUtil.getPageableFromLazyLoadEvent(event);
+		const filterParams = RequestUtil.getParamsFromObject(filter);
+		const params = RequestUtil.mergeParams(pageableParams, filterParams);
+		return this.http.get<Page<TreeNodeModel<Cliente>>>(`${ this.getUrl() }/filtro/socio`, { params });
 	}
 
 	public buscarDependentesPorResponsavelTree(idResponsavel: number): Observable<TreeNodeModel<Cliente>[]> {
-		return this.http.get<TreeNodeModel<Cliente>[]>(`${ this.getUrl() }/dependente?idResponsavel=${ idResponsavel }`);
+		const params = RequestUtil.getParamsFromObject({ idResponsavel });
+		return this.http.get<TreeNodeModel<Cliente>[]>(`${ this.getUrl() }/dependente`, { params });
 	}
 
 	public patchAtivo(id: number, value: boolean): Observable<void> {
-		return this.http.patch<void>(`${ this.getUrlId(id) }/ativo?value=${ value }`, null);
+		const params = RequestUtil.getParamsFromObject({ value });
+		return this.http.patch<void>(`${ this.getUrlId(id) }/ativo`, null, { params });
 	}
 
 }

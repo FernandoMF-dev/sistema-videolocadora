@@ -51,10 +51,10 @@ public class ItemResource {
 		return ResponseEntity.ok().body(servico.obterTodos());
 	}
 
-	@PostMapping("/filtro")
+	@GetMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<ItemListDTO>> filtro(@RequestBody ItemListDTO dto, Pageable page) {
-		return ResponseEntity.ok().body(servico.filtrar(dto, page));
+	public ResponseEntity<Page<ItemListDTO>> filtro(ItemListDTO filter, Pageable page) {
+		return ResponseEntity.ok().body(servico.filtrar(filter, page));
 	}
 
 	@PutMapping("/{id}")

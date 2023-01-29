@@ -20,13 +20,13 @@ public class ClienteDTO implements Serializable {
 
 	private Integer numeroInscricao;
 
-	private String nome;
+	private String nome = "";
 
-	private String cpf;
+	private String cpf = "";
 
-	private String endereco;
+	private String endereco = "";
 
-	private String telefone;
+	private String telefone = "";
 
 	private TipoClienteEnum tipoCliente;
 

@@ -20,7 +20,7 @@ public class ItemListDTO implements Serializable {
 
 	private Integer numeroSerie;
 
-	private String nomeTitulo;
+	private String nomeTitulo = "";
 
 	private Date dataAquisicao;
 
@@ -28,13 +28,13 @@ public class ItemListDTO implements Serializable {
 
 	private CategoriaEnum categoria;
 
-	private String nomeClasse;
+	private String nomeClasse = "";
 
 	private Double valor;
 
 	private Integer prazoDevolucao;
 
-	private String sinopse;
+	private String sinopse = "";
 
 	private Long idTitulo;
 

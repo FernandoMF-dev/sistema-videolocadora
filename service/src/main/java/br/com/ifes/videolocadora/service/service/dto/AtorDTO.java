@@ -15,6 +15,6 @@ public class AtorDTO implements Serializable {
 
 	private Long id;
 
-	private String nome;
+	private String nome = "";
 
 }

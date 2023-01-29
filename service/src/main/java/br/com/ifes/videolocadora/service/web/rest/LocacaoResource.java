@@ -61,10 +61,10 @@ public class LocacaoResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping("/filtro")
+	@GetMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<LocacaoListDTO>> filtro(@RequestBody LocacaoListDTO dto, Pageable page) {
-		return ResponseEntity.ok().body(servico.filtrar(dto, page));
+	public ResponseEntity<Page<LocacaoListDTO>> filtro(LocacaoListDTO filter, Pageable page) {
+		return ResponseEntity.ok().body(servico.filtrar(filter, page));
 	}
 
 	@PatchMapping("/devolver")
