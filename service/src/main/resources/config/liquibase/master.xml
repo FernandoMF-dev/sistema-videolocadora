@@ -13,4 +13,5 @@
 	<include file="config/liquibase/changelogs/20220817162000_create_table_cliente.xml" relativeToChangelogFile="false"/>
 	<include file="config/liquibase/changelogs/20220817163500_create_rel_socio_dependente.xml" relativeToChangelogFile="false"/>
 	<include file="config/liquibase/changelogs/20220817170000_create_table_locacao.xml" relativeToChangelogFile="false"/>
+	<include file="config/liquibase/changelogs/20230129153300_create_table_login.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
