@@ -25,7 +25,7 @@ export class LoginCadastrarComponent implements OnInit {
 	}
 
 	get isFormValid(): boolean {
-		return this.form.valid && this.form.controls['password'].value === this.form.controls['confirmPassword'].value;
+		return this.loader || (this.form.valid && this.form.controls['password'].value === this.form.controls['confirmPassword'].value);
 	}
 
 	ngOnInit(): void {

@@ -19,12 +19,12 @@
 
 		<p-footer>
 			<div class="ui-g ui-fluid">
-				<div class="ui-g-12 ui-sm-12">
+				<div class="ui-g-6 ui-sm-12">
 					<button pButton type="reset" icon="pi pi-refresh" label="Limpar" class="ui-button-secondary"></button>
 				</div>
 
-				<div class="ui-g-12 ui-sm-12">
-					<button pButton type="submit" icon="pi pi-save" label="Cadastrar" [disabled]="isFormValid || loader"></button>
+				<div class="ui-g-6 ui-sm-12">
+					<button pButton appFormSubmitMsg type="submit" icon="pi pi-save" label="Cadastrar" [disabled]="isFormValid"></button>
 				</div>
 			</div>
 		</p-footer>
