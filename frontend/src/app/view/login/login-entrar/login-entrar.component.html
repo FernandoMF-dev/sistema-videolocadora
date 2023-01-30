@@ -1,11 +1,13 @@
 <p-card class="ui-g-12">
 	<div class="login-entrar ui-g ui-fluid">
 		<div class="ui-g-12">
-			<input [(ngModel)]="login.username" pInputText placeholder="Login" type="text">
+			<label>Login</label>
+			<input [(ngModel)]="login.username" pInputText type="text">
 		</div>
 
 		<div class="ui-g-12">
-			<input [feedback]="false" [(ngModel)]="login.password" pPassword placeholder="Senha" type="password">
+			<label>Senha</label>
+			<input [feedback]="false" [(ngModel)]="login.password" pPassword type="password">
 		</div>
 	</div>
 

@@ -1,1 +1,32 @@
-<p>login-cadastrar works!</p>
+<form [formGroup]="form" (ngSubmit)="cadastrar()">
+	<p-card class="ui-g-12">
+		<div class="ui-g ui-fluid">
+			<div class="ui-g-12">
+				<label>Login</label>
+				<input formControlName="username" pInputText type="text">
+			</div>
+
+			<div class="ui-g-12">,
+				<label>Senha</label>
+				<input [feedback]="false" formControlName="password" pPassword type="password">
+			</div>
+
+			<div class="ui-g-12">,
+				<label>ConfirmarSenha</label>
+				<input [feedback]="false" formControlName="confirmPassword" pPassword type="password">
+			</div>
+		</div>
+
+		<p-footer>
+			<div class="ui-g ui-fluid">
+				<div class="ui-g-12 ui-sm-12">
+					<button pButton type="reset" icon="pi pi-refresh" label="Limpar" class="ui-button-secondary"></button>
+				</div>
+
+				<div class="ui-g-12 ui-sm-12">
+					<button pButton type="submit" icon="pi pi-save" label="Cadastrar" [disabled]="isFormValid || loader"></button>
+				</div>
+			</div>
+		</p-footer>
+	</p-card>
+</form>
