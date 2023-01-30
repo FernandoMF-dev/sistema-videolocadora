@@ -66,13 +66,12 @@ public class TituloService {
 		repositorio.save(entity);
 	}
 
-	public Page<TituloListDTO> filtrar(TituloListDTO dto, Pageable pageable) {
-		// TODO Implementar filtragem por atributo na busca de tótilo
-		return repositorio.filtrar(dto, pageable);
+	public Page<TituloListDTO> filtrar(TituloListDTO filter, Pageable pageable) {
+		return repositorio.filtrar(filter, pageable);
 	}
 
-	public Page<TituloDTO> filtrarSelect(TituloDTO filtro, Pageable pageable) {
-		return repositorio.filtrarSelect(filtro, pageable);
+	public Page<TituloDTO> filtrarSelect(TituloDTO filter, Pageable pageable) {
+		return repositorio.filtrarSelect(filter, pageable);
 	}
 
 	private TituloDTO salvar(TituloDTO dto) {

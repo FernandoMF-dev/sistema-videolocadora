@@ -59,15 +59,15 @@ public class TituloResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping("/filtro")
+	@GetMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<TituloListDTO>> filtro(@RequestBody TituloListDTO dto, Pageable page) {
+	public ResponseEntity<Page<TituloListDTO>> filtro(TituloListDTO dto, Pageable page) {
 		return ResponseEntity.ok().body(servico.filtrar(dto, page));
 	}
 
-	@PostMapping("/filtro-select")
+	@GetMapping("/filtro-select")
 	@Timed
-	public ResponseEntity<Page<TituloDTO>> filtroSelect(@RequestBody TituloDTO filtro, Pageable page) {
+	public ResponseEntity<Page<TituloDTO>> filtroSelect(TituloDTO filtro, Pageable page) {
 		return ResponseEntity.ok().body(servico.filtrarSelect(filtro, page));
 	}
 

@@ -1,16 +1,9 @@
-<p-card [header]="'Login'">
-	<section class="ui-g ui-fluid alinhar">
-		<p-card class="ui-g-3 login">
-			<div class="ui-g-12">
-				<input class="ui-g-12" [(ngModel)]="login" pInputText placeholder="Login" type="text">
-				<input [feedback]="false" [(ngModel)]="senha" class="ui-g-12" pPassword placeholder="Senha" type="password">
-			</div>
-			<p-footer class="align-right">
-				<p-button (onClick)="logar()" class="botao" label="Entrar"></p-button>
-			</p-footer>
-		</p-card>
+<div class="ui-g ui-fluid">
+	<section class="ui-g-6 ui-sm-12">
+		<app-login-entrar (onLogin)="logar()"></app-login-entrar>
 	</section>
-</p-card>
 
-
-
+	<section class="ui-g-6 ui-sm-12">
+		<app-login-cadastrar (onCadastrar)="logar()"></app-login-cadastrar>
+	</section>
+</div>

@@ -28,8 +28,10 @@ export class TituloService extends BaseService {
 	}
 
 	public filterSelect<T>(filter: Titulo, event?: LazyLoadEvent): Observable<Page<Titulo>> {
-		const params = RequestUtil.getPageableFromLazyLoadEvent(event);
-		return this.http.post<Page<Titulo>>(`${ this.getUrl() }/filtro-select`, filter, { params });
+		const pageableParams = RequestUtil.getPageableFromLazyLoadEvent(event);
+		const filterParams = RequestUtil.getParamsFromObject(filter);
+		const params = RequestUtil.mergeParams(pageableParams, filterParams);
+		return this.http.get<Page<Titulo>>(`${ this.getUrl() }/filtro-select`, { params });
 	}
 
 }

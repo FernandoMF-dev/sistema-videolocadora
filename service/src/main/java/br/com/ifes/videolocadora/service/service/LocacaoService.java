@@ -59,8 +59,8 @@ public class LocacaoService {
 		editar(dto);
 	}
 
-	public Page<LocacaoListDTO> filtrar(LocacaoListDTO dto, Pageable pageable) {
-		return repositorio.filtrar(dto, pageable);
+	public Page<LocacaoListDTO> filtrar(LocacaoListDTO filter, Pageable pageable) {
+		return repositorio.filtrar(filter, pageable);
 	}
 
 	private LocacaoDTO salvar(LocacaoDTO dto) {

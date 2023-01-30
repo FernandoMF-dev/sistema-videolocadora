@@ -58,10 +58,10 @@ public class DiretorResource {
 		return ResponseEntity.noContent().build();
 	}
 
-	@PostMapping("/filtro")
+	@GetMapping("/filtro")
 	@Timed
-	public ResponseEntity<Page<DiretorDTO>> filtro(@RequestBody DiretorDTO dto, Pageable pageable) {
-		return ResponseEntity.ok().body(servico.filtrar(dto, pageable));
+	public ResponseEntity<Page<DiretorDTO>> filtro(DiretorDTO filter, Pageable pageable) {
+		return ResponseEntity.ok().body(servico.filtrar(filter, pageable));
 	}
 
 }

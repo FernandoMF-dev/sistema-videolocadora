@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+		xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+
+	<changeSet id="20230129153300-1" author="Fernando Martins Ferreira">
+		<createTable tableName="tb_login">
+			<column name="id" type="BIGINT" remarks="Chave primária de TB_LOGIN">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="username" type="VARCHAR" remarks="Nome de usuário de acesso">
+				<constraints nullable="false"/>
+			</column>
+
+			<column name="password" type="VARCHAR" remarks="Senha do usuário de acesso">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<rollback>
+			<dropTable tableName="tb_login"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20230129153300-2" author="Fernando Martins Ferreira">
+		<addPrimaryKey tableName="tb_login" columnNames="id" constraintName="pk_login"/>
+
+		<rollback>
+			<dropPrimaryKey tableName="tb_login" constraintName="pk_login"/>
+		</rollback>
+	</changeSet>
+
+	<changeSet id="20230129153300-3" author="Fernando Martins Ferreira">
+		<createSequence sequenceName="seq_login" incrementBy="1" startValue="1"/>
+
+		<rollback>
+			<dropSequence sequenceName="seq_login"/>
+		</rollback>
+	</changeSet>
+</databaseChangeLog>
