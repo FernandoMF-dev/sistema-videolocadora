@@ -1,6 +1,10 @@
 application:
     appName: Videolocadora
 
+service:
+    auth:
+        providerUrl: http://localhost:8080/
+
 spring:
     application:
         name: Videolocadora
