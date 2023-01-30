@@ -11,7 +11,7 @@ import { Login } from '../models/login.model';
 export class LoginService {
 
 	private servicoUrl: string = environment.serviceUrl;
-	private baseUrl: string = `${ this.servicoUrl }${ environment.apiUrl }`;
+	private baseUrl: string = `${ this.servicoUrl }${ environment.apiUrl }/login`;
 	private urlCadastro: string = `${ this.baseUrl }/cadastro`;
 	private urlSessao: string = `${ this.baseUrl }/sessao`;
 

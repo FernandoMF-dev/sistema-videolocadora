@@ -8,7 +8,7 @@ import { LoginService } from '../services/login.service';
 @Component({
 	selector: 'app-login-cadastrar',
 	templateUrl: './login-cadastrar.component.html',
-	styleUrls: ['./login-cadastrar.component.scss']
+	styleUrls: ['./login-cadastrar.component.scss', './../login/login.component.scss']
 })
 export class LoginCadastrarComponent implements OnInit {
 
@@ -25,7 +25,7 @@ export class LoginCadastrarComponent implements OnInit {
 	}
 
 	get isFormValid(): boolean {
-		return this.loader || (this.form.valid && this.form.controls['password'].value === this.form.controls['confirmPassword'].value);
+		return !this.loader && this.form.valid && this.form.controls['password'].value === this.form.controls['confirmPassword'].value;
 	}
 
 	ngOnInit(): void {

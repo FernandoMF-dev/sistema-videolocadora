@@ -1,12 +1,12 @@
 <form [formGroup]="form" (ngSubmit)="entrar()">
-	<p-card class="ui-g-12">
+	<p-card class="ui-g-12" header="LOGIN">
 		<div class="ui-g ui-fluid">
 			<div class="ui-g-12">
 				<label>Login</label>
 				<input formControlName="username" pInputText type="text">
 			</div>
 
-			<div class="ui-g-12">,
+			<div class="ui-g-12">
 				<label>Senha</label>
 				<input [feedback]="false" formControlName="password" pPassword type="password">
 			</div>
@@ -15,7 +15,8 @@
 		<p-footer>
 			<div class="ui-g ui-fluid">
 				<div class="ui-g-12 ui-sm-12">
-					<button pButton appFormSubmitMsg type="submit" label="Entrar" [disabled]="form.valid || loader"></button>
+					<button pButton appFormSubmitMsg type="submit" [formGroup]="form" label="Entrar"
+							[disabled]="!form.valid || loader"></button>
 				</div>
 			</div>
 		</p-footer>

@@ -1,18 +1,18 @@
 <form [formGroup]="form" (ngSubmit)="cadastrar()">
-	<p-card class="ui-g-12">
+	<p-card class="ui-g-12" header="CADASTRAR">
 		<div class="ui-g ui-fluid">
 			<div class="ui-g-12">
 				<label>Login</label>
 				<input formControlName="username" pInputText type="text">
 			</div>
 
-			<div class="ui-g-12">,
+			<div class="ui-g-12">
 				<label>Senha</label>
 				<input [feedback]="false" formControlName="password" pPassword type="password">
 			</div>
 
-			<div class="ui-g-12">,
-				<label>ConfirmarSenha</label>
+			<div class="ui-g-12">
+				<label>Confirmar Senha</label>
 				<input [feedback]="false" formControlName="confirmPassword" pPassword type="password">
 			</div>
 		</div>
@@ -24,7 +24,8 @@
 				</div>
 
 				<div class="ui-g-6 ui-sm-12">
-					<button pButton appFormSubmitMsg type="submit" icon="pi pi-save" label="Cadastrar" [disabled]="isFormValid"></button>
+					<button pButton appFormSubmitMsg type="submit" [formGroup]="form" icon="pi pi-save" label="Cadastrar"
+							[disabled]="!isFormValid"></button>
 				</div>
 			</div>
 		</p-footer>

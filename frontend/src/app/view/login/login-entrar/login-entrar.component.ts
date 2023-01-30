@@ -8,7 +8,7 @@ import { LoginService } from '../services/login.service';
 @Component({
 	selector: 'app-login-entrar',
 	templateUrl: './login-entrar.component.html',
-	styleUrls: ['./login-entrar.component.scss']
+	styleUrls: ['./login-entrar.component.scss', './../login/login.component.scss']
 })
 export class LoginEntrarComponent {
 
