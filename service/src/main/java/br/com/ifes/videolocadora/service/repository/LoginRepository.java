@@ -9,4 +9,6 @@ public interface LoginRepository extends JpaRepository<Login, Long> {
 
 	boolean existsByUsername(String username);
 
+	boolean existsByUsernameAndPassword(String username, String password);
+
 }
